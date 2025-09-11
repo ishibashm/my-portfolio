@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { print } from "graphql/language/printer";
@@ -12,11 +11,14 @@ import { nextSlugToWpSlug } from "@/utils/nextSlugToWpSlug";
 import PostTemplate from "@/components/Templates/Post/PostTemplate";
 import { SeoQuery } from "@/queries/general/SeoQuery";
 
+interface PageProps {
+  params: { slug: string[] };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: { slug: string[] };
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const slug = nextSlugToWpSlug(params.slug);
   const isPreview = slug.includes("preview");
 
@@ -42,7 +44,7 @@ export async function generateMetadata({
   } as Metadata;
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export default async function Page({ params }: PageProps) {
   const slug = nextSlugToWpSlug(params.slug);
   const isPreview = slug.includes("preview");
 
