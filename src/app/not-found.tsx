@@ -1,44 +1,38 @@
 import type { Metadata } from "next";
-import { print } from "graphql/language/printer";
 
-import { setSeoData } from "@/utils/seoData";
+export const metadata: Metadata = {
+  title: "ページが見つかりませんでした - 404エラー",
+  description: "お探しのページは見つかりませんでした。",
+};
 
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import { ContentNode, Page } from "@/gql/graphql";
-import { PageQuery } from "@/components/Templates/Page/PageQuery";
-import { SeoQuery } from "@/queries/general/SeoQuery";
-
-const notFoundPageWordPressId = 501;
-
-export async function generateMetadata(): Promise<Metadata> {
-  const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
-    print(SeoQuery),
-    { slug: notFoundPageWordPressId, idType: "DATABASE_ID" },
+export default function NotFound() {
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '60vh',
+      padding: '2rem',
+      textAlign: 'center'
+    }}>
+      <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>404 - ページが見つかりません</h1>
+      <p style={{ fontSize: '1.1rem', marginBottom: '2rem' }}>
+        お探しのページは存在しないか、移動した可能性があります。
+      </p>
+      <a
+        href="/"
+        style={{
+          color: '#0070f3',
+          textDecoration: 'none',
+          fontSize: '1.1rem',
+          padding: '0.5rem 1rem',
+          border: '1px solid #0070f3',
+          borderRadius: '4px'
+        }}
+      >
+        トップページに戻る
+      </a>
+    </div>
   );
-
-  const metadata = setSeoData({ seo: contentNode.seo });
-
-  return {
-    ...metadata,
-    alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/404-not-found/`,
-    },
-  } as Metadata;
-}
-
-export default async function NotFound() {
-  try {
-    const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
-      id: notFoundPageWordPressId,
-    });
-
-    if (!page) {
-      return <div>ページが見つかりませんでした。</div>;
-    }
-
-    return <div dangerouslySetInnerHTML={{ __html: page.content || " " }} />;
-  } catch (error) {
-    console.error("404ページの取得に失敗しました:", error);
-    return <div>ページが見つかりませんでした。</div>;
-  }
 }
