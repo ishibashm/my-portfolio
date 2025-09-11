@@ -12,12 +12,11 @@ import PostTemplate from "@/components/Templates/Post/PostTemplate";
 import { SeoQuery } from "@/queries/general/SeoQuery";
 import { GetPortfoliosQuery } from '@/queries/portfolio/GetPortfolios';
 
-type Props = {
-  // params.slugはオプショナル（ホームページの場合undefinedになる）
+export async function generateMetadata({
+  params,
+}: {
   params: { slug?: string[] };
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+}): Promise<Metadata> {
   // slugが存在しない場合は "home" を使う
   const slug = params.slug ? nextSlugToWpSlug(params.slug) : "home";
   const isPreview = slug.includes("preview");
@@ -44,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } as Metadata;
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: { params: { slug?: string[] } }) {
   // slugが存在しない場合はホームページなので、LPをレンダリング
   if (!params.slug) {
     let portfolios = null;
