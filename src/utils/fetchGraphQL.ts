@@ -3,7 +3,10 @@ import { draftMode } from "next/headers";
 // "default" を削除し、関数の前に "export" を付ける
 export async function fetchGraphQL<T>(
   query: string,
-  variables?: Record<string, any>
+  variables?: Record<string, any>,
+  options?: {
+    headers?: Record<string, string>;
+  }
 ): Promise<T> {
   const { isEnabled } = await draftMode();
 
@@ -13,6 +16,7 @@ export async function fetchGraphQL<T>(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...(options?.headers || {}),
       },
       cache: isEnabled ? "no-store" : "force-cache",
       body: JSON.stringify({
