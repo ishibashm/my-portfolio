@@ -12,21 +12,21 @@ import PostTemplate from "@/components/Templates/Post/PostTemplate";
 import { SeoQuery } from "@/queries/general/SeoQuery";
 
 interface PageProps {
-  params: { slug: string[] };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string[] }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const slug = nextSlugToWpSlug(params.slug);
-  const isPreview = slug.includes("preview");
+  const { slug } = await params;
+  const processedSlug = nextSlugToWpSlug(slug);
 
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
     print(SeoQuery),
     {
-      slug: isPreview ? slug.split("preview/")[1] : slug,
-      idType: isPreview ? "DATABASE_ID" : "URI",
+      slug: processedSlug.includes("preview") ? processedSlug.split("preview/")[1] : processedSlug,
+      idType: processedSlug.includes("preview") ? "DATABASE_ID" : "URI",
     },
   );
 
@@ -39,20 +39,20 @@ export async function generateMetadata({
   return {
     ...metadata,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${slug}`,
+      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${processedSlug}`,
     },
   } as Metadata;
 }
 
 export default async function Page({ params }: PageProps) {
-  const slug = nextSlugToWpSlug(params.slug);
-  const isPreview = slug.includes("preview");
+  const { slug } = await params;
+  const processedSlug = nextSlugToWpSlug(slug);
 
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
     print(ContentInfoQuery),
     {
-      slug: isPreview ? slug.split("preview/")[1] : slug,
-      idType: isPreview ? "DATABASE_ID" : "URI",
+      slug: processedSlug.includes("preview") ? processedSlug.split("preview/")[1] : processedSlug,
+      idType: processedSlug.includes("preview") ? "DATABASE_ID" : "URI",
     },
   );
 
