@@ -12,36 +12,36 @@ import PostTemplate from "@/components/Templates/Post/PostTemplate";
 import { SeoQuery } from "@/queries/general/SeoQuery";
 import { GetPortfoliosQuery } from '@/queries/portfolio/GetPortfolios';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug?: string[] };
-}): Promise<Metadata> {
-  // slugが存在しない場合は "home" を使う
-  const slug = params.slug ? nextSlugToWpSlug(params.slug) : "home";
-  const isPreview = slug.includes("preview");
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { slug?: string[] };
+// }): Promise<Metadata> {
+//   // slugが存在しない場合は "home" を使う
+//   const slug = params.slug ? nextSlugToWpSlug(params.slug) : "home";
+//   const isPreview = slug.includes("preview");
 
-  const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
-    print(SeoQuery),
-    {
-      slug: isPreview ? slug.split("preview/")[1] : slug,
-      idType: isPreview ? "DATABASE_ID" : "URI",
-    },
-  );
+//   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
+//     print(SeoQuery),
+//     {
+//       slug: isPreview ? slug.split("preview/")[1] : slug,
+//       idType: isPreview ? "DATABASE_ID" : "URI",
+//     },
+//   );
 
-  if (!contentNode) {
-    return notFound();
-  }
+//   if (!contentNode) {
+//     return notFound();
+//   }
 
-  const metadata = setSeoData({ seo: contentNode.seo });
+//   const metadata = setSeoData({ seo: contentNode.seo });
 
-  return {
-    ...metadata,
-    alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${slug}`,
-    },
-  } as Metadata;
-}
+//   return {
+//     ...metadata,
+//     alternates: {
+//       canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${slug}`,
+//     },
+//   } as Metadata;
+// }
 
 export default async function Page({ params }: { params: { slug?: string[] } }) {
   // slugが存在しない場合はホームページなので、LPをレンダリング
