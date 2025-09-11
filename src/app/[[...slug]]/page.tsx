@@ -43,9 +43,10 @@ import { GetPortfoliosQuery } from '@/queries/portfolio/GetPortfolios';
 //   } as Metadata;
 // }
 
-export default async function Page({ params }: { params: { slug?: string[] } }) {
+export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
+  const { slug } = await params;
   // slugが存在しない場合はホームページなので、LPをレンダリング
-  if (!params.slug) {
+  if (!slug) {
     let portfolios = null;
     try {
       const portfolioData = await fetchGraphQL<{ posts: { nodes: any[] } }>(print(GetPortfoliosQuery));
@@ -106,13 +107,13 @@ export default async function Page({ params }: { params: { slug?: string[] } }) 
   }
 
   // slugが存在する場合は、これまで通りの処理
-  const slug = nextSlugToWpSlug(params.slug);
-  const isPreview = slug.includes("preview");
+  const processedSlug = nextSlugToWpSlug(slug);
+  const isPreview = processedSlug.includes("preview");
 
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
     print(ContentInfoQuery),
     {
-      slug: isPreview ? slug.split("preview/")[1] : slug,
+      slug: isPreview ? processedSlug.split("preview/")[1] : processedSlug,
       idType: isPreview ? "DATABASE_ID" : "URI",
     },
   );

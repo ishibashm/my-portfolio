@@ -5,7 +5,8 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const path = searchParams.get("path");
 
-  draftMode().disable();
+  const draft = await draftMode();
+  draft.disable();
 
   const response = NextResponse.redirect(
     `${process.env.NEXT_PUBLIC_BASE_URL}${path}`,
