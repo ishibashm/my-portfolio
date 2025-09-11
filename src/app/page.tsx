@@ -27,32 +27,59 @@ export default function HomePage() {
         root.style.setProperty('--color-5', colors.quinary);
     }
 
-    const toggleAnimationBtn = document.getElementById('toggleAnimation');
-    if (toggleAnimationBtn) {
-      toggleAnimationBtn.addEventListener('click', () => {
-          animationEnabled = !animationEnabled;
-          document.body.classList.toggle('no-animation', !animationEnabled);
-      });
-    }
+    // イベントリスナーを設定
+    const setupEventListeners = () => {
+      const toggleAnimationBtn = document.getElementById('toggleAnimation');
+      if (toggleAnimationBtn) {
+        toggleAnimationBtn.addEventListener('click', () => {
+            animationEnabled = !animationEnabled;
+            document.body.classList.toggle('no-animation', !animationEnabled);
+        });
+      }
 
-    const changeColorsBtn = document.getElementById('changeColors');
-    if (changeColorsBtn) {
-      changeColorsBtn.addEventListener('click', () => {
-          currentColorSet = (currentColorSet + 1) % colorSets.length;
-          updateColors();
-      });
-    }
+      const changeColorsBtn = document.getElementById('changeColors');
+      if (changeColorsBtn) {
+        changeColorsBtn.addEventListener('click', () => {
+            currentColorSet = (currentColorSet + 1) % colorSets.length;
+            updateColors();
+        });
+      }
 
-    const toggleNoiseBtn = document.getElementById('toggleNoise');
-    if (toggleNoiseBtn) {
-      toggleNoiseBtn.addEventListener('click', () => {
-          noiseEnabled = !noiseEnabled;
-          const noiseOverlay = document.querySelector('.noise-overlay') as HTMLElement;
-          if(noiseOverlay) noiseOverlay.style.opacity = noiseEnabled ? '0.6' : '0';
-      });
+      const toggleNoiseBtn = document.getElementById('toggleNoise');
+      if (toggleNoiseBtn) {
+        toggleNoiseBtn.addEventListener('click', () => {
+            noiseEnabled = !noiseEnabled;
+            const noiseOverlay = document.querySelector('.noise-overlay') as HTMLElement;
+            if(noiseOverlay) noiseOverlay.style.opacity = noiseEnabled ? '0.6' : '0';
+        });
+      }
+    };
+
+    // DOMの読み込みを待ってから実行
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupEventListeners);
+    } else {
+      setupEventListeners();
     }
 
     updateColors();
+
+    // クリーンアップ関数
+    return () => {
+      const toggleAnimationBtn = document.getElementById('toggleAnimation');
+      const changeColorsBtn = document.getElementById('changeColors');
+      const toggleNoiseBtn = document.getElementById('toggleNoise');
+
+      if (toggleAnimationBtn) {
+        toggleAnimationBtn.removeEventListener('click', () => {});
+      }
+      if (changeColorsBtn) {
+        changeColorsBtn.removeEventListener('click', () => {});
+      }
+      if (toggleNoiseBtn) {
+        toggleNoiseBtn.removeEventListener('click', () => {});
+      }
+    };
   }, []);
 
   return (

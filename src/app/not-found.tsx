@@ -27,9 +27,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NotFound() {
-  const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
-    id: notFoundPageWordPressId,
-  });
+  try {
+    const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
+      id: notFoundPageWordPressId,
+    });
 
-  return <div dangerouslySetInnerHTML={{ __html: page.content || " " }} />;
+    if (!page) {
+      return <div>ページが見つかりませんでした。</div>;
+    }
+
+    return <div dangerouslySetInnerHTML={{ __html: page.content || " " }} />;
+  } catch (error) {
+    console.error("404ページの取得に失敗しました:", error);
+    return <div>ページが見つかりませんでした。</div>;
+  }
 }
