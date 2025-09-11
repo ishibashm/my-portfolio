@@ -1,9 +1,11 @@
+// This is the new home page.
+// The content from the gradient mesh corporate site will be here.
 "use client";
 
 import { useEffect } from 'react';
-import './style.css';
+import './lp-style.css';
 
-export default function CorporateSiteLp() {
+export default function HomePage() {
   useEffect(() => {
     let animationEnabled = true;
     let currentColorSet = 0;
