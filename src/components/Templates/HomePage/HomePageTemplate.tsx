@@ -17,9 +17,11 @@ export const HomePageTemplate = ({
   page,
   posts,
 }: HomePageTemplateProps) => {
-  const heroTitle = page?.title || 'Welcome';
+  // ACFから取得したデータを使用
+  const heroTitle = page?.heroTitle || page?.title || 'Welcome';
   const heroMessage =
-    'This is my portfolio site. Please take a look at my work.';
+    page?.heroMessage || 'This is my portfolio site. Please take a look at my work.';
+  const heroImage = page?.heroImage;
 
   return (
     <div className={styles.container}>
@@ -29,6 +31,17 @@ export const HomePageTemplate = ({
             <h1 className={styles.title}>{heroTitle}</h1>
             <p className={styles.description}>{heroMessage}</p>
           </div>
+          {heroImage?.node?.sourceUrl && (
+            <div className={styles.heroImage}>
+              <Image
+                src={heroImage.node.sourceUrl}
+                alt={heroImage.node.altText || 'ヒーロー画像'}
+                width={500}
+                height={300}
+                priority
+              />
+            </div>
+          )}
         </section>
 
         <section className={styles.section}>

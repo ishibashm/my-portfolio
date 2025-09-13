@@ -2,6 +2,15 @@ query HomePage {
   page(id: "home", idType: URI) {
     title
     content
+    # ACFで作成したカスタムフィールドを取得
+    heroTitle
+    heroMessage
+    heroImage {
+      node {
+        sourceUrl
+        altText
+      }
+    }
     seo {
       title
       metaDesc
