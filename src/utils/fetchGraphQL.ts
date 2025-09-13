@@ -1,43 +1,48 @@
-import { draftMode } from "next/headers";
+import { DocumentNode } from 'graphql';
+import { draftMode } from 'next/headers';
 
-// "default" を削除し、関数の前に "export" を付ける
-export async function fetchGraphQL<T>(
-  query: string,
-  variables?: Record<string, any>,
-  options?: {
-    headers?: Record<string, string>;
-  }
-): Promise<T> {
-  const { isEnabled } = await draftMode();
+type FetchGraphQLOptions<T> = {
+  query: DocumentNode;
+  variables?: Record<string, any>;
+  isDraft?: boolean;
+};
+
+export async function fetchGraphQL<T>({
+  query,
+  variables,
+}: FetchGraphQLOptions<T>): Promise<{ data: T }> {
+  const { isEnabled } = draftMode();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql`,
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL!,
     {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        ...(options?.headers || {}),
+        'Content-Type': 'application/json',
       },
-      cache: isEnabled ? "no-store" : "force-cache",
       body: JSON.stringify({
-        query,
+        query: query.loc?.source.body,
         variables,
       }),
+      // isEnabled (プレビューモード) の場合はキャッシュしない
+      cache: isEnabled ? 'no-store' : 'force-cache',
     }
   );
 
   if (!res.ok) {
-    const body = await res.text();
-    throw new Error(
-      `${res.status} ${res.statusText}: ${body}`
-    );
+    // エラーハンドリングを改善
+    const errorBody = await res.text();
+    console.error(`GraphQL fetch failed: ${res.status} ${res.statusText}`, {
+      errorBody,
+    });
+    throw new Error('Failed to fetch API');
   }
 
   const json = await res.json();
   if (json.errors) {
-    console.error("GraphQL Errors:", json.errors);
-    throw new Error("Failed to fetch API");
+    console.error('GraphQL Errors:', json.errors);
+    throw new Error('Failed to fetch API');
   }
 
-  return json.data;
+  return json;
 }

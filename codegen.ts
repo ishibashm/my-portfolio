@@ -1,26 +1,18 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
-import { loadEnvConfig } from "@next/env";
-
-const projectDir = process.cwd();
-loadEnvConfig(projectDir);
+import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
-  overwrite: true,
-  schema: {
-    [`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql`]: {
-      headers: {
-        "User-Agent": "Codegen",
+  schema: 'http://35.224.211.72/graphql',
+  documents: ['src/**/*.ts', 'src/**/*.tsx'],
+  generates: {
+    './src/gql/': {
+      preset: 'client',
+      plugins: [],
+      presetConfig: {
+        gqlTagName: 'gql',
       },
     },
   },
-  generates: {
-    "src/gql/": {
-      preset: "client",
-    },
-    "src/gql/schema.gql": {
-      plugins: ["schema-ast"],
-    },
-  },
+  ignoreNoDocuments: true,
 };
 
 export default config;
