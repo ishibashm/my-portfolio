@@ -1,48 +1,16 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  Page,
-  Post,
-  Portfolio,
-  Maybe,
-} from '@/gql/graphql';
+import { HomePageQuery, Maybe } from '@/gql/graphql';
 import styles from './HomePageTemplate.module.css';
 
+type Page = NonNullable<HomePageQuery['page']>;
+type Posts = NonNullable<HomePageQuery['posts']>['nodes'];
+
 interface HomePageTemplateProps {
-  page?: Maybe<
-    Pick<Page, 'title'> & {
-      homeFields?: Maybe<
-        Pick<Page['homeFields'], 'heroTitle' | 'heroMessage'> & {
-          heroImage?: Maybe<{
-            node: Pick<NonNullable<Page['homeFields']['heroImage']>['node'], 'sourceUrl' | 'altText'>;
-          }>;
-        }
-      >;
-    }
-  >;
-  posts?: Maybe<
-    Array<
-      Maybe<
-        Pick<Post, 'title' | 'slug' | 'date'> & {
-          featuredImage?: Maybe<{
-            node: Pick<NonNullable<Post['featuredImage']>['node'], 'sourceUrl' | 'altText'>;
-          }>;
-        }
-      >
-    >
-  >;
-  portfolios?: Maybe<
-    Array<
-      Maybe<
-        Pick<Portfolio, 'title' | 'slug'> & {
-          featuredImage?: Maybe<{
-            node: Pick<NonNullable<Portfolio['featuredImage']>['node'], 'sourceUrl' | 'altText'>;
-          }>;
-        }
-      >
-    >
-  >;
+  page?: Page | null;
+  posts?: Posts | null;
+  portfolios?: Posts | null; // portfoliosも同じ型を使う
 }
 
 export const HomePageTemplate = ({
@@ -51,17 +19,18 @@ export const HomePageTemplate = ({
   portfolios,
 }: HomePageTemplateProps) => {
   const { homeFields } = page || {};
-  const { heroTitle, heroMessage, heroImage } = homeFields || {};
+  // homeFieldsは存在しないので、デフォルト値を設定
+  const heroTitle = '静的タイトル';
+  const heroMessage = '静的なヒーローメッセージ';
+  const heroImage = null;
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroText}>
-            <h1 className={styles.title}>{heroTitle || '静的タイトル'}</h1>
-            <p className={styles.description}>
-              {heroMessage || '静的なヒーローメッセージ'}
-            </p>
+            <h1 className={styles.title}>{heroTitle}</h1>
+            <p className={styles.description}>{heroMessage}</p>
           </div>
           {heroImage?.node?.sourceUrl && (
             <div className={styles.heroImage}>
@@ -96,7 +65,9 @@ export const HomePageTemplate = ({
                       />
                     )}
                     <h3>{post.title}</h3>
-                    <small>{new Date(post.date).toLocaleDateString()}</small>
+                    {post.date && (
+                      <small>{new Date(post.date).toLocaleDateString()}</small>
+                    )}
                   </Link>
                 )
             )}
