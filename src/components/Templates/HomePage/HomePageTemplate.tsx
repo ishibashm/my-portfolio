@@ -18,8 +18,6 @@ export const HomePageTemplate = ({
   posts,
 }: HomePageTemplateProps) => {
   const heroTitle = page?.title || 'Welcome';
-  // 本文をヒーローメッセージとして使用
-  const heroMessage = page?.content ? <div dangerouslySetInnerHTML={{ __html: page.content }} /> : 'This is my portfolio site.';
 
   return (
     <div className={styles.container}>
@@ -27,34 +25,34 @@ export const HomePageTemplate = ({
         <section className={styles.hero}>
           <div className={styles.heroText}>
             <h1 className={styles.title}>{heroTitle}</h1>
-            <div className={styles.description}>{heroMessage}</div>
+            {/* 本文をヒーローメッセージとして使用 */}
+            {page?.content && (
+              <div
+                className={styles.description}
+                dangerouslySetInnerHTML={{ __html: page.content }}
+              />
+            )}
           </div>
         </section>
 
-        <section className={styles.section}>
-          <h2>最新のブログ記事</h2>
-          <div className={styles.grid}>
-            {posts?.map(
-              (post) =>
-                post && (
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    key={post.slug}
-                    className={styles.card}
-                  >
-                    {post.featuredImage?.node?.sourceUrl && (
-                      <Image
-                        src={post.featuredImage.node.sourceUrl}
-                        alt={post.featuredImage.node.altText || ''}
-                        width={200}
-                        height={150}
-                      />
-                    )}
-                    <h3>{post.title}</h3>
-                    {post.date && <small>{formatDate(post.date)}</small>}
-                  </Link>
-                )
-            )}
+        {/* ServicesとAboutセクションを削除し、page.contentに含める */}
+
+        <section id="news" className="news">
+          <div className="container">
+            <h2 className="section-title">Latest Blog</h2>
+            <ul className="news-list">
+              {posts?.map(
+                (post) =>
+                  post && (
+                    <li key={post.slug}>
+                      {post.date && (
+                        <time dateTime={post.date}>{formatDate(post.date)}</time>
+                      )}
+                      <a href={`/blog/${post.slug}`}>{post.title}</a>
+                    </li>
+                  )
+              )}
+            </ul>
           </div>
         </section>
       </main>

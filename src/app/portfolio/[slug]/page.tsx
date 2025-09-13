@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { PostTemplate } from '@/components/Templates/Post/PostTemplate';
+import { PortfolioDetailTemplate } from '@/components/Templates/PortfolioDetail/PortfolioDetailTemplate';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
 import {
   PostBySlugDocument,
@@ -28,8 +28,45 @@ export default async function Portfolio({ params }: PortfolioProps) {
     notFound();
   }
 
-  // ポートフォリオもPostTemplateを再利用する
-  return <PostTemplate post={post} />;
+  return (
+    <div className="content">
+      <header className="header">
+        <div className="container">
+          <div className="header-inner">
+            <a href="/" className="logo">
+              My Portfolio
+            </a>
+            <nav className="nav">
+              <ul>
+                <li>
+                  <a href="/portfolio">Portfolio</a>
+                </li>
+                <li>
+                  <a href="/about">About</a>
+                </li>
+                <li>
+                  <a href="/blog">Blog</a>
+                </li>
+                <li>
+                  <a href="#contact" className="contact-button">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <main>
+        <PortfolioDetailTemplate portfolio={post} />
+      </main>
+      <footer id="contact" className="footer">
+        <div className="container">
+          <p>© 2025 My Portfolio. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
 }
 
 export async function generateMetadata(
