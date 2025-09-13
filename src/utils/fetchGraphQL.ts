@@ -1,5 +1,6 @@
 import { DocumentNode } from 'graphql';
 import { draftMode } from 'next/headers';
+import { print } from 'graphql/language/printer'; // printをインポート
 
 type FetchGraphQLOptions<T> = {
   query: DocumentNode;
@@ -12,7 +13,6 @@ export async function fetchGraphQL<T>({
 }: FetchGraphQLOptions<T>): Promise<{ data: T }> {
   const { isEnabled } = await draftMode();
 
-  // サーバーサイドでは直接IPを、クライアントサイドではプロキシを使う
   const endpoint =
     typeof window === 'undefined'
       ? 'http://35.224.211.72/graphql'
@@ -24,7 +24,7 @@ export async function fetchGraphQL<T>({
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      query: query.loc?.source.body,
+      query: print(query), // print関数でクエリ文字列に変換
       variables,
     }),
     cache: isEnabled ? 'no-store' : 'force-cache',
