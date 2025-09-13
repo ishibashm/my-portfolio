@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { HomePageQuery } from '@/gql/graphql';
 import styles from './HomePageTemplate.module.css';
+import { formatDate } from '@/utils/formatDate';
 
 type Page = NonNullable<HomePageQuery['page']>;
 type Posts = NonNullable<HomePageQuery['posts']>['nodes'];
@@ -10,7 +11,6 @@ type Posts = NonNullable<HomePageQuery['posts']>['nodes'];
 interface HomePageTemplateProps {
   page?: Page | null;
   posts?: Posts | null;
-  // portfolios は削除
 }
 
 export const HomePageTemplate = ({
@@ -51,7 +51,7 @@ export const HomePageTemplate = ({
                     )}
                     <h3>{post.title}</h3>
                     {post.date && (
-                      <small>{new Date(post.date).toLocaleDateString()}</small>
+                      <small>{formatDate(post.date)}</small>
                     )}
                   </Link>
                 )

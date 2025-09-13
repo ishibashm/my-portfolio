@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PostsByCategoryQuery, PostsListQuery } from '@/gql/graphql';
 import styles from './BlogListTemplate.module.css';
+import { formatDate } from '@/utils/formatDate';
 
 // 複数のクエリに対応できるよう、より汎用的な型を定義
 type PostNode =
@@ -48,7 +49,7 @@ export const BlogListTemplate = ({
                 )}
                 <h3>{post.title}</h3>
                 {post.date && (
-                  <small>{new Date(post.date).toLocaleDateString()}</small>
+                  <small>{formatDate(post.date)}</small>
                 )}
               </Link>
             )
