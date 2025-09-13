@@ -17,8 +17,9 @@ export const HomePageTemplate = ({
   page,
   posts,
 }: HomePageTemplateProps) => {
-  const heroTitle = page?.title || '静的タイトル';
-  const heroMessage = '静的なヒーローメッセージ';
+  const heroTitle = page?.title || 'Welcome';
+  const heroMessage =
+    'This is my portfolio site. Please take a look at my work.';
 
   return (
     <div className={styles.container}>
@@ -50,9 +51,7 @@ export const HomePageTemplate = ({
                       />
                     )}
                     <h3>{post.title}</h3>
-                    {post.date && (
-                      <small>{formatDate(post.date)}</small>
-                    )}
+                    {post.date && <small>{formatDate(post.date)}</small>}
                   </Link>
                 )
             )}
