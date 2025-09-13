@@ -4,7 +4,7 @@ import { PageQuery } from '@/components/Templates/Page/PageQuery';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
 import { nextSlugToWpSlug } from '@/utils/nextSlugToWpSlug';
 import { PageQuery as PageQueryType } from '@/gql/graphql';
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 import { seoData } from '@/utils/seoData';
 
 type PageProps = {
@@ -32,7 +32,10 @@ export default async function Page({ params }: PageProps) {
   return <PageTemplate page={page} />;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const wpSlug = nextSlugToWpSlug(params.slug);
 
   const { data } = await fetchGraphQL<PageQueryType>({
