@@ -14,7 +14,7 @@ export const PostTemplate = ({ post }: PostTemplateProps) => {
       <main className={styles.main}>
         <h1>{title}</h1>
         <div className={styles.meta}>
-          <span>{new Date(date).toLocaleDateString()}</span>
+          {date && <span>{new Date(date).toLocaleDateString()}</span>}
           {author?.node?.name && <span> by {author.node.name}</span>}
         </div>
         {featuredImage?.node?.sourceUrl && (

@@ -21,7 +21,6 @@ export default async function Home() {
     <HomePageTemplate
       page={page}
       posts={posts?.nodes}
-      portfolios={[]} // portfoliosは削除されたので空配列を渡す
     />
   );
 }

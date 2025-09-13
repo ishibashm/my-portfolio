@@ -10,18 +10,15 @@ type Posts = NonNullable<HomePageQuery['posts']>['nodes'];
 interface HomePageTemplateProps {
   page?: Page | null;
   posts?: Posts | null;
-  portfolios?: Posts | null; // portfoliosも同じ型を使う
+  // portfolios は削除
 }
 
 export const HomePageTemplate = ({
   page,
   posts,
-  portfolios,
 }: HomePageTemplateProps) => {
-  // homeFieldsは存在しないので、参照を削除し、デフォルト値を直接使用
   const heroTitle = page?.title || '静的タイトル';
   const heroMessage = '静的なヒーローメッセージ';
-  const heroImage = null;
 
   return (
     <div className={styles.container}>
@@ -31,17 +28,6 @@ export const HomePageTemplate = ({
             <h1 className={styles.title}>{heroTitle}</h1>
             <p className={styles.description}>{heroMessage}</p>
           </div>
-          {heroImage?.node?.sourceUrl && (
-            <div className={styles.heroImage}>
-              <Image
-                src={heroImage.node.sourceUrl}
-                alt={heroImage.node.altText || 'ヒーロー画像'}
-                width={500}
-                height={300}
-                priority
-              />
-            </div>
-          )}
         </section>
 
         <section className={styles.section}>
@@ -67,32 +53,6 @@ export const HomePageTemplate = ({
                     {post.date && (
                       <small>{new Date(post.date).toLocaleDateString()}</small>
                     )}
-                  </Link>
-                )
-            )}
-          </div>
-        </section>
-
-        <section className={styles.section}>
-          <h2>ポートフォリオ</h2>
-          <div className={styles.grid}>
-            {portfolios?.map(
-              (item) =>
-                item && (
-                  <Link
-                    href={`/portfolio/${item.slug}`}
-                    key={item.slug}
-                    className={styles.card}
-                  >
-                    {item.featuredImage?.node?.sourceUrl && (
-                      <Image
-                        src={item.featuredImage.node.sourceUrl}
-                        alt={item.featuredImage.node.altText || ''}
-                        width={200}
-                        height={150}
-                      />
-                    )}
-                    <h3>{item.title}</h3>
                   </Link>
                 )
             )}
