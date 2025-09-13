@@ -4,7 +4,6 @@ import { draftMode } from 'next/headers';
 type FetchGraphQLOptions<T> = {
   query: DocumentNode;
   variables?: Record<string, any>;
-  isDraft?: boolean;
 };
 
 export async function fetchGraphQL<T>({

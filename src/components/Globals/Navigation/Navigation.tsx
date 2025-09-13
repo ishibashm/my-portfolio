@@ -55,4 +55,4 @@ export const Navigation = () => {
   );
 };
 
-export default Navigation; // デフォルトエクスポートを追加
+export default Navigation;
