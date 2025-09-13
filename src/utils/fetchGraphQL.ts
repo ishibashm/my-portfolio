@@ -10,7 +10,7 @@ export async function fetchGraphQL<T>({
   query,
   variables,
 }: FetchGraphQLOptions<T>): Promise<{ data: T }> {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = await draftMode(); // await を追加
 
   const res = await fetch(
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL!,
@@ -23,13 +23,11 @@ export async function fetchGraphQL<T>({
         query: query.loc?.source.body,
         variables,
       }),
-      // isEnabled (プレビューモード) の場合はキャッシュしない
       cache: isEnabled ? 'no-store' : 'force-cache',
     }
   );
 
   if (!res.ok) {
-    // エラーハンドリングを改善
     const errorBody = await res.text();
     console.error(`GraphQL fetch failed: ${res.status} ${res.statusText}`, {
       errorBody,
