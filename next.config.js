@@ -1,16 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: true,
-  images: {
-    remotePatterns: [
+  async rewrites() {
+    return [
       {
-        protocol: "http",
-        hostname: process.env.NEXT_PUBLIC_WORDPRESS_API_HOSTNAME,
-        port: "",
+        source: '/api/graphql',
+        destination: 'http://35.224.211.72/graphql',
       },
-    ],
+    ];
   },
-
 };
 
 module.exports = nextConfig;
