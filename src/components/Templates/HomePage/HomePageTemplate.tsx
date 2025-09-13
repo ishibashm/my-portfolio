@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HomePageQuery, Maybe } from '@/gql/graphql';
+import { HomePageQuery } from '@/gql/graphql';
 import styles from './HomePageTemplate.module.css';
 
 type Page = NonNullable<HomePageQuery['page']>;
@@ -18,9 +18,8 @@ export const HomePageTemplate = ({
   posts,
   portfolios,
 }: HomePageTemplateProps) => {
-  const { homeFields } = page || {};
-  // homeFieldsは存在しないので、デフォルト値を設定
-  const heroTitle = '静的タイトル';
+  // homeFieldsは存在しないので、参照を削除し、デフォルト値を直接使用
+  const heroTitle = page?.title || '静的タイトル';
   const heroMessage = '静的なヒーローメッセージ';
   const heroImage = null;
 
