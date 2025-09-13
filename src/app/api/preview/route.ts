@@ -1,17 +1,8 @@
-import { draftMode } from 'next/headers';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import gql from 'graphql-tag';
+import { NextRequest, NextResponse } from 'next/server';
 
-const LOGIN_MUTATION = gql`
-  mutation LoginWithCookies($login: String!, $password: String!) {
-    loginWithCookies(login: $login, password: $password) {
-      status
-    }
-  }
-`;
-
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
   const slug = searchParams.get('slug');
@@ -20,19 +11,11 @@ export async function GET(request: Request) {
     return new Response('Invalid token', { status: 401 });
   }
 
-  const { data } = await fetchGraphQL<{ loginWithCookies: { status: string } }>({
-    query: LOGIN_MUTATION,
-    variables: {
-      login: process.env.WORDPRESS_AUTH_USER,
-      password: process.env.WORDPRESS_AUTH_PASSWORD,
-    },
-  });
+  const response = NextResponse.redirect(new URL(`/${slug || ''}`, request.url));
 
-  if (data.loginWithCookies.status !== 'SUCCESS') {
-    return new Response('Failed to login', { status: 401 });
-  }
+  // プレビューモードを有効にするCookieを設定
+  response.cookies.set('__prerender_bypass', '1');
+  response.cookies.set('__next_preview_data', '{"preview":true}');
 
-  draftMode().enable();
-
-  redirect(`/${slug || ''}`);
+  return response;
 }
