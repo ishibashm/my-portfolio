@@ -1,60 +1,56 @@
-import Link from "next/link";
-import { print } from "graphql/language/printer";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { fetchGraphQL } from '@/utils/fetchGraphQL';
+import gql from 'graphql-tag';
+import styles from './Navigation.module.css';
+import {
+  RootQueryToMenuItemConnection,
+  MenuItem,
+} from '@/gql/graphql';
 
-import styles from "./Navigation.module.css";
-
-import { MenuItem, RootQueryToMenuItemConnection } from "@/gql/graphql";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import gql from "graphql-tag";
-
-async function getData() {
-  const menuQuery = gql`
-    query MenuQuery {
-      menuItems(where: { location: PRIMARY }) {
-        nodes {
-          uri
-          target
-          label
-        }
+const menuQuery = gql`
+  query GetMenu {
+    menuItems(where: { location: PRIMARY }) {
+      nodes {
+        uri
+        label
       }
     }
-  `;
-
-  const { menuItems } = await fetchGraphQL<{
-    menuItems: RootQueryToMenuItemConnection;
-  }>(print(menuQuery));
-
-  if (menuItems === null) {
-    throw new Error("Failed to fetch data");
   }
+`;
 
-  return menuItems;
-}
+export const Navigation = () => {
+  const pathname = usePathname();
+  const [menuItems, setMenuItems] = useState<
+    (MenuItem | null)[] | undefined
+  >();
 
-export default async function Navigation() {
-  const menuItems = await getData();
+  useEffect(() => {
+    const getMenuItems = async () => {
+      const { data } = await fetchGraphQL<{
+        menuItems: RootQueryToMenuItemConnection;
+      }>({ query: menuQuery });
+      setMenuItems(data.menuItems.nodes as (MenuItem | null)[]);
+    };
+    getMenuItems();
+  }, []);
 
   return (
-    <nav
-      className={styles.navigation}
-      role="navigation"
-      itemScope
-      itemType="http://schema.org/SiteNavigationElement"
-    >
-      {menuItems.nodes.map((item: MenuItem, index: number) => {
-        if (!item.uri) return null;
-
-        return (
-          <Link
-            itemProp="url"
-            href={item.uri}
-            key={index}
-            target={item.target || "_self"}
-          >
-            <span itemProp="name">{item.label}</span>
-          </Link>
-        );
-      })}
+    <nav className={styles.nav}>
+      <Link href="/" className={pathname === '/' ? styles.active : ''}>
+        Home
+      </Link>
+      {menuItems?.map((item) => (
+        <Link
+          href={item?.uri || ''}
+          key={item?.uri}
+          className={pathname === item?.uri ? styles.active : ''}
+        >
+          {item?.label}
+        </Link>
+      ))}
     </nav>
   );
-}
+};
