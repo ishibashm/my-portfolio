@@ -10,22 +10,25 @@ export async function fetchGraphQL<T>({
   query,
   variables,
 }: FetchGraphQLOptions<T>): Promise<{ data: T }> {
-  const { isEnabled } = await draftMode(); // await を追加
+  const { isEnabled } = await draftMode();
 
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_WORDPRESS_API_URL!,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: query.loc?.source.body,
-        variables,
-      }),
-      cache: isEnabled ? 'no-store' : 'force-cache',
-    }
-  );
+  // サーバーサイドでは直接IPを、クライアントサイドではプロキシを使う
+  const endpoint =
+    typeof window === 'undefined'
+      ? 'http://35.224.211.72/graphql'
+      : '/api/graphql';
+
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: query.loc?.source.body,
+      variables,
+    }),
+    cache: isEnabled ? 'no-store' : 'force-cache',
+  });
 
   if (!res.ok) {
     const errorBody = await res.text();
