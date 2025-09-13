@@ -1,79 +1,38 @@
-import { print } from "graphql/language/printer";
+import { draftMode } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { fetchGraphQL } from '@/utils/fetchGraphQL';
+import gql from 'graphql-tag';
 
-import { ContentNode } from "@/gql/graphql";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import { draftMode } from "next/headers";
-import { NextResponse } from "next/server";
-import gql from "graphql-tag";
-
-export const dynamic = "force-dynamic";
-
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-  const id = searchParams.get("id");
-
-  if (secret !== process.env.HEADLESS_SECRET || !id) {
-    return new Response("Invalid token", { status: 401 });
-  }
-
-  const mutation = gql`
-  mutation LoginUser {
-    login( input: {
-      clientMutationId: "uniqueId",
-      username: "${process.env.WP_USER}",
-      password: "${process.env.WP_APP_PASS}"
-    } ) {
-      authToken
-      user {
-        id
-        name
-      }
+const LOGIN_MUTATION = gql`
+  mutation LoginWithCookies($login: String!, $password: String!) {
+    loginWithCookies(login: $login, password: $password) {
+      status
     }
   }
 `;
 
-  const { login } = await fetchGraphQL<{ login: any }>(
-    print(mutation),
-  );
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const secret = searchParams.get('secret');
+  const slug = searchParams.get('slug');
 
-  const authToken = login.authToken;
-
-  (await draftMode()).enable();
-
-  const query = gql`
-    query GetContentNode($id: ID!) {
-      contentNode(id: $id, idType: DATABASE_ID) {
-        uri
-        status
-        databaseId
-      }
-    }
-  `;
-
-  const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
-    print(query),
-    {
-      id,
-    },
-    {
-      headers: { Authorization: `Bearer ${authToken}` },
-    },
-  );
-
-  if (!contentNode) {
-    return new Response("Invalid id", { status: 401 });
+  if (secret !== process.env.WORDPRESS_PREVIEW_SECRET) {
+    return new Response('Invalid token', { status: 401 });
   }
 
-  const response = NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_BASE_URL}${
-      contentNode.status === "draft"
-        ? `/preview/${contentNode.databaseId}`
-        : contentNode.uri
-    }`,
-  );
+  const { data } = await fetchGraphQL<{ loginWithCookies: { status: string } }>({
+    query: LOGIN_MUTATION,
+    variables: {
+      login: process.env.WORDPRESS_AUTH_USER,
+      password: process.env.WORDPRESS_AUTH_PASSWORD,
+    },
+  });
 
-  response.headers.set("Set-Cookie", `wp_jwt=${authToken}; path=/;`);
+  if (data.loginWithCookies.status !== 'SUCCESS') {
+    return new Response('Failed to login', { status: 401 });
+  }
 
-  return response;
+  draftMode().enable();
+
+  redirect(`/${slug || ''}`);
 }

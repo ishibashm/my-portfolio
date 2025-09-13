@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import gql from 'graphql-tag';
 
 export const PostQuery = gql`
   query PostQuery($slug: ID!) {
@@ -16,10 +16,6 @@ export const PostQuery = gql`
           sourceUrl
           altText
         }
-      }
-      # ACFフィールドグループ'postFields'を取得
-      postFields {
-        relatedLink
       }
     }
   }

@@ -1,22 +1,15 @@
-import { gql } from "graphql-tag";
+import gql from 'graphql-tag';
 
-export const GetPortfoliosQuery = gql`
+export const GetPortfolios = gql`
   query GetPortfolios {
-    posts(first: 10, where: { categoryName: "portfolio" }) {
+    posts(where: { categoryName: "portfolio" }) {
       nodes {
-        ... on Post {
-          title
-          content
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          portfolioInfo {
-            siteUrl
-            techStack
-            githubUrl
+        title
+        slug
+        featuredImage {
+          node {
+            sourceUrl
+            altText
           }
         }
       }
