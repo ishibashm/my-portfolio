@@ -7,16 +7,18 @@ import { PageQuery as PageQueryType } from '@/gql/graphql';
 import { Metadata, ResolvingMetadata } from 'next';
 import { seoData } from '@/utils/seoData';
 
+// Next.js 15の非同期Propsに対応
 type PageProps = {
-  params: {
-    slug: string[];
-  };
+  params: Promise<{ slug: string[] }>;
 };
 
 export const revalidate = 60;
 
+// 1. コンポーネントをasyncにする
 export default async function Page({ params }: PageProps) {
-  const wpSlug = nextSlugToWpSlug(params.slug);
+  // 3. awaitでPromiseを解決する
+  const resolvedParams = await params;
+  const wpSlug = nextSlugToWpSlug(resolvedParams.slug);
 
   const { data } = await fetchGraphQL<PageQueryType>({
     query: PageQuery,
@@ -36,7 +38,8 @@ export async function generateMetadata(
   { params }: PageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const wpSlug = nextSlugToWpSlug(params.slug);
+  const resolvedParams = await params;
+  const wpSlug = nextSlugToWpSlug(resolvedParams.slug);
 
   const { data } = await fetchGraphQL<PageQueryType>({
     query: PageQuery,
