@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
+import { fetchGraphQLClient } from '@/utils/fetchGraphQL-client'; // 変更
 import gql from 'graphql-tag';
 import styles from './Navigation.module.css';
 import {
@@ -29,7 +29,7 @@ export const Navigation = () => {
 
   useEffect(() => {
     const getMenuItems = async () => {
-      const { data } = await fetchGraphQL<{
+      const { data } = await fetchGraphQLClient<{ // 変更
         menuItems: RootQueryToMenuItemConnection;
       }>({ query: menuQuery });
       setMenuItems(data.menuItems.nodes as (MenuItem | null)[]);
@@ -54,3 +54,5 @@ export const Navigation = () => {
     </nav>
   );
 };
+
+export default Navigation; // デフォルトエクスポートを追加
