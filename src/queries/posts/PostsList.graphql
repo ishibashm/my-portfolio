@@ -1,0 +1,19 @@
+query PostsList($first: Int, $after: String) {
+  posts(first: $first, after: $after) {
+    nodes {
+      title
+      slug
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

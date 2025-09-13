@@ -5,11 +5,10 @@ import {
   PostsByCategoryDocument,
   PostsByCategoryQuery,
 } from '@/gql/graphql';
+import { Metadata, ResolvingMetadata } from 'next';
 
 type CategoryPageProps = {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
   searchParams: {
     after?: string;
   };
@@ -21,7 +20,7 @@ export default async function CategoryPage({
   params,
   searchParams,
 }: CategoryPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const { after } = searchParams;
 
   const { data } = await fetchGraphQL<PostsByCategoryQuery>({
@@ -45,4 +44,15 @@ export default async function CategoryPage({
       currentSlug={`/blog/category/${slug}`}
     />
   );
+}
+
+// generateMetadataも追加
+export async function generateMetadata(
+  { params }: CategoryPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  return {
+    title: `Category: ${slug}`,
+  };
 }

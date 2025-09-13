@@ -1,86 +1,35 @@
-import { draftMode } from "next/headers";
-import { print } from "graphql/language/printer";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import { PostsListQuery } from "@/queries/posts/PostsListQuery";
-import BlogListTemplate from "@/components/Templates/BlogList/BlogListTemplate";
+import BlogListTemplate from '@/components/Templates/BlogList/BlogListTemplate';
+import { fetchGraphQL } from '@/utils/fetchGraphQL';
+import {
+  PostsListDocument,
+  PostsListQuery,
+} from '@/gql/graphql';
 
-interface PostsListResponse {
-  posts: {
-    edges: Array<{
-      node: {
-        id: string;
-        title: string;
-        excerpt: string;
-        slug: string;
-        date: string;
-        featuredImage?: {
-          node: {
-            sourceUrl: string;
-            altText?: string;
-            mediaDetails?: {
-              width: number;
-              height: number;
-            };
-          };
-        };
-        categories: {
-          edges: Array<{
-            node: {
-              id: string;
-              name: string;
-              slug: string;
-            };
-          }>;
-        };
-        author: {
-          node: {
-            name: string;
-          };
-        };
-      };
-    }>;
-    pageInfo: {
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor?: string;
-      endCursor?: string;
-    };
+type BlogPageProps = {
+  searchParams: {
+    after?: string;
   };
-}
+};
 
-export default async function BlogPage() {
-  const { isEnabled } = await draftMode();
+export const revalidate = 60;
 
-  const data = await fetchGraphQL<PostsListResponse>(
-    print(PostsListQuery),
-    { first: 12 }
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const { after } = searchParams;
+
+  const { data } = await fetchGraphQL<PostsListQuery>({
+    query: PostsListDocument,
+    variables: {
+      first: 10,
+      after: after || null,
+    },
+  });
+
+  return (
+    <BlogListTemplate
+      posts={data.posts?.nodes}
+      pageInfo={data.posts?.pageInfo}
+      title="Blog"
+      currentSlug="/blog"
+    />
   );
-
-  if (!data?.posts) {
-    return (
-      <div className="error-container">
-        <h1>ブログ記事が見つかりません</h1>
-        <p>ブログ記事のデータ取得に失敗しました。</p>
-      </div>
-    );
-  }
-
-  return <BlogListTemplate posts={data.posts} />;
-}
-
-export async function generateMetadata() {
-  return {
-    title: "ブログ | Next-Gen Corp.",
-    description: "Next-Gen Corp.の技術ブログ。最新の技術トレンドや開発情報をお届けします。",
-    openGraph: {
-      title: "ブログ | Next-Gen Corp.",
-      description: "Next-Gen Corp.の技術ブログ。最新の技術トレンドや開発情報をお届けします。",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "ブログ | Next-Gen Corp.",
-      description: "Next-Gen Corp.の技術ブログ。最新の技術トレンドや開発情報をお届けします。",
-    },
-  };
 }

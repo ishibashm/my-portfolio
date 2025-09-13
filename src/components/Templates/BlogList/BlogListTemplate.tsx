@@ -56,3 +56,5 @@ export const BlogListTemplate = ({
     </div>
   );
 };
+
+export default BlogListTemplate;
