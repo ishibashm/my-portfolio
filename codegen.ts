@@ -1,10 +1,7 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
 
-// Vercelのビルド環境ではNEXT_PUBLIC_WORDPRESS_API_URLを使い、
-// ローカルではプロキシ（localhost）を使うように動的に切り替え
-const schema =
-  process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
-  'http://localhost:3000/api/graphql';
+// Vercelのビルド環境でも、認証不要なオリジナルのIPアドレスを直接参照する
+const schema = 'http://35.224.211.72/graphql';
 
 const config: CodegenConfig = {
   schema,
