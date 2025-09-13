@@ -2,8 +2,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PostsByCategoryQuery, PostsListQuery } from '@/gql/graphql';
-import styles from './BlogListTemplate.module.css';
 import { formatDate } from '@/utils/formatDate';
+// CSSモジュールではなく、グローバルなlp-style.cssを使う
+// import styles from './BlogListTemplate.module.css';
 
 // 複数のクエリに対応できるよう、より汎用的な型を定義
 type PostNode =
@@ -28,41 +29,31 @@ export const BlogListTemplate = ({
   currentSlug,
 }: BlogListTemplateProps) => {
   return (
-    <div className={styles.container}>
-      <h1>{title}</h1>
-      <div className={styles.grid}>
-        {posts?.map(
-          (post) =>
-            post && (
-              <Link
-                href={`/blog/${post.slug}`}
-                key={post.slug}
-                className={styles.card}
-              >
-                {post.featuredImage?.node?.sourceUrl && (
-                  <Image
-                    src={post.featuredImage.node.sourceUrl}
-                    alt={post.featuredImage.node.altText || ''}
-                    width={300}
-                    height={200}
-                  />
-                )}
-                <h3>{post.title}</h3>
-                {post.date && (
-                  <small>{formatDate(post.date)}</small>
-                )}
-              </Link>
-            )
+    <section className="news">
+      <div className="container">
+        <h2 className="section-title">{title}</h2>
+        <ul className="news-list">
+          {posts?.map(
+            (post) =>
+              post && (
+                <li key={post.slug}>
+                  {post.date && (
+                    <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  )}
+                  <a href={`/blog/${post.slug}`}>{post.title}</a>
+                </li>
+              )
+          )}
+        </ul>
+        {pageInfo?.hasNextPage && (
+          <div className="pagination">
+            <Link href={`${currentSlug}?after=${pageInfo.endCursor}`}>
+              Next Page
+            </Link>
+          </div>
         )}
       </div>
-      {pageInfo?.hasNextPage && (
-        <div className={styles.pagination}>
-          <Link href={`${currentSlug}?after=${pageInfo.endCursor}`}>
-            Next Page
-          </Link>
-        </div>
-      )}
-    </div>
+    </section>
   );
 };
 

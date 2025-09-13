@@ -23,11 +23,47 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   });
 
   return (
-    <BlogListTemplate
-      posts={data.posts?.nodes}
-      pageInfo={data.posts?.pageInfo}
-      title="Blog"
-      currentSlug="/blog"
-    />
+    <div className="content">
+      <header className="header">
+        <div className="container">
+          <div className="header-inner">
+            <a href="/" className="logo">
+              My Portfolio
+            </a>
+            <nav className="nav">
+              <ul>
+                <li>
+                  <a href="/portfolio">Portfolio</a>
+                </li>
+                <li>
+                  <a href="/about">About</a>
+                </li>
+                <li>
+                  <a href="/blog">Blog</a>
+                </li>
+                <li>
+                  <a href="#contact" className="contact-button">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <main>
+        <BlogListTemplate
+          posts={data.posts?.nodes}
+          pageInfo={data.posts?.pageInfo}
+          title="Blog"
+          currentSlug="/blog"
+        />
+      </main>
+      <footer id="contact" className="footer">
+        <div className="container">
+          <p>© 2025 My Portfolio. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
   );
 }
