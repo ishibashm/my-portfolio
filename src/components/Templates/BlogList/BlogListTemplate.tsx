@@ -1,14 +1,20 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PostsByCategoryQuery } from '@/gql/graphql';
+import { PostsByCategoryQuery, PostsListQuery } from '@/gql/graphql';
 import styles from './BlogListTemplate.module.css';
 
-type Posts = NonNullable<PostsByCategoryQuery['category']>['posts']['nodes'];
-type PageInfo = NonNullable<PostsByCategoryQuery['category']>['posts']['pageInfo'];
+// 複数のクエリに対応できるよう、より汎用的な型を定義
+type PostNode =
+  | NonNullable<PostsByCategoryQuery['category']>['posts']['nodes'][0]
+  | NonNullable<PostsListQuery['posts']>['nodes'][0];
+
+type PageInfo =
+  | NonNullable<PostsByCategoryQuery['category']>['posts']['pageInfo']
+  | NonNullable<PostsListQuery['posts']>['pageInfo'];
 
 interface BlogListTemplateProps {
-  posts?: Posts | null;
+  posts?: (PostNode | null)[] | null;
   pageInfo?: PageInfo | null;
   title: string;
   currentSlug: string;
