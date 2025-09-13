@@ -6,15 +6,13 @@ import {
 } from '@/gql/graphql';
 
 type BlogPageProps = {
-  searchParams: {
-    after?: string;
-  };
+  searchParams: Promise<{ after?: string }>;
 };
 
 export const revalidate = 60;
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const { after } = searchParams;
+  const { after } = await searchParams;
 
   const { data } = await fetchGraphQL<PostsListQuery>({
     query: PostsListDocument,

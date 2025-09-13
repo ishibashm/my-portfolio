@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { BlogListTemplate } from '@/components/Templates/BlogList/BlogListTemplate';
+import BlogListTemplate from '@/components/Templates/BlogList/BlogListTemplate';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
 import {
   PostsByCategoryDocument,
@@ -7,11 +7,10 @@ import {
 } from '@/gql/graphql';
 import { Metadata, ResolvingMetadata } from 'next';
 
+// Next.js 15の非同期Propsに対応
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: {
-    after?: string;
-  };
+  searchParams: Promise<{ after?: string }>;
 };
 
 export const revalidate = 60;
@@ -21,7 +20,7 @@ export default async function CategoryPage({
   searchParams,
 }: CategoryPageProps) {
   const { slug } = await params;
-  const { after } = searchParams;
+  const { after } = await searchParams;
 
   const { data } = await fetchGraphQL<PostsByCategoryQuery>({
     query: PostsByCategoryDocument,
@@ -46,7 +45,6 @@ export default async function CategoryPage({
   );
 }
 
-// generateMetadataも追加
 export async function generateMetadata(
   { params }: CategoryPageProps,
   parent: ResolvingMetadata
