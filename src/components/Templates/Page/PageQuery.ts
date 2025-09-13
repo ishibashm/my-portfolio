@@ -1,9 +1,19 @@
-import gql from "graphql-tag";
+import { gql } from '@apollo/client';
 
 export const PageQuery = gql`
-  query PageQuery($id: ID!, $preview: Boolean = false) {
-    page(id: $id, idType: DATABASE_ID, asPreview: $preview) {
+  query PageQuery($slug: ID!) {
+    page(id: $slug, idType: URI) {
+      title
       content
+      pageFields {
+        subTitle
+        gallery {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+      }
     }
   }
 `;

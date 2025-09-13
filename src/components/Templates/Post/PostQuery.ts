@@ -1,15 +1,25 @@
-import gql from "graphql-tag";
+import { gql } from '@apollo/client';
 
 export const PostQuery = gql`
-  query PostQuery($id: ID!, $preview: Boolean = false) {
-    post(id: $id, idType: DATABASE_ID, asPreview: $preview) {
+  query PostQuery($slug: ID!) {
+    post(id: $slug, idType: SLUG) {
+      title
       content
       date
-      title
       author {
         node {
           name
         }
+      }
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+      # ACFフィールドグループ'postFields'を取得
+      postFields {
+        relatedLink
       }
     }
   }

@@ -1,26 +1,45 @@
-import { print } from "graphql/language/printer";
+import { Post } from '@/gql/graphql';
+import Image from 'next/image';
+import styles from './PostTemplate.module.css';
 
-import { ContentNode, Post } from "@/gql/graphql";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-
-import styles from "./PostTemplate.module.css";
-import { PostQuery } from "./PostQuery";
-
-interface TemplateProps {
-  node: ContentNode;
+interface PostTemplateProps {
+  post: Post;
 }
 
-export default async function PostTemplate({ node }: TemplateProps) {
-  const { post } = await fetchGraphQL<{ post: Post }>(print(PostQuery), {
-    id: node.databaseId,
-  });
+export const PostTemplate = ({ post }: PostTemplateProps) => {
+  const { title, content, date, author, featuredImage, postFields } = post;
+  const { relatedLink } = postFields || {};
 
   return (
-    <div className={styles.post}>
-      <h1 className={styles.title}>{post.title}</h1>
-      <div className={styles.author}>By {post.author?.node.name}</div>
-
-      <div dangerouslySetInnerHTML={{ __html: post.content || "" }} />
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <h1>{title}</h1>
+        <div className={styles.meta}>
+          <span>{new Date(date).toLocaleDateString()}</span>
+          {author?.node?.name && <span> by {author.node.name}</span>}
+        </div>
+        {featuredImage?.node?.sourceUrl && (
+          <Image
+            src={featuredImage.node.sourceUrl}
+            alt={featuredImage.node.altText || ''}
+            width={800}
+            height={400}
+            priority
+          />
+        )}
+        <div
+          className={styles.content}
+          dangerouslySetInnerHTML={{ __html: content || '' }}
+        />
+        {relatedLink && (
+          <div className={styles.related}>
+            <h4>関連リンク</h4>
+            <a href={relatedLink} target="_blank" rel="noopener noreferrer">
+              {relatedLink}
+            </a>
+          </div>
+        )}
+      </main>
     </div>
   );
-}
+};

@@ -1,16 +1,41 @@
-import { print } from "graphql/language/printer";
-import { ContentNode, Page } from "@/gql/graphql";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import { PageQuery } from "./PageQuery";
+import { Page } from '@/gql/graphql';
+import Image from 'next/image';
+import styles from './PageTemplate.module.css';
 
-interface TemplateProps {
-  node: ContentNode;
+interface PageTemplateProps {
+  page: Page;
 }
 
-export default async function PageTemplate({ node }: TemplateProps) {
-  const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
-    id: node.databaseId,
-  });
+export const PageTemplate = ({ page }: PageTemplateProps) => {
+  const { title, content, pageFields } = page;
+  const { subTitle, gallery } = pageFields || {};
 
-  return <div dangerouslySetInnerHTML={{ __html: page?.content || "" }} />;
-}
+  return (
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <h1>{title}</h1>
+        {subTitle && <h2>{subTitle}</h2>}
+        <div
+          className={styles.content}
+          dangerouslySetInnerHTML={{ __html: content || '' }}
+        />
+        {gallery && (
+          <div className={styles.gallery}>
+            {gallery.map(
+              (image) =>
+                image?.node?.sourceUrl && (
+                  <Image
+                    key={image.node.sourceUrl}
+                    src={image.node.sourceUrl}
+                    alt={image.node.altText || ''}
+                    width={300}
+                    height={200}
+                  />
+                )
+            )}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
