@@ -1,23 +1,42 @@
 import { HomePageTemplate } from '@/components/Templates/HomePage/HomePageTemplate';
-import { HomePageQuery } from '@/queries/home/HomePageQuery';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import { HomePageQuery as HomePageQueryType } from '@/gql/graphql';
+import {
+  HomePageDocument,
+  HomePageQuery,
+} from '@/gql/graphql';
+import { Metadata } from 'next';
+import { seoData } from '@/utils/seoData';
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const { data } = await fetchGraphQL<HomePageQueryType>({
-    query: HomePageQuery,
+  const { data } = await fetchGraphQL<HomePageQuery>({
+    query: HomePageDocument,
     variables: {},
   });
 
-  const { page, posts, portfolios } = data;
+  const { page, posts } = data;
 
   return (
     <HomePageTemplate
       page={page}
       posts={posts?.nodes}
-      portfolios={portfolios?.nodes}
+      portfolios={[]} // portfoliosは削除されたので空配列を渡す
     />
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { data } = await fetchGraphQL<HomePageQuery>({
+    query: HomePageDocument,
+    variables: {},
+  });
+
+  const { page } = data;
+
+  if (!page) {
+    return {};
+  }
+
+  return seoData(page);
 }

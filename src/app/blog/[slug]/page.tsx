@@ -1,25 +1,24 @@
 import { notFound } from 'next/navigation';
 import { PostTemplate } from '@/components/Templates/Post/PostTemplate';
-import { PostQuery } from '@/components/Templates/Post/PostQuery';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import { PostQuery as PostQueryType } from '@/gql/graphql';
+import {
+  PostBySlugDocument,
+  PostBySlugQuery,
+} from '@/gql/graphql';
 import { Metadata, ResolvingMetadata } from 'next';
 import { seoData } from '@/utils/seoData';
 
-// Next.js 15の非同期Propsに対応
 type PostProps = {
   params: Promise<{ slug: string }>;
 };
 
 export const revalidate = 60;
 
-// 1. コンポーネントをasyncにする
 export default async function Post({ params }: PostProps) {
-  // 3. awaitでPromiseを解決する
   const { slug } = await params;
 
-  const { data } = await fetchGraphQL<PostQueryType>({
-    query: PostQuery,
+  const { data } = await fetchGraphQL<PostBySlugQuery>({
+    query: PostBySlugDocument,
     variables: { slug },
   });
 
@@ -38,8 +37,8 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
 
-  const { data } = await fetchGraphQL<PostQueryType>({
-    query: PostQuery,
+  const { data } = await fetchGraphQL<PostBySlugQuery>({
+    query: PostBySlugDocument,
     variables: { slug },
   });
 
