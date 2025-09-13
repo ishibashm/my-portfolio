@@ -47,7 +47,9 @@ export const BlogListTemplate = ({
                   />
                 )}
                 <h3>{post.title}</h3>
-                <small>{new Date(post.date).toLocaleDateString()}</small>
+                {post.date && (
+                  <small>{new Date(post.date).toLocaleDateString()}</small>
+                )}
               </Link>
             )
         )}
