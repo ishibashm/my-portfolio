@@ -6,11 +6,11 @@ import styles from './BlogListTemplate.module.css';
 
 // 複数のクエリに対応できるよう、より汎用的な型を定義
 type PostNode =
-  | NonNullable<PostsByCategoryQuery['category']>['posts']['nodes'][0]
+  | NonNullable<NonNullable<PostsByCategoryQuery['category']>['posts']>['nodes'][0]
   | NonNullable<PostsListQuery['posts']>['nodes'][0];
 
 type PageInfo =
-  | NonNullable<PostsByCategoryQuery['category']>['posts']['pageInfo']
+  | NonNullable<NonNullable<PostsByCategoryQuery['category']>['posts']>['pageInfo']
   | NonNullable<PostsListQuery['posts']>['pageInfo'];
 
 interface BlogListTemplateProps {
