@@ -1,14 +1,13 @@
-import { Post } from '@/gql/graphql';
+import { PostBySlugQuery } from '@/gql/graphql';
 import Image from 'next/image';
 import styles from './PostTemplate.module.css';
 
 interface PostTemplateProps {
-  post: Post;
+  post: NonNullable<PostBySlugQuery['post']>;
 }
 
 export const PostTemplate = ({ post }: PostTemplateProps) => {
-  const { title, content, date, author, featuredImage, postFields } = post;
-  const { relatedLink } = postFields || {};
+  const { title, content, date, author, featuredImage } = post;
 
   return (
     <div className={styles.container}>
@@ -31,14 +30,6 @@ export const PostTemplate = ({ post }: PostTemplateProps) => {
           className={styles.content}
           dangerouslySetInnerHTML={{ __html: content || '' }}
         />
-        {relatedLink && (
-          <div className={styles.related}>
-            <h4>関連リンク</h4>
-            <a href={relatedLink} target="_blank" rel="noopener noreferrer">
-              {relatedLink}
-            </a>
-          </div>
-        )}
       </main>
     </div>
   );

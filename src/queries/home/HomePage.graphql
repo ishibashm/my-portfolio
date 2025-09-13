@@ -1,0 +1,22 @@
+query HomePage {
+  page(id: "home", idType: URI) {
+    title
+    seo {
+      title
+      metaDesc
+    }
+  }
+  posts(first: 3) {
+    nodes {
+      title
+      slug
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+  }
+}

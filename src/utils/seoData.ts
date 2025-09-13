@@ -1,24 +1,17 @@
-import { Page, Post } from '@/gql/graphql';
+import { PageBySlugQuery, PostBySlugQuery } from '@/gql/graphql';
 import { Metadata } from 'next';
 
-// WordPressのYoast SEOなどから取得したSEO情報を想定
-type Seo = {
-  title: string;
-  metaDesc: string;
-  opengraphImage?: {
-    sourceUrl: string;
-  };
-};
-
 type PostOrPage =
-  | (Pick<Page, 'title'> & { seo?: Seo | null })
-  | (Pick<Post, 'title'> & { seo?: Seo | null });
+  | NonNullable<PageBySlugQuery['page']>
+  | NonNullable<PostBySlugQuery['post']>;
 
 export function seoData(postOrPage: PostOrPage): Metadata {
-  const seo = postOrPage.seo;
-  const title = seo?.title || postOrPage.title || '';
+  const seo = postOrPage?.seo;
+  const title = seo?.title || postOrPage?.title || '';
   const description = seo?.metaDesc || '';
-  const ogImage = seo?.opengraphImage?.sourceUrl;
+  
+  // postOrPageがPost型かチェックしてfeaturedImageを取得
+  const ogImage = 'featuredImage' in postOrPage ? postOrPage.featuredImage?.node?.sourceUrl : undefined;
 
   return {
     title,

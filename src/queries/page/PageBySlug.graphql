@@ -1,0 +1,10 @@
+query PageBySlug($slug: ID!) {
+  page(id: $slug, idType: URI) {
+    title
+    content
+    seo {
+      title
+      metaDesc
+    }
+  }
+}
