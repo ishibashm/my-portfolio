@@ -18,8 +18,8 @@ export const HomePageTemplate = ({
   posts,
 }: HomePageTemplateProps) => {
   const heroTitle = page?.title || 'Welcome';
-  const heroMessage =
-    'This is my portfolio site. Please take a look at my work.';
+  // 本文をヒーローメッセージとして使用
+  const heroMessage = page?.content ? <div dangerouslySetInnerHTML={{ __html: page.content }} /> : 'This is my portfolio site.';
 
   return (
     <div className={styles.container}>
@@ -27,7 +27,7 @@ export const HomePageTemplate = ({
         <section className={styles.hero}>
           <div className={styles.heroText}>
             <h1 className={styles.title}>{heroTitle}</h1>
-            <p className={styles.description}>{heroMessage}</p>
+            <div className={styles.description}>{heroMessage}</div>
           </div>
         </section>
 
