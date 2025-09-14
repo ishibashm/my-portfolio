@@ -29,7 +29,7 @@ export default async function Post({ params }: PostProps) {
   }
 
   return (
-    <div className="content">
+    <div className="content gradient-mesh-background">
       <header className="header">
         <div className="container">
           <div className="header-inner">

@@ -29,7 +29,7 @@ export default async function Portfolio({ params }: PortfolioProps) {
   }
 
   return (
-    <div className="content">
+    <div className="content gradient-mesh-background">
       <header className="header">
         <div className="container">
           <div className="header-inner">
