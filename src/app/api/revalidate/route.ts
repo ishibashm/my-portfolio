@@ -2,42 +2,38 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function PUT(request: NextRequest) {
-  const requestBody = await request.text();
-  const { paths, tags } = requestBody
-    ? JSON.parse(requestBody)
-    : { paths: [], tags: [] };
-  let revalidated = false;
-
   if (
     request.headers.get("X-Headless-Secret-Key") !== process.env.HEADLESS_SECRET
   ) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
+  const requestBody = await request.text();
+  const { paths } = requestBody
+    ? JSON.parse(requestBody)
+    : { paths: [] };
+
   try {
+    // Always revalidate the HomePage tag
+    await revalidateTag("HomePage");
+    console.log("Successfully revalidated tag: HomePage");
+
+    // Also revalidate any paths sent in the request
     if (paths && Array.isArray(paths) && paths.length > 0) {
       await Promise.all(paths.map((path) => revalidatePath(path)));
-      console.log("Revalidated paths:", paths);
-      revalidated = true;
-    }
-
-    const allTags = [...new Set([...(tags || []), "HomePage"])];
-
-    if (allTags.length > 0) {
-      await Promise.all(allTags.map((tag) => revalidateTag(tag)));
-      console.log("Revalidated tags:", allTags);
-      revalidated = true;
+      console.log("Successfully revalidated paths:", paths);
     }
 
     return NextResponse.json({
-      revalidated,
+      revalidated: true,
       now: Date.now(),
-      paths,
-      tags: allTags,
+      revalidatedHomePage: true,
+      revalidatedPaths: paths || [],
     });
   } catch (error) {
+    console.error("Revalidation error:", error);
     return NextResponse.json(
-      { message: "Error revalidating paths or tags" },
+      { message: "Error during revalidation" },
       { status: 500 },
     );
   }
