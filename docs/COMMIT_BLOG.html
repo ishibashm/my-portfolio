@@ -1,0 +1,77 @@
+<h1>開発ブログ：コミットの軌跡</h1>
+<p>このブログは、このリポジトリのコミット履歴を分析して生成されました。プロジェクト開発の物語を、コミット一つひとつの積み重ねから紐解きます。</p>
+
+<hr>
+
+<h2>1. Initial commit from Create Next App</h2>
+<ul>
+  <li><strong>Commit:</strong> <code>d69afe7af333fade14f89d60c6720902f299dc8b</code></li>
+  <li><strong>Author:</strong> metamo</li>
+  <li><strong>Date:</strong> 2025-09-11 21:04:24 +0900</li>
+</ul>
+<h3>コンテキスト</h3>
+<p>すべてのプロジェクトには始まりがあります。これが私たちの第一歩です。このコミットは<code>create-next-app</code>によって自動生成されたもので、モダンなNext.jsアプリケーションの基本的なディレクトリ構造、設定ファイル、そして開発を始めるために必要な依存関係が含まれています。<code>/docs</code>のドキュメントが示すように、このプロジェクトはヘッドレスWordPressサイトの構築を目指しており、この初期設定はその旅の始まりです。</p>
+<h3>変更点</h3>
+<pre><code>
+... (中略) ...
+</code></pre>
+
+<hr>
+
+<h2>2. Implement corporate site with gradient mesh styles and dynamic color features</h2>
+<ul>
+  <li><strong>Commit:</strong> <code>b28e5cc709e3be0c443147522a95b7f86a4126a1</code></li>
+  <li><strong>Author:</strong> metamo</li>
+  <li><strong>Date:</strong> 2025-09-12 00:39:58 +0900</li>
+</ul>
+<h3>コンテキスト</h3>
+<p>このコミットは、標準的なテンプレートから脱却し、最初の本格的なビジュアルと機能の実装を示します。サイトの美的感覚を定義する、動的でアニメーション化されたグラデーションメッシュ背景が導入されました。この機能を披露するために<code>/variable-font-lp</code>に新しいランディングページが作成され、アニメーションやカラースキームを制御するためのHTML構造、CSSスタイリング、クライアントサイドJavaScriptが完備されています。これは、プロジェクトが目指す独自のビジュアルアイデンティティを実現するための重要な一歩です。</p>
+<h3>変更点</h3>
+<pre><code>
+... (中略) ...
+</code></pre>
+
+<hr>
+
+<h2>3. Refactor generateMetadata and Page function signatures for improved type clarity</h2>
+<ul>
+  <li><strong>Commit:</strong> <code>05eaab649d994f0399c7cd85814d64e77b2dcada</code></li>
+  <li><strong>Author:</strong> metamo</li>
+  <li><strong>Date:</strong> 2025-09-12 00:56:42 +0900</li>
+</ul>
+<h3>コンテキスト</h3>
+<p>これは、多く行われた小さくも重要なリファクタリングの最初のコミットです。<code>/docs</code>のプロジェクトドキュメントが示すように、開発プロセスには大幅なデバッグと再構築が含まれていました。このコミットは、メインページコンポーネント（<code>[[...slug]]/page.tsx</code>）の型安全性と明瞭性を向上させることを特に目的としています。<code>params</code>の型定義を<code>generateMetadata</code>と<code>Page</code>の関数シグネチャに直接移動することで、コードがより明示的で理解しやすくなり、型関連のエラーの可能性を減らします。これは、プロジェクトの進化における重要なテーマの一つです。</p>
+<h3>変更点</h3>
+<pre><code>
+... (中略) ...
+</code></pre>
+
+<hr>
+
+<h2>4. Comment out unused generateMetadata function for future reference</h2>
+<ul>
+  <li><strong>Commit:</strong> <code>41669ca98fd2e5d6777d5a7299e72f2bac52bbb6</code></li>
+  <li><strong>Author:</strong> metamo</li>
+  <li><strong>Date:</strong> 2025-09-12 01:04:46 +0900</li>
+</ul>
+<h3>コンテキスト</h3>
+<p>小さいながらも実用的な変更です。前のコミットで新しいホームページのロジックが導入されたことに伴い、メインの<code>page.tsx</code>内の<code>generateMetadata</code>関数がルートパスでは一時的に不要になりました。削除する代わりに、将来的な使用やリファクタリングの可能性を考慮してコメントアウトされています。これは、後で役立つ可能性のあるコードを保持するための、反復的な開発でよく見られる慣行です。</p>
+<h3>変更点</h3>
+<pre><code>
+... (中略) ...
+</code></pre>
+
+<hr>
+
+<h2>5. Implement new home page with gradient mesh styles and dynamic color features</h2>
+<ul>
+  <li><strong>Commit:</strong> <code>b7649d40c9e64b1e15ada29c3133d27dabd8a965</code></li>
+  <li><strong>Author:</strong> metamo</li>
+  <li><strong>Date:</strong> 2025-09-12 01:09:16 +0900</li>
+</ul>
+<h3>コンテキスト</h3>
+<p>このコミットは、サイトの新しいアイデンティティを固めるものです。以前は<code>/variable-font-lp</code>にあった実験的なランディングページが、今回からルート（<code>/</code>）の公式ホームページに昇格しました。関連ファイル（<code>page.tsx</code>と<code>style.css</code>）は、この変更を反映してリネームおよび移動されました。古いキャッチオールルートは<code>app/[...slug]/page.tsx</code>に移動され、他のすべてのページを処理するようになり、新しいデザインが訪問者のデフォルト体験となる明確なルーティング構造が確立されました。</p>
+<h3>変更点</h3>
+<pre><code>
+... (中略) ...
+</code></pre>
