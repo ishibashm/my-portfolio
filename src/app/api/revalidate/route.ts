@@ -16,14 +16,16 @@ export async function PUT(request: NextRequest) {
 
   try {
     if (paths && Array.isArray(paths) && paths.length > 0) {
-      Promise.all(paths.map((path) => revalidatePath(path)));
+      await Promise.all(paths.map((path) => revalidatePath(path)));
       console.log("Revalidated paths:", paths);
       revalidated = true;
     }
 
-    if (tags && Array.isArray(tags) && tags.length > 0) {
-      Promise.all(tags.map((tag) => revalidateTag(tag)));
-      console.log("Revalidated tags:", tags);
+    const allTags = [...new Set([...(tags || []), "HomePage"])];
+
+    if (allTags.length > 0) {
+      await Promise.all(allTags.map((tag) => revalidateTag(tag)));
+      console.log("Revalidated tags:", allTags);
       revalidated = true;
     }
 
@@ -31,7 +33,7 @@ export async function PUT(request: NextRequest) {
       revalidated,
       now: Date.now(),
       paths,
-      tags: tags,
+      tags: allTags,
     });
   } catch (error) {
     return NextResponse.json(
