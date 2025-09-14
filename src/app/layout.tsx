@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import './lp-style.css'; // 追加
-import { Navigation } from '@/components/Globals/Navigation/Navigation';
-import { PreviewNotice } from '@/components/Globals/PreviewNotice/PreviewNotice';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,8 +16,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} gradient-mesh-background`}>
-        <PreviewNotice />
+      <body className={inter.className}>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}>
+          <div className="mesh-container" style={{ width: '100%', height: '100%' }}>
+            <div className="gradient-blob gradient-blob-1"></div>
+            <div className="gradient-blob gradient-blob-2"></div>
+            <div className="gradient-blob gradient-blob-3"></div>
+            <div className="gradient-blob gradient-blob-4"></div>
+            <div className="gradient-blob gradient-blob-5"></div>
+            <div className="noise-overlay"></div>
+          </div>
+        </div>
         {children}
       </body>
     </html>
