@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js && next dev",
-    "build": "rm -rf .next src/gql && graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js && next build",
+    "build": "rm -rf .next src/gql && graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js && next build && next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js"
@@ -25,6 +25,7 @@
     "@types/react-dom": "^18",
     "eslint": "^9",
     "eslint-config-next": "latest",
+    "next-sitemap": "^4.2.3",
     "typescript": "^5"
   }
 }
