@@ -22,11 +22,7 @@ export default async function AboutPage() {
     notFound();
   }
 
-  return (
-    <div className="gradient-mesh-background">
-      <PageTemplate page={page} />
-    </div>
-  );
+  return <PageTemplate page={page} />;
 }
 
 export async function generateMetadata(): Promise<Metadata> {

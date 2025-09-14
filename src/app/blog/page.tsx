@@ -23,7 +23,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   });
 
   return (
-    <div className="content gradient-mesh-background">
+    <div className="content">
       <header className="header">
         <div className="container">
           <div className="header-inner">
