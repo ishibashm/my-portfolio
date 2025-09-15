@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Styles Dashboard | モダンWebデザインコレクション</title>
+    <meta name="description" content="20種類以上のモダンなUIスタイルとデザインパターンのインタラクティブなダッシュボード">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="styles/21-holographic/holographic.css">
+    <link rel="stylesheet" href="styles/22-retrofuturism/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button id="sidebarToggle" class="sidebar-toggle" aria-label="Close sidebar">
+    <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+    <div class="dashboard">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <!-- Header Section -->
+                <header class="dashboard-header">
+                    <div class="header-content">
+                        <h1 class="main-title">
+                            UI Styles Dashboard
+                            <span class="title-accent">モダンWebデザイン</span>
+                        </h1>
+                        <p class="subtitle">インタラクティブなUIスタイルとデザインパターンのコレクション</p>
+                    </div>
+                    
+                    <!-- Search and Filter Controls -->
+                    <div class="controls">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="スタイル名で検索..." class="search-input">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="filter-container">
+                            <select id="categoryFilter" class="filter-select">
+                                <option value="">すべてのカテゴリ</option>
+                                <option value="modern">Modern</option>
+                                <option value="interactive">Interactive</option>
+                                <option value="typography">Typography</option>
+                                <option value="effects">Effects</option>
+                                <option value="layout">Layout</option>
+                                <option value="functionality">Functionality</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-container">
+                            <select id="difficultyFilter" class="filter-select">
+                                <option value="">すべての難易度</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                        
+                        <button id="themeToggle" class="theme-toggle" title="ダークモード切り替え">
+                            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="12" cy="12" r="5"/>
+                                <line x1="12" y1="1" x2="12" y2="3"/>
+                                <line x1="12" y1="21" x2="12" y2="23"/>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                                <line x1="1" y1="12" x2="3" y2="12"/>
+                                <line x1="21" y1="12" x2="23" y2="12"/>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                            </svg>
+                            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Statistics Section -->
+                <section class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalStyles">20</div>
+                        <div class="stat-label">スタイル数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCategories">6</div>
+                        <div class="stat-label">カテゴリ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="filteredCount">20</div>
+                        <div class="stat-label">表示中</div>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Main Content Grid -->
+            <main class="main-content">
+                <div class="styles-grid" id="stylesGrid">
+                    <!-- スタイルカードは JavaScript で動的に生成されます -->
+                </div>
+                
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">🔍</div>
+                    <h3>該当するスタイルが見つかりません</h3>
+                    <p>検索条件やフィルターを変更してお試しください</p>
+                    <button class="clear-filters-btn" id="clearFilters">フィルターをクリア</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 UI Styles Dashboard. モダンなWebデザインパターンのコレクション</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">GitHub</a>
+                    <a href="#" class="footer-link">ドキュメント</a>
+                    <a href="#" class="footer-link">フィードバック</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>スタイルを読み込み中...</p>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/utils.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/dashboard.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const dashboardLayout = document.querySelector('.dashboard-layout');
+    const iconMenu = sidebarToggle.querySelector('.icon-menu');
+    const iconClose = sidebarToggle.querySelector('.icon-close');
+
+    // Set initial state: sidebar is open, so show close icon
+    iconMenu.style.display = 'none';
+    iconClose.style.display = 'block';
+
+    sidebarToggle.addEventListener('click', () => {
+      dashboardLayout.classList.toggle('sidebar-collapsed');
+      
+      const isCollapsed = dashboardLayout.classList.contains('sidebar-collapsed');
+      
+      if (isCollapsed) {
+        // Sidebar is now collapsed, show menu icon to open it
+        iconMenu.style.display = 'block';
+        iconClose.style.display = 'none';
+        sidebarToggle.setAttribute('aria-label', 'Open sidebar');
+      } else {
+        // Sidebar is now open, show close icon to collapse it
+        iconMenu.style.display = 'none';
+        iconClose.style.display = 'block';
+        sidebarToggle.setAttribute('aria-label', 'Close sidebar');
+      }
+    });
+  });
+</script>
+</body>
+</html>

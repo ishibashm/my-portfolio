@@ -3,10 +3,23 @@ query Portfolios {
     nodes {
       title
       slug
+      excerpt
       featuredImage {
         node {
           sourceUrl
           altText
+        }
+      }
+      categories {
+        nodes {
+          name
+          slug
+        }
+      }
+      tags {
+        nodes {
+          name
+          slug
         }
       }
     }
