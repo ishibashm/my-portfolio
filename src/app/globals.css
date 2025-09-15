@@ -156,6 +156,8 @@ a {
   overflow: hidden;
   width: 100%;
   position: relative;
+  transition: transform 0.3s ease-out;
+  transform: translate(calc((var(--mouse-x, 0.5) - 0.5) * -30px), calc((var(--mouse-y, 0.5) - 0.5) * -30px));
 }
 
 .gradient-blob {
