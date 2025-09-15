@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Navigation } from '@/components/Globals/Navigation/Navigation';
+import { Footer } from '@/components/Globals/Footer/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,17 +19,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}>
-          <div className="mesh-container" style={{ width: '100%', height: '100%' }}>
-            <div className="gradient-blob gradient-blob-1"></div>
-            <div className="gradient-blob gradient-blob-2"></div>
-            <div className="gradient-blob gradient-blob-3"></div>
-            <div className="gradient-blob gradient-blob-4"></div>
-            <div className="gradient-blob gradient-blob-5"></div>
-            <div className="noise-overlay"></div>
+        <div className="site-wrapper">
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}>
+            <div className="mesh-container" style={{ width: '100%', height: '100%' }}>
+              <div className="gradient-blob gradient-blob-1"></div>
+              <div className="gradient-blob gradient-blob-2"></div>
+              <div className="gradient-blob gradient-blob-3"></div>
+              <div className="gradient-blob gradient-blob-4"></div>
+              <div className="gradient-blob gradient-blob-5"></div>
+              <div className="noise-overlay"></div>
+            </div>
           </div>
+          <Navigation />
+          <main className="main-content">{children}</main>
+          <Footer />
         </div>
-        {children}
       </body>
     </html>
   );

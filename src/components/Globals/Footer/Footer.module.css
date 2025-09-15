@@ -1,0 +1,7 @@
+.footer {
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding: 40px 0;
+  width: 100%;
+  margin-top: auto; /* Flexboxコンテナ内でフッターを一番下に押し出す */
+}

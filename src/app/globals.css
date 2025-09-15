@@ -126,6 +126,15 @@ a {
   width: 100%;
   position: relative;
 }
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+}
 
 /* =================================== */
 /*      Gradient Mesh & Animation      */
@@ -458,12 +467,7 @@ section {
   text-decoration: underline;
 }
 
-.footer {
-  background-color: rgba(0, 0, 0, .5);
-  text-align: center;
-  padding: 40px 0;
-  margin-top: 80px;
-}
+
 
 .contact-form {
   max-width: 600px;
