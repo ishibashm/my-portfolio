@@ -21,7 +21,7 @@ export const PortfolioListTemplate = ({
   return (
     <section className={styles.portfolioSection}>
       <div className="container">
-        <h2 className="section-title">Portfolio</h2>
+        <h1 className={styles.pageTitle}>Portfolio</h1>
         <div className={styles.stylesGrid}>
           {posts?.map(
             (post) =>

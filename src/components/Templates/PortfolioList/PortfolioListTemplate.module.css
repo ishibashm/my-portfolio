@@ -1,6 +1,13 @@
 .portfolioSection {
   padding: 80px 0;
 }
+.pageTitle {
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4rem;
+  color: #fff;
+}
 
 .stylesGrid {
   display: grid;

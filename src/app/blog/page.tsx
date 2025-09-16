@@ -24,28 +24,6 @@ const BlogPage = async () => {
           },
         ],
       },
-    },
-    {
-      __typename: 'Post' as const,
-      slug: 'dummy-post-2',
-      title: '静的ブログ投稿2',
-      excerpt: '<p>これは静的なブログ投稿の抜粋です。</p>',
-      date: new Date().toISOString(),
-      featuredImage: {
-        node: {
-          sourceUrl: '/images/blog.webp', // 画像パスを更新
-          altText: 'ブログ記事のアイキャッチ画像',
-        },
-      },
-      categories: {
-        nodes: [
-          {
-            __typename: 'Category' as const,
-            name: '技術ブログ',
-            slug: 'tech',
-          },
-        ],
-      },
     }
   ];
 
