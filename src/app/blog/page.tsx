@@ -1,12 +1,6 @@
 import { BlogListTemplate } from '@/components/Templates/BlogList/BlogListTemplate';
-// import { PostsListQuery } from '@/gql/graphql';
-// import { PostsList } from '@/queries/posts/PostsList';
-// import { fetchGraphQL } from '@/utils/fetchGraphQL';
 
 const BlogPage = async () => {
-  // const { data } = await fetchGraphQL<PostsListQuery>({
-  //   query: PostsList,
-  // });
 
   const dummyPosts = [
     {
@@ -17,8 +11,8 @@ const BlogPage = async () => {
       date: new Date().toISOString(),
       featuredImage: {
         node: {
-          sourceUrl: 'https://via.placeholder.com/400x250',
-          altText: 'ダミー画像',
+          sourceUrl: '/images/blog.webp', // 画像パスを更新
+          altText: 'ブログ記事のアイキャッチ画像',
         },
       },
       categories: {
@@ -27,6 +21,28 @@ const BlogPage = async () => {
             __typename: 'Category' as const,
             name: 'お知らせ',
             slug: 'notice',
+          },
+        ],
+      },
+    },
+    {
+      __typename: 'Post' as const,
+      slug: 'dummy-post-2',
+      title: '静的ブログ投稿2',
+      excerpt: '<p>これは静的なブログ投稿の抜粋です。</p>',
+      date: new Date().toISOString(),
+      featuredImage: {
+        node: {
+          sourceUrl: '/images/blog.webp', // 画像パスを更新
+          altText: 'ブログ記事のアイキャッチ画像',
+        },
+      },
+      categories: {
+        nodes: [
+          {
+            __typename: 'Category' as const,
+            name: '技術ブログ',
+            slug: 'tech',
           },
         ],
       },

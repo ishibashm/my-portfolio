@@ -23,8 +23,8 @@ const AboutPage = () => {
         <section className={styles.history}>
           <h2>Company History</h2>
           <ul>
-            <li><span>2023.04</span>会社設立</li>
-            <li><span>2023.08</span>初の自社サービス「Connect」をリリース</li>
+            <li><span>2025.04</span>会社設立</li>
+            <li><span>2025.08</span>初の自社サービス「Connect」をリリース</li>
             <li><span>2024.01</span>従業員数10名を突破</li>
             <li><span>2024.06</span>「Global Web Design Award 2024」にて金賞を受賞</li>
           </ul>

@@ -1,60 +1,90 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PostsByCategoryQuery, PostsListQuery } from '@/gql/graphql';
+import styles from './BlogListTemplate.module.css';
 import { formatDate } from '@/utils/formatDate';
-// CSSモジュールではなく、グローバルなlp-style.cssを使う
-// import styles from './BlogListTemplate.module.css';
 
-// 複数のクエリに対応できるよう、より汎用的な型を定義
-type PostNode =
-  | NonNullable<NonNullable<PostsByCategoryQuery['category']>['posts']>['nodes'][0]
-  | NonNullable<PostsListQuery['posts']>['nodes'][0];
-
-type PageInfo =
-  | NonNullable<NonNullable<PostsByCategoryQuery['category']>['posts']>['pageInfo']
-  | NonNullable<PostsListQuery['posts']>['pageInfo'];
+// 型定義をコンポーネント内で定義
+type Post = {
+  __typename?: 'Post';
+  slug?: string | null;
+  title?: string | null;
+  excerpt?: string | null;
+  date?: string | null;
+  featuredImage?: {
+    __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge';
+    node?: {
+      __typename?: 'MediaItem';
+      sourceUrl?: string | null;
+      altText?: string | null;
+    } | null;
+  } | null;
+  categories?: {
+    __typename?: 'PostToCategoryConnection';
+    nodes?: Array<{
+      __typename?: 'Category';
+      name?: string | null;
+      slug?: string | null;
+    } | null> | null;
+  } | null;
+};
 
 interface BlogListTemplateProps {
-  posts?: (PostNode | null)[] | null;
-  pageInfo?: PageInfo | null;
+  posts?: (Post | null)[] | null;
   title: string;
   currentSlug: string;
 }
 
 export const BlogListTemplate = ({
   posts,
-  pageInfo,
   title,
-  currentSlug,
 }: BlogListTemplateProps) => {
   return (
-    <section className="news">
+    <section className={styles.blogListSection}>
       <div className="container">
-        <h2 className="section-title">{title}</h2>
-        <ul className="news-list">
+        <h1 className={styles.pageTitle}>{title}</h1>
+        <div className={styles.blogGrid}>
           {posts?.map(
             (post) =>
               post && (
-                <li key={post.slug}>
-                  {post.date && (
-                    <time dateTime={post.date}>{formatDate(post.date)}</time>
+                <Link href={`/blog/${post.slug}`} key={post.slug} className={styles.blogCard}>
+                  {post.featuredImage?.node?.sourceUrl && (
+                    <div className={styles.cardImage}>
+                      <Image
+                        src={post.featuredImage.node.sourceUrl}
+                        alt={post.featuredImage.node.altText || ''}
+                        width={400}
+                        height={250}
+                        style={{ objectFit: 'cover' }}
+                      />
+                    </div>
                   )}
-                  <a href={`/blog/${post.slug}`}>{post.title}</a>
-                </li>
+                  <div className={styles.cardContent}>
+                    <div className={styles.cardMeta}>
+                      {post.categories?.nodes?.[0]?.name && (
+                        <span className={styles.cardCategory}>
+                          {post.categories.nodes[0].name}
+                        </span>
+                      )}
+                      {post.date && (
+                        <time dateTime={post.date} className={styles.cardDate}>
+                          {formatDate(post.date)}
+                        </time>
+                      )}
+                    </div>
+                    <h2 className={styles.cardTitle}>{post.title}</h2>
+                    {post.excerpt && (
+                      <div
+                        className={styles.cardExcerpt}
+                        dangerouslySetInnerHTML={{ __html: post.excerpt }}
+                      />
+                    )}
+                  </div>
+                </Link>
               )
           )}
-        </ul>
-        {pageInfo?.hasNextPage && (
-          <div className="pagination">
-            <Link href={`${currentSlug}?after=${pageInfo.endCursor}`}>
-              Next Page
-            </Link>
-          </div>
-        )}
+        </div>
       </div>
     </section>
   );
 };
-
-export default BlogListTemplate;

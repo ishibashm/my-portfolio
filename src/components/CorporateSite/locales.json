@@ -28,13 +28,13 @@
     "news": {
       "title": "Latest News",
       "items": [
-        { "date": "2024.07.01", "title": "Launched our new branding and website." },
-        { "date": "2024.06.15", "title": "Welcomed two new developers to our team." },
-        { "date": "2024.05.20", "title": "Published a case study on our latest project." }
+        { "date": "2025.07.01", "title": "Launched our new branding and website." },
+        { "date": "2025.06.15", "title": "Welcomed two new developers to our team." },
+        { "date": "2025.05.20", "title": "Published a case study on our latest project." }
       ]
     },
     "footer": {
-      "copyright": "© 2024 MyCorp Inc. All Rights Reserved."
+      "copyright": "© 2025 MyCorp Inc. All Rights Reserved."
     }
   },
   "ja": {
@@ -66,14 +66,14 @@
     "news": {
       "title": "最新ニュース",
       "items": [
-        { "date": "2024.07.01", "title": "新しいブランディングとウェブサイトを公開しました。" },
-        { "date": "2024.06.15", "title": "チームに2人の新しい開発者を迎えました。" },
-        { "date": "2024.05.20",
+        { "date": "2025.07.01", "title": "新しいブランディングとウェブサイトを公開しました。" },
+        { "date": "2025.06.15", "title": "チームに2人の新しい開発者を迎えました。" },
+        { "date": "2025.05.20",
  "title": "最新プロジェクトのケーススタディを公開しました。" }
       ]
     },
     "footer": {
-      "copyright": "© 2024 MyCorp Inc. 無断複写・転載を禁じます。"
+      "copyright": "© 2025 MyCorp Inc. 無断複写・転載を禁じます。"
     }
   }
 }

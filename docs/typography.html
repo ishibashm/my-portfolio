@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オーバーサイズタイポグラフィ - UI Examples</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- メインヒーロータイポグラフィ -->
+        <section class="hero-section">
+            <div class="oversized-text-wrapper">
+                <h1 class="oversized-text" data-text="BOLD">
+                    <span class="char">B</span>
+                    <span class="char">O</span>
+                    <span class="char">L</span>
+                    <span class="char">D</span>
+                </h1>
+                <div class="subtitle">
+                    <p>Typography that commands attention</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- セカンダリメッセージ -->
+        <section class="secondary-section">
+            <div class="message-wrapper">
+                <h2 class="large-message">
+                    <span class="line">DESIGN</span>
+                    <span class="line overflow">IMPACT</span>
+                </h2>
+                <div class="supporting-text">
+                    <p>巨大なタイポグラフィが画面を支配し、<br>瞬時にメッセージを伝達します</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数値ディスプレイ -->
+        <section class="stats-section">
+            <div class="stats-wrapper">
+                <div class="stat-item">
+                    <span class="big-number">100</span>
+                    <span class="stat-label">% IMPACT</span>
+                </div>
+                <div class="stat-item">
+                    <span class="big-number">2024</span>
+                    <span class="stat-label">MODERN</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- オーバーフロー効果 -->
+        <section class="overflow-section">
+            <div class="overflow-wrapper">
+                <h3 class="overflow-text">BREAK</h3>
+                <div class="overflow-content">
+                    <p>文字が画面をはみ出し、<br>従来の枠組みを破る表現</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- インタラクティブテキスト -->
+        <section class="interactive-section">
+            <div class="interactive-wrapper">
+                <h4 class="hover-text" data-hover="HOVER">TYPE</h4>
+                <div class="interaction-hint">
+                    <p>↑ ホバーして効果を確認</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- フッター -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">Oversized Typography Demo</p>
+                <div class="back-link">
+                    <a href='/'>← ダッシュボードに戻る</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 文字の組み立てアニメーション
+        document.addEventListener('DOMContentLoaded', function() {
+            const chars = document.querySelectorAll('.char');
+            
+            chars.forEach((char, index) => {
+                char.style.animationDelay = `${index * 0.1}s`;
+                char.classList.add('animate-in');
+            });
+
+            // スタッツ数字のカウントアップ
+            const numbers = document.querySelectorAll('.big-number');
+            numbers.forEach(number => {
+                const finalValue = parseInt(number.textContent);
+                let currentValue = 0;
+                const increment = finalValue / 50;
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= finalValue) {
+                        number.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        number.textContent = Math.floor(currentValue);
+                    }
+                }, 40);
+            });
+
+            // パララックス効果
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.overflow-text');
+                
+                parallaxElements.forEach(element => {
+                    const speed = 0.5;
+                    element.style.transform = `translateX(${scrolled * speed}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -13,19 +13,19 @@ const dummyPosts = [
   {
     slug: 'new-service-launch',
     title: '新サービス「AIウェブ解析ツール」提供開始のお知らせ',
-    date: '2024-07-15',
+    date: '2025-07-15',
     categories: { nodes: [{ name: 'プレスリリース' }] },
   },
   {
     slug: 'design-award-2024',
-    title: '「Global Web Design Award 2024」にて金賞を受賞しました',
-    date: '2024-06-28',
+    title: '「Global Web Design Award 2025」にて金賞を受賞しました',
+    date: '2025-06-28',
     categories: { nodes: [{ name: 'お知らせ' }] },
   },
   {
     slug: 'tech-conference-report',
-    title: '「Next.js Conf 2024」参加レポート',
-    date: '2024-06-10',
+    title: '「Next.js Conf 2025」参加レポート',
+    date: '2025-06-10',
     categories: { nodes: [{ name: '技術ブログ' }] },
   },
 ];
@@ -80,9 +80,6 @@ export const HomePageTemplate = () => {
               </li>
             ))}
           </ul>
-          <div className={styles.viewMore}>
-            <Link href="/blog">もっと見る</Link>
-          </div>
         </div>
       </section>
     </div>

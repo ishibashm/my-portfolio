@@ -5,30 +5,6 @@ import locales from './locales.json';
 
 type Locale = 'en' | 'ja';
 
-export const Header = ({ locale, setLocale }: { locale: Locale, setLocale: (locale: Locale) => void }) => {
-  const t = locales[locale];
-  return (
-    <header className="header">
-      <div className="container header-inner">
-        <a href="#" className="logo">MyCorp</a>
-        <nav className="nav">
-          <ul>
-            <li><a href="#services">{t.nav.services}</a></li>
-            <li><a href="#about">{t.nav.about}</a></li>
-            <li><a href="#news">{t.nav.news}</a></li>
-            <li><a href="#" className="contact-button">{t.nav.contact}</a></li>
-          </ul>
-        </nav>
-        <div className="language-switcher">
-          <button onClick={() => setLocale('en')} className={locale === 'en' ? 'active' : ''}>EN</button>
-          <button onClick={() => setLocale('ja')} className={locale === 'ja' ? 'active' : ''}>JA</button>
-        </div>
-      </div>
-    </header>
-  );
-};
-
-
 export const CorporateSite = () => {
   const [locale, setLocale] = useState<Locale>('ja');
   const t = locales[locale];
@@ -64,7 +40,7 @@ export const CorporateSite = () => {
               <p>{t.about.content}</p>
               <dl>
                 <dt>{t.about.company}</dt><dd>MyCorp Inc.</dd>
-                <dt>{t.about.founded}</dt><dd>2023</dd>
+                <dt>{t.about.founded}</dt><dd>2025</dd>
                 <dt>{t.about.location}</dt><dd>Tokyo, Japan</dd>
               </dl>
             </div>
