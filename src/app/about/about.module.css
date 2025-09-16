@@ -1,0 +1,104 @@
+.about {
+  padding: 5rem 0;
+  color: #fff;
+}
+
+.about h1, .about h2 {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+
+.about h1 {
+  font-size: 3rem;
+}
+
+.about h2 {
+  font-size: 2.5rem;
+}
+
+.lead {
+  font-size: 1.2rem;
+  text-align: center;
+  max-width: 800px;
+  margin: -2rem auto 4rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto 5rem;
+}
+
+.mission h2 {
+  font-size: 1.8rem;
+  text-align: left;
+  margin-bottom: 1rem;
+  color: #4ECDC4;
+}
+
+.history {
+  max-width: 700px;
+  margin: 0 auto 5rem;
+}
+
+.history ul {
+  list-style: none;
+  padding: 0;
+  border-left: 2px solid #4ECDC4;
+}
+
+.history li {
+  padding: 1rem 2rem;
+  position: relative;
+}
+
+.history li::before {
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 1.5rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #4ECDC4;
+  border: 2px solid #1a1a2e;
+}
+
+.history span {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.members {
+  padding-bottom: 5rem;
+}
+
+.memberGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.memberCard {
+  text-align: center;
+}
+
+.memberCard img {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.memberCard h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.role {
+  color: #4ECDC4;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}

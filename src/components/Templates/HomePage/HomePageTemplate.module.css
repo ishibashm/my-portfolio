@@ -1,313 +1,134 @@
-.container {
-  min-height: 100vh;
+.home {
+  color: #fff;
 }
 
-/* ヒーローセクション */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.heroContent {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60vh;
+  padding: 4rem 1rem;
 }
 
-.heroTitle {
-  font-size: 3rem;
+.heroContent h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
   font-weight: 700;
-  line-height: 1.2;
-  color: #1a1a1a;
-  margin: 0;
+  letter-spacing: -0.05em;
 }
 
-.heroDescription {
-  font-size: 1.25rem;
-  line-height: 1.6;
-  color: #666;
+.heroContent p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.heroActions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.primaryButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 2rem;
-  background-color: #0070f3;
-  color: white;
+.ctaButton {
+  display: inline-block;
+  background-color: #4ECDC4;
+  color: #fff;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
   text-decoration: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.primaryButton:hover {
-  background-color: #0051cc;
-}
-
-.secondaryButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 2rem;
-  background-color: transparent;
-  color: #0070f3;
-  text-decoration: none;
-  border: 2px solid #0070f3;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.secondaryButton:hover {
-  background-color: #0070f3;
-  color: white;
-}
-
-.heroImage {
-  position: relative;
-  aspect-ratio: 4/3;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* セクション共通 */
-.section {
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.sectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
+.ctaButton:hover {
+  background-color: #5ad5cb;
+  transform: translateY(-3px);
 }
 
 .sectionTitle {
   font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
-}
-
-.viewAllLink {
-  color: #0070f3;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.viewAllLink:hover {
-  color: #0051cc;
-}
-
-/* ポートフォリオグリッド */
-.portfolioGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.portfolioCard {
-  background: white;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.portfolioCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-.portfolioImage {
-  position: relative;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-}
-
-.portfolioContent {
-  padding: 1.5rem;
-}
-
-.portfolioTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 0.5rem 0;
-}
-
-.portfolioExcerpt {
-  color: #666;
-  line-height: 1.5;
-  margin: 0 0 1rem 0;
-}
-
-.technologies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.techTag {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  background-color: #f0f0f0;
-  color: #666;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-}
-
-.readMore {
-  color: #0070f3;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.readMore:hover {
-  color: #0051cc;
-}
-
-/* ブロググリッド */
-.blogGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.blogCard {
-  background: white;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.blogCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-.blogImage {
-  position: relative;
-  aspect-ratio: 16/10;
-  overflow: hidden;
-}
-
-.blogContent {
-  padding: 1.5rem;
-}
-
-.blogDate {
-  display: block;
-  color: #999;
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
-
-.blogTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 0.5rem 0;
-}
-
-.blogExcerpt {
-  color: #666;
-  line-height: 1.5;
-  margin: 0 0 1rem 0;
-}
-
-/* エラーコンテナ */
-.errorContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 50vh;
-  padding: 2rem;
   text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 600;
 }
 
-.errorContainer h1 {
-  font-size: 2rem;
-  color: #e74c3c;
+.services {
+  padding: 5rem 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.serviceCard {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.serviceCard img {
+  margin-bottom: 1.5rem;
+  border-radius: 50%;
+}
+
+.serviceCard h3 {
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.errorContainer p {
-  color: #666;
+.news {
+  padding: 5rem 0;
+}
+
+.newsList {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.newsList li a {
+  display: block;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.newsList li a:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.newsList time {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-right: 1rem;
+}
+
+.newsCategory {
+  display: inline-block;
+  background-color: #45B7D1;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  margin-right: 1rem;
+}
+
+.newsList p {
+  display: inline;
   font-size: 1.1rem;
 }
 
-/* レスポンシブデザイン */
-@media (max-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 2rem 1rem;
-  }
-
-  .heroTitle {
-    font-size: 2rem;
-  }
-
-  .heroDescription {
-    font-size: 1.1rem;
-  }
-
-  .heroActions {
-    flex-direction: column;
-  }
-
-  .section {
-    padding: 2rem 1rem;
-  }
-
-  .sectionHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-  }
-
-  .portfolioGrid,
-  .blogGrid {
-    grid-template-columns: 1fr;
-  }
+.viewMore {
+  text-align: center;
+  margin-top: 2rem;
 }
 
-@media (max-width: 480px) {
-  .heroTitle {
-    font-size: 1.75rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.5rem;
-  }
-
-  .portfolioGrid,
-  .blogGrid {
-    gap: 1.5rem;
-  }
+.viewMore a {
+  color: #4ECDC4;
+  text-decoration: none;
+  font-weight: bold;
 }
