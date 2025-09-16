@@ -5,23 +5,50 @@ const PortfolioPage = () => {
   const dummyPosts = [
     {
       __typename: 'Post' as const,
+      slug: 'auris-cosmetics',
+      title: 'Auris Cosmetics LP',
+      excerpt: '<p>高級エイジングケア美容液の架空LP。オーロラグラデーションやスクロールアニメーションを実装。</p>',
+      featuredImage: {
+        node: {
+          sourceUrl: '/images/auris/gold-ink.png', // ヒーローセクションの背景画像
+          altText: 'Auris Cosmetics LPのヒーローイメージ',
+        },
+      },
+      tags: {
+        nodes: [
+          {
+            __typename: 'Tag' as const,
+            name: 'Next.js',
+            slug: 'nextjs',
+          },
+          {
+            __typename: 'Tag' as const,
+            name: 'TypeScript',
+            slug: 'typescript',
+          },
+          {
+            __typename: 'Tag' as const,
+            name: 'Swiper.js',
+            slug: 'swiperjs',
+          },
+          {
+            __typename: 'Tag' as const,
+            name: 'Intersection Observer',
+            slug: 'intersection-observer',
+          },
+        ],
+      },
+    },
+    {
+      __typename: 'Post' as const,
       slug: 'corporate-site',
-      title: '旧コーポレートサイト',
-      excerpt: '<p>React, TypeScript, Next.jsで構築した旧コーポレートサイトです。</p>',
+      title: 'コーポレートサイト',
+      excerpt: '<p>React, TypeScript, Next.jsで構築したコーポレートサイトです。</p>',
       featuredImage: {
         node: {
           sourceUrl: '/images/portfolio.png', // スクリーンショットのパスに変更
-          altText: '旧コーポレートサイトのスクリーンショット',
+          altText: 'コーポレートサイトのスクリーンショット',
         },
-      },
-      categories: {
-        nodes: [
-          {
-            __typename: 'Category' as const,
-            name: 'Webサイト制作',
-            slug: 'web-production',
-          },
-        ],
       },
       tags: {
         nodes: [
