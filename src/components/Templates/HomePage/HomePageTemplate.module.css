@@ -2,34 +2,6 @@
   color: #fff;
 }
 
-/* Hero Section */
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: 40vh; /* 高さを調整 */
-  padding: 4rem 1rem;
-}
-
-.ctaButton {
-  display: inline-block;
-  background-color: transparent;
-  color: #fff;
-  padding: 1rem 2.5rem;
-  border-radius: 8px;
-  border: 1px solid #fff;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 1.2rem;
-  transition: background-color 0.3s ease;
-}
-
-.ctaButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 /* General Section Styles */
 .sectionTitle {
   font-size: 2.5rem;
@@ -38,106 +10,13 @@
   font-weight: 500;
 }
 
-/* Portfolio Section */
-.portfolio {
-  padding: 5rem 0;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.portfolioGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.portfolioCard {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  text-decoration: none;
-  color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.portfolioCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.cardImage {
-  height: 220px;
-  position: relative;
-}
-
-.cardContent {
-  padding: 1.5rem;
-}
-
-.cardContent h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.cardTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.cardTags span {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
-}
-
-/* Blog Section */
-.blog {
-  padding: 5rem 0;
-}
-
-.blogList {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.blogPostItem {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  text-decoration: none;
-  color: #fff;
-  transition: opacity 0.3s ease;
-}
-
-.blogPostItem:hover {
-  opacity: 0.8;
-}
-
-.blogPostItem time {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.blogCategory {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.3rem 0.8rem;
-  border-radius: 5px;
-  font-size: 0.8rem;
-}
-
-.blogPostItem h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
 /* About Section */
 .about {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
   padding: 5rem 0;
-  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .aboutContent {
