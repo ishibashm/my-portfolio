@@ -3,42 +3,42 @@ import { PortfolioListTemplate } from '@/components/Templates/PortfolioList/Port
 const PortfolioPage = () => {
   // 静的なダミーデータのみを使用
   const dummyPosts = [
-    {
-      __typename: 'Post' as const,
-      slug: 'auris-cosmetics',
-      title: 'Auris Cosmetics LP',
-      excerpt: '<p>高級エイジングケア美容液の架空LP。オーロラグラデーションやスクロールアニメーションを実装。</p>',
-      featuredImage: {
-        node: {
-          sourceUrl: '/images/auris/gold-ink.png', // ヒーローセクションの背景画像
-          altText: 'Auris Cosmetics LPのヒーローイメージ',
-        },
-      },
-      tags: {
-        nodes: [
-          {
-            __typename: 'Tag' as const,
-            name: 'Next.js',
-            slug: 'nextjs',
-          },
-          {
-            __typename: 'Tag' as const,
-            name: 'TypeScript',
-            slug: 'typescript',
-          },
-          {
-            __typename: 'Tag' as const,
-            name: 'Swiper.js',
-            slug: 'swiperjs',
-          },
-          {
-            __typename: 'Tag' as const,
-            name: 'Intersection Observer',
-            slug: 'intersection-observer',
-          },
-        ],
-      },
-    },
+    // {
+    //   __typename: 'Post' as const,
+    //   slug: 'auris-cosmetics',
+    //   title: 'Auris Cosmetics LP',
+    //   excerpt: '<p>高級エイジングケア美容液の架空LP。オーロラグラデーションやスクロールアニメーションを実装。</p>',
+    //   featuredImage: {
+    //     node: {
+    //       sourceUrl: '/images/auris/gold-ink.png', // ヒーローセクションの背景画像
+    //       altText: 'Auris Cosmetics LPのヒーローイメージ',
+    //     },
+    //   },
+    //   tags: {
+    //     nodes: [
+    //       {
+    //         __typename: 'Tag' as const,
+    //         name: 'Next.js',
+    //         slug: 'nextjs',
+    //       },
+    //       {
+    //         __typename: 'Tag' as const,
+    //         name: 'TypeScript',
+    //         slug: 'typescript',
+    //       },
+    //       {
+    //         __typename: 'Tag' as const,
+    //         name: 'Swiper.js',
+    //         slug: 'swiperjs',
+    //       },
+    //       {
+    //         __typename: 'Tag' as const,
+    //         name: 'Intersection Observer',
+    //         slug: 'intersection-observer',
+    //       },
+    //     ],
+    //   },
+    // },
     {
       __typename: 'Post' as const,
       slug: 'corporate-site',
