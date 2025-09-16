@@ -2,7 +2,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navigation } from '@/components/Globals/Navigation/Navigation';
-import { PreviewNotice } from '@/components/Globals/PreviewNotice/PreviewNotice';
+// import { PreviewNotice } from '@/components/Globals/PreviewNotice/PreviewNotice';
 import { InteractiveBackground } from '@/components/Globals/InteractiveBackground/InteractiveBackground';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="ja">
       <body className={inter.className}>
         <InteractiveBackground />
-        <PreviewNotice />
+        {/* <PreviewNotice /> */}
         <Navigation />
         <main>{children}</main>
       </body>
