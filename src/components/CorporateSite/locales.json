@@ -1,0 +1,79 @@
+{
+  "en": {
+    "nav": {
+      "services": "Services",
+      "about": "About",
+      "news": "News",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "Innovative Solutions for a Digital World",
+      "subtitle": "We craft beautiful and functional websites that drive results."
+    },
+    "services": {
+      "title": "Our Services",
+      "items": [
+        { "title": "Web Design", "description": "Creating stunning and user-friendly interfaces." },
+        { "title": "Web Development", "description": "Building robust and scalable web applications." },
+        { "title": "SEO & Marketing", "description": "Driving traffic and increasing online visibility." }
+      ]
+    },
+    "about": {
+      "title": "About Us",
+      "content": "We are a passionate team of designers and developers dedicated to creating exceptional digital experiences. With a focus on innovation and quality, we help businesses succeed in the online world.",
+      "company": "Company",
+      "founded": "Founded",
+      "location": "Location"
+    },
+    "news": {
+      "title": "Latest News",
+      "items": [
+        { "date": "2024.07.01", "title": "Launched our new branding and website." },
+        { "date": "2024.06.15", "title": "Welcomed two new developers to our team." },
+        { "date": "2024.05.20", "title": "Published a case study on our latest project." }
+      ]
+    },
+    "footer": {
+      "copyright": "© 2024 MyCorp Inc. All Rights Reserved."
+    }
+  },
+  "ja": {
+    "nav": {
+      "services": "サービス",
+      "about": "会社概要",
+      "news": "ニュース",
+      "contact": "お問い合わせ"
+    },
+    "hero": {
+      "title": "デジタルの世界に革新的なソリューションを",
+      "subtitle": "結果を出す、美しく機能的なウェブサイトを構築します。"
+    },
+    "services": {
+      "title": "私たちのサービス",
+      "items": [
+        { "title": "ウェブデザイン", "description": "魅力的で使いやすいインターフェースを作成します。" },
+        { "title": "ウェブ開発", "description": "堅牢でスケーラブルなウェブアプリケーションを構築します。" },
+        { "title": "SEO & マーケティング", "description": "トラフィックを促進し、オンラインでの認知度を高めます。" }
+      ]
+    },
+    "about": {
+      "title": "私たちについて",
+      "content": "私たちは、卓越したデジタル体験を創造することに専念する、情熱的なデザイナーと開発者のチームです。革新と品質に重点を置き、企業がオンラインの世界で成功するのを支援します。",
+      "company": "会社名",
+      "founded": "設立",
+      "location": "所在地"
+    },
+    "news": {
+      "title": "最新ニュース",
+      "items": [
+        { "date": "2024.07.01", "title": "新しいブランディングとウェブサイトを公開しました。" },
+        { "date": "2024.06.15", "title": "チームに2人の新しい開発者を迎えました。" },
+        { "date": "2024.05.20",
+ "title": "最新プロジェクトのケーススタディを公開しました。" }
+      ]
+    },
+    "footer": {
+      "copyright": "© 2024 MyCorp Inc. 無断複写・転載を禁じます。"
+    }
+  }
+}

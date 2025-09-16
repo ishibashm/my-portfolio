@@ -1,55 +1,59 @@
 import { PortfolioListTemplate } from '@/components/Templates/PortfolioList/PortfolioListTemplate';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import {
-  PortfoliosDocument,
-  PortfoliosQuery,
-} from '@/gql/graphql';
+import { PortfoliosQuery } from '@/gql/graphql';
+import Portfolios from '@/queries/portfolio/Portfolios.graphql';
 
-export const revalidate = 60;
-
-export default async function PortfolioPage() {
+const PortfolioPage = async () => {
   const { data } = await fetchGraphQL<PortfoliosQuery>({
-    query: PortfoliosDocument,
-    variables: {},
+    query: Portfolios,
   });
 
-  return (
-    <div className="content">
-      <header className="header">
-        <div className="container">
-          <div className="header-inner">
-            <a href="/" className="logo">
-              My Portfolio
-            </a>
-            <nav className="nav">
-              <ul>
-                <li>
-                  <a href="/portfolio">Portfolio</a>
-                </li>
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/blog">Blog</a>
-                </li>
-                <li>
-                  <a href="#contact" className="contact-button">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <main>
-        <PortfolioListTemplate posts={data.posts?.nodes} />
-      </main>
-      <footer id="contact" className="footer">
-        <div className="container">
-          <p>© 2025 My Portfolio. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
-  );
-}
+  // ダミーデータを追加
+  const dummyPost = {
+    __typename: 'Post' as const,
+    slug: 'corporate-site',
+    title: '旧コーポレートサイト',
+    excerpt: '<p>React, TypeScript, Next.jsで構築した旧コーポレートサイトです。</p>',
+    featuredImage: {
+      node: {
+        sourceUrl: 'https://via.placeholder.com/400x250', // ダミー画像
+        altText: '旧コーポレートサイトのスクリーンショット',
+      },
+    },
+    categories: {
+      nodes: [
+        {
+          __typename: 'Category' as const,
+          name: 'Webサイト制作',
+          slug: 'web-production',
+        },
+      ],
+    },
+    tags: {
+      nodes: [
+        {
+          __typename: 'Tag' as const,
+          name: 'React',
+          slug: 'react',
+        },
+        {
+          __typename: 'Tag' as const,
+          name: 'Next.js',
+          slug: 'nextjs',
+        },
+        {
+          __typename: 'Tag' as const,
+          name: 'TypeScript',
+          slug: 'typescript',
+        },
+      ],
+    },
+  };
+
+  const posts = data?.posts?.nodes ? [...data.posts.nodes, dummyPost] : [dummyPost];
+
+
+  return <PortfolioListTemplate posts={posts} />;
+};
+
+export default PortfolioPage;

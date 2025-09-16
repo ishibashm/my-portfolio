@@ -1,12 +1,28 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
+  images: {
+    remotePatterns: [
       {
-        source: '/api/graphql',
-        destination: 'http://35.224.211.72/graphql',
+        protocol: 'https',
+        hostname: 'images.microcms-assets.io',
       },
-    ];
+      {
+        protocol: 'http',
+        hostname: '35.224.211.72',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      }
+    ],
+  },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader',
+    });
+    return config;
   },
 };
 

@@ -1,0 +1,40 @@
+.mesh-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+    overflow: hidden;
+    z-index: -1;
+}
+
+.gradient-blob {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    will-change: transform, opacity;
+    /* animation: float 20s ease-in-out infinite; */ /* アニメーションは無効化 */
+    filter: blur(150px);
+    z-index: 1;
+}
+
+.gradient-blob-1 { width: 600px; height: 600px; background: radial-gradient(circle, #FF6B6B 0%, transparent 70%); top: 10%; left: 10%; }
+.gradient-blob-2 { width: 500px; height: 500px; background: radial-gradient(ellipse 60% 40%, #4ECDC4 0%, transparent 70%); top: 30%; right: 15%; }     
+.gradient-blob-3 { width: 700px; height: 400px; background: radial-gradient(ellipse 80% 60%, #45B7D1 0%, transparent 70%); bottom: 20%; left: 20%; }  
+.gradient-blob-4 { width: 400px; height: 600px; background: radial-gradient(ellipse 40% 80%, #FFA07A 0%, transparent 70%); top: 50%; right: 30%; mix-blend-mode: multiply; }
+.gradient-blob-5 { width: 550px; height: 350px; background: radial-gradient(circle, #98D8C8 0%, transparent 70%); bottom: 10%; right: 10%; }
+
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    mix-blend-mode: overlay;
+    background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    background-size: 100px 100px;
+    pointer-events: none;
+    z-index: 2;
+}

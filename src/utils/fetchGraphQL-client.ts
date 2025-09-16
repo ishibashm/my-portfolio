@@ -1,43 +1,23 @@
-import { DocumentNode } from 'graphql';
+export const fetchGraphQLClient = async (
+  query: string,
+  variables?: Record<string, any>
+) => {
+  const response = await fetch('/api/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ query, variables }),
+  });
 
-type FetchGraphQLOptions<T> = {
-  query: DocumentNode;
-  variables?: Record<string, any>;
-};
-
-export async function fetchGraphQLClient<T>({
-  query,
-  variables,
-}: FetchGraphQLOptions<T>): Promise<{ data: T }> {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_WORDPRESS_API_URL!,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: query.loc?.source.body,
-        variables,
-      }),
-      // クライアントサイドでは常にキャッシュしない
-      cache: 'no-store',
-    }
-  );
-
-  if (!res.ok) {
-    const errorBody = await res.text();
-    console.error(`GraphQL client fetch failed: ${res.status} ${res.statusText}`, {
-      errorBody,
-    });
-    throw new Error('Failed to fetch API');
+  if (!response.ok) {
+    throw new Error(`Failed to fetch: ${response.statusText}`);
   }
 
-  const json = await res.json();
+  const json = await response.json();
   if (json.errors) {
-    console.error('GraphQL Errors:', json.errors);
-    throw new Error('Failed to fetch API');
+    throw new Error(json.errors.map((e: any) => e.message).join('\n'));
   }
 
-  return json;
-}
+  return json.data;
+};

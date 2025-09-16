@@ -1,24 +1,16 @@
 'use client';
-
-import { useEffect } from 'react';
+import React from 'react';
+import './InteractiveBackground.css';
 
 export const InteractiveBackground = () => {
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      const { clientX, clientY } = event;
-      const x = clientX / window.innerWidth;
-      const y = clientY / window.innerHeight;
-
-      document.documentElement.style.setProperty('--mouse-x', x.toString());
-      document.documentElement.style.setProperty('--mouse-y', y.toString());
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  return null; // このコンポーネントはUIを描画しない
+  return (
+    <div className="mesh-container">
+      <div className="gradient-blob gradient-blob-1"></div>
+      <div className="gradient-blob gradient-blob-2"></div>
+      <div className="gradient-blob gradient-blob-3"></div>
+      <div className="gradient-blob gradient-blob-4"></div>
+      <div className="gradient-blob gradient-blob-5"></div>
+      <div className="noise-overlay"></div>
+    </div>
+  );
 };

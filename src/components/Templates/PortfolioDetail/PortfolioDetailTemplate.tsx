@@ -12,13 +12,25 @@ interface PortfolioDetailTemplateProps {
 export const PortfolioDetailTemplate = ({
   portfolio,
 }: PortfolioDetailTemplateProps) => {
-  console.log('WordPress Content:', portfolio.content); // この行を追加
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
   const contentWithoutGallery = useMemo(() => {
     if (!portfolio.content) return '';
+    let updatedContent = portfolio.content;
+
+    // 外部リンクを相対パスに変換
+    updatedContent = updatedContent.replace(
+      /https?:\/\/(www\.)?cloud-palette\.com/g,
+      ''
+    );
+
+    // /blog/ を /portfolio/ に置換
+    updatedContent = updatedContent.replace(/href="\/blog\//g, 'href="/portfolio/');
+
     // WordPressのギャラリーブロックを正規表現で削除
-    return portfolio.content.replace(/<figure class="wp-block-gallery[^>]*>[\s\S]*?<\/figure>/g, '');
+    updatedContent = updatedContent.replace(/<figure class="wp-block-gallery[^>]*>[\s\S]*?<\/figure>/g, '');
+
+    return updatedContent;
   }, [portfolio.content]);
 
   useEffect(() => {

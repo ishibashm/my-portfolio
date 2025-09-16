@@ -1,22 +1,24 @@
 import { DocumentNode } from 'graphql';
 import { draftMode } from 'next/headers';
-import { print } from 'graphql/language/printer'; // printをインポート
+import { print } from 'graphql/language/printer';
 
-type FetchGraphQLOptions<T> = {
-  query: DocumentNode;
+type FetchGraphQLOptions = {
+  query: DocumentNode | string;
   variables?: Record<string, any>;
 };
 
 export async function fetchGraphQL<T>({
   query,
   variables,
-}: FetchGraphQLOptions<T>): Promise<{ data: T }> {
+}: FetchGraphQLOptions): Promise<{ data: T }> {
   const { isEnabled } = await draftMode();
 
   const endpoint =
     typeof window === 'undefined'
-      ? 'http://35.224.211.72/graphql'
+      ? `${process.env.NEXT_PUBLIC_SITE_URL}/api/graphql`
       : '/api/graphql';
+
+  const queryString = typeof query === 'string' ? query : print(query);
 
   const res = await fetch(endpoint, {
     method: 'POST',
@@ -24,7 +26,7 @@ export async function fetchGraphQL<T>({
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      query: print(query), // print関数でクエリ文字列に変換
+      query: queryString,
       variables,
     }),
     cache: isEnabled ? 'no-store' : 'force-cache',
