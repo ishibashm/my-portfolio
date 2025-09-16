@@ -1,56 +1,48 @@
-import { notFound } from 'next/navigation';
-import BlogListTemplate from '@/components/Templates/BlogList/BlogListTemplate';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import {
-  PostsByCategoryDocument,
-  PostsByCategoryQuery,
-} from '@/gql/graphql';
-import { Metadata, ResolvingMetadata } from 'next';
+import { BlogListTemplate } from '@/components/Templates/BlogList/BlogListTemplate';
+// import { PostsByCategoryQuery } from '@/gql/graphql';
+// import { PostsByCategory } from '@/queries/posts/PostsByCategory';
+// import { fetchGraphQL } from '@/utils/fetchGraphQL';
 
-// Next.js 15の非同期Propsに対応
-type CategoryPageProps = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ after?: string }>;
-};
+const CategoryPage = async ({ params }: { params: { slug: string } }) => {
+  // const { data } = await fetchGraphQL<PostsByCategoryQuery>({
+  //   query: PostsByCategory,
+  //   variables: {
+  //     category: params.slug,
+  //   },
+  // });
 
-export const revalidate = 60;
-
-export default async function CategoryPage({
-  params,
-  searchParams,
-}: CategoryPageProps) {
-  const { slug } = await params;
-  const { after } = await searchParams;
-
-  const { data } = await fetchGraphQL<PostsByCategoryQuery>({
-    query: PostsByCategoryDocument,
-    variables: {
-      slug,
-      first: 10,
-      after: after || null,
-    },
-  });
-
-  if (!data.category) {
-    notFound();
-  }
+  const dummyPosts = [
+    {
+      __typename: 'Post' as const,
+      slug: 'dummy-post-1',
+      title: '静的ブログ投稿1',
+      excerpt: '<p>これは静的なブログ投稿の抜粋です。</p>',
+      date: new Date().toISOString(),
+      featuredImage: {
+        node: {
+          sourceUrl: 'https://via.placeholder.com/400x250',
+          altText: 'ダミー画像',
+        },
+      },
+      categories: {
+        nodes: [
+          {
+            __typename: 'Category' as const,
+            name: 'お知らせ',
+            slug: 'notice',
+          },
+        ],
+      },
+    }
+  ];
 
   return (
     <BlogListTemplate
-      posts={data.category.posts?.nodes}
-      pageInfo={data.category.posts?.pageInfo}
-      title={`Category: ${data.category.name}`}
-      currentSlug={`/blog/category/${slug}`}
+      posts={dummyPosts}
+      title={`カテゴリ: ${params.slug}`}
+      currentSlug={params.slug}
     />
   );
-}
+};
 
-export async function generateMetadata(
-  { params }: CategoryPageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const { slug } = await params;
-  return {
-    title: `Category: ${slug}`,
-  };
-}
+export default CategoryPage;

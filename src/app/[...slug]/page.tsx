@@ -1,55 +1,53 @@
-import { notFound } from 'next/navigation';
 import { PageTemplate } from '@/components/Templates/Page/PageTemplate';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import { nextSlugToWpSlug } from '@/utils/nextSlugToWpSlug';
-import {
-  PageBySlugDocument,
-  PageBySlugQuery,
-} from '@/gql/graphql';
-import { Metadata, ResolvingMetadata } from 'next';
-import { seoData } from '@/utils/seoData';
+// import { PageBySlugQuery } from '@/gql/graphql';
+// import { PageBySlug } from '@/queries/page/PageBySlug';
+// import { fetchGraphQL } from '@/utils/fetchGraphQL';
+// import { Metadata } from 'next';
+// import { notFound } from 'next/navigation';
+// import { seoData } from '@/utils/seoData';
 
-type PageProps = {
-  params: Promise<{ slug: string[] }>;
+// export const revalidate = 60;
+
+const Page = async ({ params }: { params: { slug: string[] } }) => {
+  // const { data } = await fetchGraphQL<PageBySlugQuery>({
+  //   query: PageBySlug,
+  //   variables: {
+  //     uri: params.slug.join('/'),
+  //   },
+  // });
+
+  // if (!data.page) {
+  //   notFound();
+  // }
+
+  const dummyPage = {
+    __typename: 'Page' as const,
+    title: '静的ページ',
+    content: '<p>これは静的な固定ページです。</p>',
+  };
+
+  return <PageTemplate page={dummyPage} />;
 };
 
-export const revalidate = 60;
+export default Page;
 
-export default async function Page({ params }: PageProps) {
-  const resolvedParams = await params;
-  const wpSlug = nextSlugToWpSlug(resolvedParams.slug);
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { slug: string[] };
+// }): Promise<Metadata> {
+//   const { data } = await fetchGraphQL<PageBySlugQuery>({
+//     query: PageBySlug,
+//     variables: {
+//       uri: params.slug.join('/'),
+//     },
+//   });
 
-  const { data } = await fetchGraphQL<PageBySlugQuery>({
-    query: PageBySlugDocument,
-    variables: { slug: wpSlug },
-  });
+//   const { page } = data;
 
-  const { page } = data;
+//   if (!page) {
+//     return {};
+//   }
 
-  if (!page) {
-    notFound();
-  }
-
-  return <PageTemplate page={page} />;
-}
-
-export async function generateMetadata(
-  { params }: PageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const resolvedParams = await params;
-  const wpSlug = nextSlugToWpSlug(resolvedParams.slug);
-
-  const { data } = await fetchGraphQL<PageBySlugQuery>({
-    query: PageBySlugDocument,
-    variables: { slug: wpSlug },
-  });
-
-  const { page } = data;
-
-  if (!page) {
-    return {};
-  }
-
-  return seoData(page);
-}
+//   return seoData(page);
+// }

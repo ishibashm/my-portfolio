@@ -1,90 +1,62 @@
-import { notFound } from 'next/navigation';
-import { PostTemplate } from '@/components/Templates/Post/PostTemplate';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import {
-  PostBySlugDocument,
-  PostBySlugQuery,
-} from '@/gql/graphql';
-import { Metadata, ResolvingMetadata } from 'next';
-import { seoData } from '@/utils/seoData';
+import { BlogDetailTemplate } from '@/components/Templates/BlogDetail/BlogDetailTemplate';
+// import { PostBySlugQuery } from '@/gql/graphql';
+// import { PostBySlug } from '@/queries/post/PostBySlug';
+// import { fetchGraphQL } from '@/utils/fetchGraphQL';
+// import { Metadata } from 'next';
+// import { seoData } from '@/utils/seoData';
 
-type PostProps = {
-  params: Promise<{ slug: string }>;
+// export const revalidate = 60;
+
+const BlogDetailPage = async ({ params }: { params: { slug: string } }) => {
+  // const { data } = await fetchGraphQL<PostBySlugQuery>({
+  //   query: PostBySlug,
+  //   variables: {
+  //     id: params.slug,
+  //   },
+  // });
+
+  const dummyPost = {
+    __typename: 'Post' as const,
+    title: '静的ブログ投稿の詳細',
+    content: '<p>これは静的なブログ投稿の本文です。</p>',
+    date: new Date().toISOString(),
+    author: {
+      node: {
+        __typename: 'User' as const,
+        name: '開発者',
+      },
+    },
+    featuredImage: {
+      node: {
+        __typename: 'MediaItem' as const,
+        sourceUrl: 'https://via.placeholder.com/1280x720',
+        altText: 'ダミー画像',
+      },
+    },
+  };
+
+  return <BlogDetailTemplate post={dummyPost} />;
 };
 
-export const revalidate = 60;
+export default BlogDetailPage;
 
-export default async function Post({ params }: PostProps) {
-  const { slug } = await params;
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { slug: string };
+// }): Promise<Metadata> {
+//   const { data } = await fetchGraphQL<PostBySlugQuery>({
+//     query: PostBySlug,
+//     variables: {
+//       id: params.slug,
+//     },
+//   });
 
-  const { data } = await fetchGraphQL<PostBySlugQuery>({
-    query: PostBySlugDocument,
-    variables: { slug },
-  });
+//   const { post } = data;
 
-  const { post } = data;
+//   if (!post) {
+//     return {};
+//   }
 
-  if (!post) {
-    notFound();
-  }
-
-  return (
-    <div className="content">
-      <header className="header">
-        <div className="container">
-          <div className="header-inner">
-            <a href="/" className="logo">
-              My Portfolio
-            </a>
-            <nav className="nav">
-              <ul>
-                <li>
-                  <a href="/portfolio">Portfolio</a>
-                </li>
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/blog">Blog</a>
-                </li>
-                <li>
-                  <a href="#contact" className="contact-button">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <main>
-        <PostTemplate post={post} />
-      </main>
-      <footer id="contact" className="footer">
-        <div className="container">
-          <p>© 2025 My Portfolio. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
-export async function generateMetadata(
-  { params }: PostProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const { slug } = await params;
-
-  const { data } = await fetchGraphQL<PostBySlugQuery>({
-    query: PostBySlugDocument,
-    variables: { slug },
-  });
-
-  const { post } = data;
-
-  if (!post) {
-    return {};
-  }
-
-  return seoData(post);
-}
+//   return seoData(post);
+// }

@@ -1,69 +1,45 @@
-import BlogListTemplate from '@/components/Templates/BlogList/BlogListTemplate';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import {
-  PostsListDocument,
-  PostsListQuery,
-} from '@/gql/graphql';
+import { BlogListTemplate } from '@/components/Templates/BlogList/BlogListTemplate';
+// import { PostsListQuery } from '@/gql/graphql';
+// import { PostsList } from '@/queries/posts/PostsList';
+// import { fetchGraphQL } from '@/utils/fetchGraphQL';
 
-type BlogPageProps = {
-  searchParams: Promise<{ after?: string }>;
-};
+const BlogPage = async () => {
+  // const { data } = await fetchGraphQL<PostsListQuery>({
+  //   query: PostsList,
+  // });
 
-export const revalidate = 60;
-
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const { after } = await searchParams;
-
-  const { data } = await fetchGraphQL<PostsListQuery>({
-    query: PostsListDocument,
-    variables: {
-      first: 10,
-      after: after || null,
-    },
-  });
+  const dummyPosts = [
+    {
+      __typename: 'Post' as const,
+      slug: 'dummy-post-1',
+      title: '静的ブログ投稿1',
+      excerpt: '<p>これは静的なブログ投稿の抜粋です。</p>',
+      date: new Date().toISOString(),
+      featuredImage: {
+        node: {
+          sourceUrl: 'https://via.placeholder.com/400x250',
+          altText: 'ダミー画像',
+        },
+      },
+      categories: {
+        nodes: [
+          {
+            __typename: 'Category' as const,
+            name: 'お知らせ',
+            slug: 'notice',
+          },
+        ],
+      },
+    }
+  ];
 
   return (
-    <div className="content">
-      <header className="header">
-        <div className="container">
-          <div className="header-inner">
-            <a href="/" className="logo">
-              My Portfolio
-            </a>
-            <nav className="nav">
-              <ul>
-                <li>
-                  <a href="/portfolio">Portfolio</a>
-                </li>
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/blog">Blog</a>
-                </li>
-                <li>
-                  <a href="#contact" className="contact-button">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <main>
-        <BlogListTemplate
-          posts={data.posts?.nodes}
-          pageInfo={data.posts?.pageInfo}
-          title="Blog"
-          currentSlug="/blog"
-        />
-      </main>
-      <footer id="contact" className="footer">
-        <div className="container">
-          <p>© 2025 My Portfolio. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+    <BlogListTemplate
+      posts={dummyPosts}
+      title="ブログ"
+      currentSlug=""
+    />
   );
-}
+};
+
+export default BlogPage;

@@ -1,38 +1,41 @@
 import { HomePageTemplate } from '@/components/Templates/HomePage/HomePageTemplate';
-import { fetchGraphQL } from '@/utils/fetchGraphQL';
-import {
-  HomePageDocument,
-  HomePageQuery,
-} from '@/gql/graphql';
-import { Metadata } from 'next';
-import { seoData } from '@/utils/seoData';
+// import { fetchGraphQL } from '@/utils/fetchGraphQL';
+// import {
+//   HomePageDocument,
+//   HomePageQuery,
+// } from '@/gql/graphql';
+// import { Metadata } from 'next';
+// import { seoData } from '@/utils/seoData';
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const { data } = await fetchGraphQL<HomePageQuery>({
-    query: HomePageDocument,
-    variables: {},
-  });
+  // const { data } = await fetchGraphQL<HomePageQuery>({
+  //   query: HomePageDocument,
+  //   variables: {},
+  // });
 
-  const { posts } = data;
+  // const { page, posts } = data;
 
   return (
-    <HomePageTemplate page={data.page} posts={posts?.nodes} />
+    <HomePageTemplate
+      // page={page}
+      // posts={posts?.nodes}
+    />
   );
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { data } = await fetchGraphQL<HomePageQuery>({
-    query: HomePageDocument,
-    variables: {},
-  });
+// export async function generateMetadata(): Promise<Metadata> {
+//   const { data } = await fetchGraphQL<HomePageQuery>({
+//     query: HomePageDocument,
+//     variables: {},
+//   });
 
-  const { page } = data;
+//   const { page } = data;
 
-  if (!page) {
-    return {};
-  }
+//   if (!page) {
+//     return {};
+//   }
 
-  return seoData(page);
-}
+//   return seoData(page);
+// }
