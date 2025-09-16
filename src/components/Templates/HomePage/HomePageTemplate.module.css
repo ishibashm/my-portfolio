@@ -2,133 +2,169 @@
   color: #fff;
 }
 
+/* Hero Section */
 .hero {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 60vh;
+  min-height: 40vh; /* 高さを調整 */
   padding: 4rem 1rem;
-}
-
-.heroContent h1 {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-}
-
-.heroContent p {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .ctaButton {
   display: inline-block;
-  background-color: #4ECDC4;
+  background-color: transparent;
   color: #fff;
   padding: 1rem 2.5rem;
-  border-radius: 50px;
+  border-radius: 8px;
+  border: 1px solid #fff;
   text-decoration: none;
-  font-weight: bold;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  font-weight: 500;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
 }
 
 .ctaButton:hover {
-  background-color: #5ad5cb;
-  transform: translateY(-3px);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* General Section Styles */
 .sectionTitle {
   font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 3rem;
-  font-weight: 600;
+  margin-bottom: 4rem;
+  font-weight: 500;
 }
 
-.services {
+/* Portfolio Section */
+.portfolio {
   padding: 5rem 0;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.serviceGrid {
+.portfolioGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
 }
 
-.serviceCard {
+.portfolioCard {
   background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.serviceCard img {
-  margin-bottom: 1.5rem;
-  border-radius: 50%;
+.portfolioCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.serviceCard h3 {
+.cardImage {
+  height: 220px;
+  position: relative;
+}
+
+.cardContent {
+  padding: 1.5rem;
+}
+
+.cardContent h3 {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.news {
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.cardTags span {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+}
+
+/* Blog Section */
+.blog {
   padding: 5rem 0;
 }
 
-.newsList {
-  list-style: none;
-  padding: 0;
+.blogList {
   max-width: 800px;
   margin: 0 auto;
 }
 
-.newsList li a {
-  display: block;
-  padding: 1.5rem;
+.blogPostItem {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-decoration: none;
   color: #fff;
-  transition: background-color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-.newsList li a:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+.blogPostItem:hover {
+  opacity: 0.8;
 }
 
-.newsList time {
-  font-size: 0.9rem;
+.blogPostItem time {
   color: rgba(255, 255, 255, 0.6);
-  margin-right: 1rem;
 }
 
-.newsCategory {
-  display: inline-block;
-  background-color: #45B7D1;
-  color: #fff;
-  padding: 0.2rem 0.6rem;
+.blogCategory {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
   border-radius: 5px;
   font-size: 0.8rem;
-  margin-right: 1rem;
 }
 
-.newsList p {
-  display: inline;
-  font-size: 1.1rem;
+.blogPostItem h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
-.viewMore {
+/* About Section */
+.about {
+  padding: 5rem 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.aboutContent {
+  max-width: 700px;
+  margin: 0 auto;
   text-align: center;
-  margin-top: 2rem;
 }
 
-.viewMore a {
-  color: #4ECDC4;
+.socialLinks {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.socialButton {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
   text-decoration: none;
-  font-weight: bold;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.socialButton:hover {
+  background-color: #fff;
+  color: #000;
 }

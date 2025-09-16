@@ -44,3 +44,7 @@ certificates
 
 #generated
 gql
+
+# Sensitive files
+docs/E198967.html
+docs/E198967_20250911.xlsx

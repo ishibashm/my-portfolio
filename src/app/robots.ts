@@ -1,38 +1,12 @@
-import { MetadataRoute } from "next";
+import { MetadataRoute } from 'next';
 
-export const revalidate = 0;
-
-export default async function robots(): Promise<MetadataRoute.Robots> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/robots.txt`,
-    { cache: "no-store" },
-  );
-
-  const text = await res.text();
-
-  const lines = text.split("\n");
-
-  const userAgent = lines
-    .find((line) => line.startsWith("User-agent: "))
-    ?.replace("User-agent: ", "");
-  const allow = lines
-    .find((line) => line.startsWith("Allow: "))
-    ?.replace("Allow: ", "");
-  const disallow = lines
-    .find((line) => line.startsWith("Disallow: "))
-    ?.replace("Disallow: ", "");
-  const sitemap = lines
-    .find((line) => line.startsWith("Sitemap: "))
-    ?.replace("Sitemap: ", "");
-
-  const robots: MetadataRoute.Robots = {
+export default function robots(): MetadataRoute.Robots {
+  return {
     rules: {
-      userAgent,
-      allow,
-      disallow,
+      userAgent: '*',
+      allow: '/',
+      disallow: '', // すべてのパスを許可
     },
-    sitemap,
+    sitemap: 'https://www.cloud-palette.com/sitemap.xml',
   };
-
-  return robots;
 }
