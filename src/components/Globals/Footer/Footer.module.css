@@ -1,7 +1,69 @@
 .footer {
-  background-color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  padding: 40px 0;
+  background-color: #283e50;
+  color: #fff;
+  padding: 60px 0;
   width: 100%;
-  margin-top: auto; /* Flexboxコンテナ内でフッターを一番下に押し出す */
+}
+
+.footerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footerTop {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #4a5c6a;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 150px;
+  height: 50px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 60px;
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.linkTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 30px;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  color: #a9b4c2;
 }

@@ -16,6 +16,7 @@ body {
   color: rgb(var(--foreground-rgb));
   font-family: 'Noto Sans JP', 'Montserrat', sans-serif;
   line-height: 1.8;
+  overflow-x: hidden;
 }
 
 main {
@@ -33,5 +34,3 @@ a {
     color-scheme: dark;
   }
 }
-
-

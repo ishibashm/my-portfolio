@@ -67,17 +67,17 @@ const MovRecruitSitePage = () => {
         <title>株式会社mov 採用サイト</title>
       </Head>
       <div className={styles.container}>
-        <section className={styles.heroSection}>
-          <Image
-            src="/images/NEXA.png"
-            alt="NEXA"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-            className={styles.heroImage}
-          />
-        </section>
         <main className={styles.mainContent}>
+          <section className={styles.heroSection}>
+            <Image
+              src="/images/NEXA_recruit.png"
+              alt="NEXA"
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+              className={styles.heroImage}
+            />
+          </section>
           <section className={styles.features}>
             <div
               ref={featuresRef}
