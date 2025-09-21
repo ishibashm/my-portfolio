@@ -125,17 +125,17 @@ const MovRecruitSitePage = () => {
             <h2 className={styles.sectionTitle}>募集中のポジション</h2>
             <div className={styles.jobList}>
               <div className={styles.jobCard}>
-                <h4>Webエンジニア</h4>
+                <h4><span className={styles.animatedTextHover}>Webエンジニア</span></h4>
                 <p>自社サービスの開発・運用を担当していただきます。</p>
                 <span className={styles.jobTag}>正社員</span>
               </div>
               <div className={styles.jobCard}>
-                <h4>Webデザイナー</h4>
+                <h4><span className={styles.animatedTextHover}>Webデザイナー</span></h4>
                 <p>自社サービスやLPのデザインを担当していただきます。</p>
                 <span className={styles.jobTag}>正社員</span>
               </div>
               <div className={styles.jobCard}>
-                <h4>Webマーケター</h4>
+                <h4><span className={styles.animatedTextHover}>Webマーケター</span></h4>
                 <p>自社サービスのマーケティング戦略の立案・実行を担当していただきます。</p>
                 <span className={styles.jobTag}>契約社員</span>
               </div>

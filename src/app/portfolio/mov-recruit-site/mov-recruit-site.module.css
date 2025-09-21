@@ -130,7 +130,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: box-shadow 0.3s;
+    transition: all 0.3s ease;
     border: 1px solid #f0f2f5;
     font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
   }
@@ -224,7 +224,7 @@
   border-radius: 0;
   box-shadow: none;
   margin: 48px auto 0 auto;
-  border: none;
+  border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -361,35 +361,37 @@
 
 
 .jobCard {
-  background: transparent;
+  background: #3A5064;
   padding: 24px 18px;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(102, 126, 234, 0.07);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: box-shadow 0.3s;
-  border: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
   color: #fff;
 }
 
 
 .jobCard:hover {
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.13);
+  transform: translateY(-4px);
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+   border-color: rgba(0, 246, 255, 0.2);
 }
 
 
 .jobCard h4 {
   font-size: 1.15rem;
   font-weight: 600;
-  color: #fff;
+  color: #F0F2F5;
   margin: 0;
 }
 
 
 .jobCard p {
   font-size: 0.98rem;
-  color: #fff;
+  color: #A9B4C2;
   margin: 0;
   flex-grow: 1;
   padding: 0 16px;
@@ -398,12 +400,29 @@
 
 
 .jobTag {
-  background: linear-gradient(90deg, #007cff 0%, #222 100%);
-  color: #fff;
+  background: #00F6FF;
+  color: #283e50;
   padding: 7px 16px;
   border-radius: 16px;
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: bold;
+.animatedTextHover {
+  background-image: linear-gradient(
+    90deg,
+    #00F6FF,
+    #F0F2F5,
+    #F0F2F5
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.7s ease;
+}
+
+.jobCard:hover .animatedTextHover {
+  background-position: 0% 0;
+}
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0, 124, 255, 0.10);
 }
