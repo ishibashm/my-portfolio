@@ -4,34 +4,6 @@ import styles from './mov-recruit-site.module.css';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
 
-const ParallaxMissionSVG = () => {
-  const svgRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (svgRef.current) {
-        const offset = window.scrollY * 0.15;
-        svgRef.current.style.transform = `translateY(${offset}px)`;
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <span ref={svgRef} className={styles.featuresImage} style={{ transition: 'transform 0.3s' }}>
-      <svg width="100%" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
-        <text x="50" y="60" fontFamily="'Noto Sans JP', 'Montserrat', sans-serif" fontSize="28" fill="#283E50">
-          NEXAは、『テクノロジーで、次の「当たり前」を創造する』をミッションに掲げるテックカンパニーです。
-        </text>
-        <text x="50" y="110" fontFamily="'Noto Sans JP', 'Montserrat', sans-serif" fontSize="24" fill="#283E50">
-          あなたの才能が、世界を動かす力になる。その挑戦の始まりが、ここにあります。
-        </text>
-      </svg>
-    </span>
-  );
-};
-
 const images = [
   "/images/gallery/gallery-1.webp",
   "/images/gallery/gallery-2.webp",
@@ -88,25 +60,24 @@ const MovRecruitSitePage = () => {
     observer.observe(refCurrent);
     return () => observer.disconnect();
   }, []);
+  
   return (
     <>
       <Head>
         <title>株式会社mov 採用サイト</title>
       </Head>
       <div className={styles.container}>
+        <section className={styles.heroSection}>
+          <Image
+            src="/images/NEXA.png"
+            alt="NEXA"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            className={styles.heroImage}
+          />
+        </section>
         <main className={styles.mainContent}>
-          <section className={styles.hero}>
-            <div className={styles.heroText}>
-              <span className={styles.featuresImage}>
-                <svg width="100%" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
-                  {/* SVGパス等が必要ならここに追加 */}
-                </svg>
-              </span>
-              <h1 className={styles.heroTitle}>株式会社NEXA 採用サイト</h1>
-              <p className={styles.heroSubtitle}>NEXAは、『テクノロジーで、次の「当たり前」を創造する』をミッションに掲げるテックカンパニーです。<br />あなたの才能が、世界を動かす力になる。その挑戦の始まりが、ここにあります。</p>
-              <div className={styles.scroll}>OUR STORY BEGINS</div>
-            </div>
-          </section>
           <section className={styles.features}>
             <div
               ref={featuresRef}
@@ -116,7 +87,6 @@ const MovRecruitSitePage = () => {
                   : styles.featuresTextBlock
               }
             >
-              <ParallaxMissionSVG />
               <p className={styles.featuresLead}>NEXAは、『テクノロジーで、次の「当たり前」を創造する』をミッションに掲げるテックカンパニーです。</p>
               <p className={styles.featuresMission}>あなたの才能が、世界を動かす力になる。その挑戦の始まりが、ここにあります。</p>
             </div>
