@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from './mov-recruit-site.module.css';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
+import { Footer } from '@/components/Globals/Footer/Footer';
 
 const images = [
   "/images/gallery/gallery-1.webp",
@@ -139,6 +140,7 @@ const MovRecruitSitePage = () => {
             <Scroller reverse={true} />
           </section>
         </main>
+        <Footer />
       </div>
     </>
   );

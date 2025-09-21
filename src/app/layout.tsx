@@ -2,7 +2,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navigation } from '@/components/Globals/Navigation/Navigation';
-import { Footer } from '@/components/Globals/Footer/Footer';
+// import { Footer } from '@/components/Globals/Footer/Footer';
 // import { PreviewNotice } from '@/components/Globals/PreviewNotice/PreviewNotice';
 import { InteractiveBackground } from '@/components/Globals/InteractiveBackground/InteractiveBackground';
 
@@ -20,7 +20,7 @@ export default function RootLayout({
         {/* <PreviewNotice /> */}
         <Navigation />
         <main>{children}</main>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
