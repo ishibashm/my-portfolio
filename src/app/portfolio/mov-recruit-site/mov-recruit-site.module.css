@@ -1,0 +1,438 @@
+.photoGallerySection {
+  background: #283e50;
+  padding: 64px 0 48px 0;
+  color: #fff;
+  text-align: center;
+}
+
+.photoGalleryTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  color: #fff;
+  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+}
+
+.photoGallerySubtitle {
+  font-size: 1.15rem;
+  margin-bottom: 2em;
+  color: #fff;
+  font-family: inherit;
+}
+
+.scroller {
+  max-width: 100%;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+  mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+  margin-top: 1rem;
+}
+
+.scrollerInner {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+.scrollerReverse .scrollerInner {
+  animation-direction: reverse;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+.scrollerInner img {
+  height: 300px;
+  width: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+}
+
+
+.aboutUsSection {
+  background: #283e50;
+  padding: 64px 0 48px 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aboutUsSection .sectionTitle {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  letter-spacing: 2px;
+  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+}
+
+.aboutUsContent {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #fff;
+  text-align: left;
+  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.featuresImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px auto 18px auto;
+  max-width: 100vw;
+  min-height: 120px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(40, 62, 80, 0.08);
+  padding: 0;
+  overflow: visible;
+}
+
+.featuresImage svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: fill 0.3s;
+  max-width: 98vw;
+  min-width: 480px;
+  background: none;
+}
+
+.featuresImage svg path {
+  fill: var(--svg-main-color, #e5e5e5);
+  transition: fill 0.3s;
+  stroke: #222;
+  stroke-width: 0.5;
+}
+
+.featuresImage:hover svg path {
+  .jobCard {
+    background: #fff;
+    padding: 24px 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(102, 126, 234, 0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.3s;
+    border: 1px solid #f0f2f5;
+    font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  }
+  .jobCard h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    font-family: inherit;
+  }
+  .jobCard p {
+    font-size: 0.98rem;
+    color: #666;
+    margin: 0;
+    flex-grow: 1;
+    padding: 0 16px;
+    font-family: inherit;
+  }
+  .jobTag {
+    background: linear-gradient(90deg, #007cff 0%, #222 100%);
+    color: #fff;
+    padding: 7px 16px;
+    border-radius: 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 124, 255, 0.10);
+    font-family: inherit;
+  }
+  text-align: center;
+  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+}
+
+.featuresLead {
+  font-size: 1.15rem;
+  color: #e5e5e5;
+  text-align: center;
+  margin-bottom: 10px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.featuresMission {
+  font-size: 1.08rem;
+  color: #e5e5e5;
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.scroll {
+  font-size: 0.98rem;
+  color: #e5e5e5;
+  text-align: center;
+  letter-spacing: 0.15em;
+  margin-top: 12px;
+}
+.featuresDescription {
+  font-size: 1.08rem;
+  color: #e5e5e5;
+  text-align: center;
+  margin: 18px 0 32px 0;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+
+
+
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  background: #283e50;
+  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  color: #333;
+}
+
+
+
+
+.mainContent {
+  width: 100%;
+  max-width: 990px;
+  padding: 48px 32px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 48px auto 0 auto;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0 48px 0;
+  background: none;
+  color: #333;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+
+.heroText {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+
+
+.heroTitle {
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: 2.45px;
+  line-height: 30px;
+  margin: 30px;
+  text-align: center;
+  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+    color: #fff !important;
+  }
+
+
+
+.heroSubtitle {
+  display: none;
+}
+
+
+.heroImage {
+  display: none;
+}
+
+.features {
+  padding: 64px 0 32px 0;
+}
+
+
+
+.sectionTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: #fff;
+  letter-spacing: 2px;
+  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+}
+
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+
+.featureCard {
+    font-size: 34px;
+    font-weight: 300;
+    letter-spacing: 2.45px;
+    line-height: 30px;
+    margin: 30px 0 18px 0;
+    color: #fff;
+    text-align: center;
+    font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+}
+
+
+
+.featureCard h3 {
+  font-size: 1.3rem;
+    width: 100%;
+    max-width: 990px;
+    padding: 48px 32px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0, 124, 255, 0.10);
+    margin-top: 48px;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  line-height: 1.7;
+  color: #555;
+}
+
+.jobs {
+  padding: 56px 0 24px 0;
+  background: #283e50;
+}
+
+.jobs h2,
+.jobs h4,
+.jobs p,
+.jobs span {
+  color: #fff;
+}
+
+
+.jobList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+
+.jobCard {
+  background: transparent;
+  padding: 24px 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(102, 126, 234, 0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.3s;
+  border: none;
+  color: #fff;
+}
+
+
+.jobCard:hover {
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.13);
+}
+
+
+.jobCard h4 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+
+.jobCard p {
+  font-size: 0.98rem;
+  color: #fff;
+  margin: 0;
+  flex-grow: 1;
+  padding: 0 16px;
+}
+
+
+
+.jobTag {
+  background: linear-gradient(90deg, #007cff 0%, #222 100%);
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: 16px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 124, 255, 0.10);
+}
+
+@media (max-width: 900px) {
+  .mainContent {
+    padding: 24px 8px;
+    margin-top: 24px;
+  }
+  .hero {
+    flex-direction: column;
+    padding: 32px 0 24px 0;
+  }
+  .heroText {
+    max-width: 100%;
+    padding-left: 0;
+    margin-bottom: 24px;
+  }
+  .heroImage {
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+  .features {
+    padding: 32px 0 16px 0;
+  }
+  .featuresGrid {
+    gap: 16px;
+  }
+  .jobs {
+    padding: 24px 0 12px 0;
+  }
+}

@@ -70,6 +70,32 @@ const PortfolioPage = () => {
         ],
       },
     },
+    {
+      __typename: 'Post' as const,
+      slug: 'mov-recruit-site',
+      title: '採用サイト',
+      excerpt: '<p>Next.js, TypeScriptで構築した採用サイトです。</p>',
+      featuredImage: {
+        node: {
+          sourceUrl: '/images/portfolio2.png',
+          altText: '採用サイトのヒーローイメージ',
+        },
+      },
+      tags: {
+        nodes: [
+          {
+            __typename: 'Tag' as const,
+            name: 'Next.js',
+            slug: 'nextjs',
+          },
+          {
+            __typename: 'Tag' as const,
+            name: 'TypeScript',
+            slug: 'typescript',
+          },
+        ],
+      },
+    },
     // 他の静的なポートフォリオ項目をここに追加できます
   ];
 
