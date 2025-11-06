@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+
 // MDX用の型定義
 export interface MDXPost {
   slug: string;
@@ -21,7 +22,7 @@ export function getAllPostSlugs(): string[] {
 }
 
 // 記事のメタデータとコンテンツを取得
-export async function getPostBySlug(slug: string): Promise<MDXPost | null> {
+export function getPostBySlug(slug: string): Omit<MDXPost, "slug"> | null {
   try {
     const mdxPath = path.join(postsDirectory, `${slug}.mdx`);
     const markdownPath = path.join(postsDirectory, `${slug}.md`);
@@ -39,14 +40,13 @@ export async function getPostBySlug(slug: string): Promise<MDXPost | null> {
     const { data, content } = matter(fileContent);
 
     return {
-      slug,
       title: data.title || "",
       date: data.date || "",
       description: data.description || "",
       tags: data.tags || [],
       content,
       ...data,
-    } as MDXPost;
+    };
   } catch (error) {
     console.error("Error reading post:", error);
     return null;
@@ -54,14 +54,21 @@ export async function getPostBySlug(slug: string): Promise<MDXPost | null> {
 }
 
 // すべての記事を取得
-export async function getAllPosts(): Promise<MDXPost[]> {
+export function getAllPosts(): MDXPost[] {
   const slugs = getAllPostSlugs();
-  const posts = await Promise.all(
-    slugs.map(async (slug) => await getPostBySlug(slug)),
-  );
-
-  // nullを除外し、日付順でソート
-  return posts
+  const posts = slugs
+    .map((slug) => {
+      const postData = getPostBySlug(slug);
+      if (!postData) {
+        return null;
+      }
+      return {
+        slug,
+        ...postData,
+      };
+    })
     .filter((post): post is MDXPost => post !== null)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  return posts;
 }

@@ -1,43 +1,70 @@
 import { notFound } from "next/navigation";
-import { MDXComponents } from "@/components/MDX/MDXComponents";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import styles from "./blog-post.module.css";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/posts";
+import { FC } from "react";
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
+}
+
+// MDXファイルのfrontmatterの型
+interface Frontmatter {
+  title: string;
+  date: string;
+  description?: string;
+  tags?: string[];
+}
+
+// MDXファイルからインポートされるモジュールの型
+interface MdxModule {
+  default: FC; // MDXコンテンツ本体
+  frontmatter: Frontmatter;
+}
+
+async function getPostComponent(
+  slug: string,
+): Promise<MdxModule | null> {
+  try {
+    // 動的インポートを使用して、slugに一致するMDXファイルを読み込む
+    return await import(`@/posts/${slug}.mdx`);
+  } catch (error) {
+    // ファイルが見つからない場合はnullを返す
+    return null;
+  }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const { slug } = params;
+  const postModule = await getPostComponent(slug);
 
-  if (!post) {
+  if (!postModule) {
     notFound();
   }
+
+  const { frontmatter, default: Content } = postModule;
 
   return (
     <section className={styles.blogPost}>
       <div className={styles.container}>
         <div className={styles.articleWrapper}>
           <header className={styles.articleHeader}>
-            <h1 className={styles.articleTitle}>{post.title}</h1>
-            {post.date && (
-              <time className={styles.articleDate} dateTime={post.date}>
-                {new Date(post.date).toLocaleDateString("ja-JP")}
+            <h1 className={styles.articleTitle}>{frontmatter.title}</h1>
+            {frontmatter.date && (
+              <time className={styles.articleDate} dateTime={frontmatter.date}>
+                {new Date(frontmatter.date).toLocaleDateString("ja-JP")}
               </time>
             )}
           </header>
 
           <div className={styles.blogContent}>
-            <MDXRemote source={post.content} components={MDXComponents} />
+            <Content />
           </div>
 
-          {post.tags && post.tags.length > 0 && (
+          {frontmatter.tags && frontmatter.tags.length > 0 && (
             <footer className={styles.articleFooter}>
               <div className={styles.tags}>
                 <span>タグ: </span>
-                {post.tags.map((tag) => (
+                {frontmatter.tags.map((tag) => (
                   <span key={tag} className={styles.tag}>
                     {tag}
                   </span>
@@ -54,7 +81,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 // 静的生成のためのパラメータ
 export async function generateStaticParams() {
   const slugs = getAllPostSlugs();
-
   return slugs.map((slug) => ({
     slug,
   }));
@@ -62,23 +88,25 @@ export async function generateStaticParams() {
 
 // メタデータ生成
 export async function generateMetadata({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const { slug } = params;
+  const postModule = await getPostComponent(slug);
 
-  if (!post) {
+  if (!postModule) {
     return {
       title: "記事が見つかりません",
     };
   }
 
+  const { frontmatter } = postModule;
+
   return {
-    title: post.title,
-    description: post.description || "",
+    title: frontmatter.title,
+    description: frontmatter.description || "",
     openGraph: {
-      title: post.title,
-      description: post.description || "",
+      title: frontmatter.title,
+      description: frontmatter.description || "",
       type: "article",
-      publishedTime: post.date,
+      publishedTime: frontmatter.date,
       authors: ["作者"],
     },
   };
