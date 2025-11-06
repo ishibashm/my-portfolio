@@ -13,7 +13,7 @@ export async function PUT(request: NextRequest) {
 
   try {
     // Always revalidate the HomePage tag
-    await revalidateTag("HomePage");
+    await revalidateTag("HomePage", "page");
     console.log("Successfully revalidated tag: HomePage");
 
     // Also revalidate any paths sent in the request
