@@ -1,6 +1,4 @@
-const createMDX = require("@next/mdx");
-const remarkFrontmatter = require("remark-frontmatter");
-const remarkMdxFrontmatter = require("remark-mdx-frontmatter");
+const createMDX = require("@next/mdx")();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -28,13 +26,5 @@ const nextConfig = {
   },
 };
 
-const withMDX = createMDX({
-  // Add markdown plugins here, as desired
-  options: {
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-    rehypePlugins: [],
-  },
-});
-
 // Merge MDX config with Next.js config
-module.exports = withMDX(nextConfig);
+module.exports = createMDX(nextConfig);
