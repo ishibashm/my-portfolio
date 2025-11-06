@@ -30,7 +30,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </header>
 
           <div className={styles.blogContent}>
-            <MDXRemote {...post.mdxSource} components={MDXComponents} />
+            <MDXRemote source={post.content} components={MDXComponents} />
           </div>
 
           {post.tags && post.tags.length > 0 && (

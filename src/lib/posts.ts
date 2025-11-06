@@ -1,9 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
-
 // MDX用の型定義
 export interface MDXPost {
   slug: string;
@@ -12,7 +9,6 @@ export interface MDXPost {
   description?: string;
   tags?: string[];
   content: string;
-  mdxSource: MDXRemoteSerializeResult;
 }
 
 // MDX記事のディレクトリパス
@@ -42,14 +38,6 @@ export async function getPostBySlug(slug: string): Promise<MDXPost | null> {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(fileContent);
 
-    // MDXをシリアライズ
-    const mdxSource = await serialize(content, {
-      mdxOptions: {
-        remarkPlugins: [],
-        rehypePlugins: [],
-      },
-    });
-
     return {
       slug,
       title: data.title || "",
@@ -57,7 +45,6 @@ export async function getPostBySlug(slug: string): Promise<MDXPost | null> {
       description: data.description || "",
       tags: data.tags || [],
       content,
-      mdxSource,
       ...data,
     } as MDXPost;
   } catch (error) {
