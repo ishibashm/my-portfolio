@@ -1,9 +1,8 @@
-import { PageBySlugQuery } from '@/gql/graphql';
-import Image from 'next/image';
-import styles from './PageTemplate.module.css';
+import { PageBySlugQuery } from "@/gql/graphql";
+import styles from "./PageTemplate.module.css";
 
 interface PageTemplateProps {
-  page: NonNullable<PageBySlugQuery['page']>;
+  page: NonNullable<PageBySlugQuery["page"]>;
 }
 
 export const PageTemplate = ({ page }: PageTemplateProps) => {
@@ -15,7 +14,7 @@ export const PageTemplate = ({ page }: PageTemplateProps) => {
         <h1>{title}</h1>
         <div
           className={styles.content}
-          dangerouslySetInnerHTML={{ __html: content || '' }}
+          dangerouslySetInnerHTML={{ __html: content || "" }}
         />
       </main>
     </div>

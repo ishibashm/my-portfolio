@@ -1,12 +1,12 @@
-'use client';
-import Image from 'next/image';
-import { PostBySlugQuery } from '@/gql/graphql';
-import { formatDate } from '@/utils/formatDate';
-import { useEffect, useState, useMemo } from 'react';
-import styles from './PortfolioDetailTemplate.module.css';
+"use client";
+import Image from "next/image";
+import { PostBySlugQuery } from "@/gql/graphql";
+import { formatDate } from "@/utils/formatDate";
+import { useEffect, useState, useMemo } from "react";
+import styles from "./PortfolioDetailTemplate.module.css";
 
 interface PortfolioDetailTemplateProps {
-  portfolio: NonNullable<PostBySlugQuery['post']>;
+  portfolio: NonNullable<PostBySlugQuery["post"]>;
 }
 
 export const PortfolioDetailTemplate = ({
@@ -15,20 +15,26 @@ export const PortfolioDetailTemplate = ({
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
   const contentWithoutGallery = useMemo(() => {
-    if (!portfolio.content) return '';
+    if (!portfolio.content) return "";
     let updatedContent = portfolio.content;
 
     // 外部リンクを相対パスに変換
     updatedContent = updatedContent.replace(
       /https?:\/\/(www\.)?cloud-palette\.com/g,
-      ''
+      "",
     );
 
     // /blog/ を /portfolio/ に置換
-    updatedContent = updatedContent.replace(/href="\/blog\//g, 'href="/portfolio/');
+    updatedContent = updatedContent.replace(
+      /href="\/blog\//g,
+      'href="/portfolio/',
+    );
 
     // WordPressのギャラリーブロックを正規表現で削除
-    updatedContent = updatedContent.replace(/<figure class="wp-block-gallery[^>]*>[\s\S]*?<\/figure>/g, '');
+    updatedContent = updatedContent.replace(
+      /<figure class="wp-block-gallery[^>]*>[\s\S]*?<\/figure>/g,
+      "",
+    );
 
     return updatedContent;
   }, [portfolio.content]);
@@ -52,7 +58,7 @@ export const PortfolioDetailTemplate = ({
           <div className={styles.postEyecatch}>
             <Image
               src={portfolio.featuredImage.node.sourceUrl}
-              alt={portfolio.featuredImage.node.altText || ''}
+              alt={portfolio.featuredImage.node.altText || ""}
               width={1280}
               height={720}
               priority
@@ -77,7 +83,13 @@ export const PortfolioDetailTemplate = ({
             <div className={styles.galleryGrid}>
               {galleryImages.map((src, index) => (
                 <div key={index} className={styles.galleryItem}>
-                  <Image src={src} alt={`Gallery image ${index + 1}`} width={500} height={300} style={{ objectFit: 'cover' }} />
+                  <Image
+                    src={src}
+                    alt={`Gallery image ${index + 1}`}
+                    width={500}
+                    height={300}
+                    style={{ objectFit: "cover" }}
+                  />
                 </div>
               ))}
             </div>

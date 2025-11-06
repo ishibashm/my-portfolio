@@ -1,11 +1,11 @@
-import { PostBySlugQuery } from '@/gql/graphql';
-import Image from 'next/image';
-import { formatDate } from '@/utils/formatDate';
+import { PostBySlugQuery } from "@/gql/graphql";
+import Image from "next/image";
+import { formatDate } from "@/utils/formatDate";
 // CSSモジュールではなく、グローバルなlp-style.cssを使う
 // import styles from './PostTemplate.module.css';
 
 interface PostTemplateProps {
-  post: NonNullable<PostBySlugQuery['post']>;
+  post: NonNullable<PostBySlugQuery["post"]>;
 }
 
 export const PostTemplate = ({ post }: PostTemplateProps) => {
@@ -18,7 +18,7 @@ export const PostTemplate = ({ post }: PostTemplateProps) => {
           <div className="post-eyecatch">
             <Image
               src={featuredImage.node.sourceUrl}
-              alt={featuredImage.node.altText || ''}
+              alt={featuredImage.node.altText || ""}
               width={1280}
               height={720}
               priority
@@ -32,7 +32,7 @@ export const PostTemplate = ({ post }: PostTemplateProps) => {
         </div>
         <div
           className="post-content"
-          dangerouslySetInnerHTML={{ __html: content || '' }}
+          dangerouslySetInnerHTML={{ __html: content || "" }}
         />
       </div>
     </section>

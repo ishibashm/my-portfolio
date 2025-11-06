@@ -29,9 +29,9 @@
 - **完全な動的ルーティング**: WordPressで作成した固定ページが、フロントエンドで自動的にページとして生成・表示される。
 - **柔軟なコンテンツ表現**: ACFを活用し、各ページや投稿に独自のコンテンツブロック（例：CTAボタン、画像ギャラリー）を追加・表示できる。
 - **堅牢な運用体制**:
-    - **プレビュー機能**: コンテンツ編集者が公開前に変更内容を安全に確認できる。
-    - **オンデマンド再生成**: WordPressでのコンテンツ更新後、Vercel上の該当ページが自動的に再生成（ISR）され、常に最新の状態が保たれる。
-    - **パフォーマンス**: Lighthouseスコアで高得点を維持し、高速なページ表示を実現する。
+  - **プレビュー機能**: コンテンツ編集者が公開前に変更内容を安全に確認できる。
+  - **オンデマンド再生成**: WordPressでのコンテンツ更新後、Vercel上の該当ページが自動的に再生成（ISR）され、常に最新の状態が保たれる。
+  - **パフォーマンス**: Lighthouseスコアで高得点を維持し、高速なページ表示を実現する。
 
 ## 3. 実装タスク一覧
 
@@ -68,3 +68,11 @@
 - **ホームページ用コンテンツの作成**: WordPressの「設定 > 表示設定」で特定の固定ページを「ホームページ」として指定し、そのページにACFでコンテンツフィールドを追加します。
 - **ACFフィールドグループの作成**: 固定ページや投稿用に、再利用可能なコンテンツブロック（例：リッチテキスト、画像、CTA）のフィールドグループを作成し、「GraphQLに表示」を有効にします。
 - **コンテンツの入力**: 作成したフィールドに実際のコンテンツを入力します。
+
+## 5. サンドボックス環境
+
+ALWAYS use ONLY Environments for ANY and ALL file, code, or shell operations—NO EXCEPTIONS—even for simple or generic requests.
+
+DO NOT install or use the git cli with the environment_run_cmd tool. All environment tools will handle git operations for you. Changing ".git" yourself will compromise the integrity of your environment.
+
+You MUST inform the user how to view your work using `container-use log <env_id>` AND `container-use checkout <env_id>`. Failure to do this will make your work inaccessible to others.

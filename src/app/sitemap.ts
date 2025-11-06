@@ -37,14 +37,16 @@ async function getPostsUrls({
 
   if (!data) return [];
 
-  const posts = data.map((post: any) => {
-    return {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}${post.url}`,
-      lastModified: new Date(post.post_modified_date)
-        .toISOString()
-        .split("T")[0],
-    };
-  });
+  const posts = data.map(
+    (post: { url: string; post_modified_date: string }) => {
+      return {
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}${post.url}`,
+        lastModified: new Date(post.post_modified_date)
+          .toISOString()
+          .split("T")[0],
+      };
+    },
+  );
 
   return posts;
 }
@@ -52,27 +54,49 @@ async function getPostsUrls({
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap = [];
 
-  const details = await getTotalCounts();
+  // 主要な静的ページを追加
+  const staticPages = [
+    {
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}`,
+      lastModified: new Date().toISOString(),
+    },
+    {
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/portfolio`,
+      lastModified: new Date().toISOString(),
+    },
+    {
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/blog`,
+      lastModified: new Date().toISOString(),
+    },
+  ];
 
-  const postsUrls = await Promise.all(
-    details.map(async (detail) => {
-      const { name, total } = detail;
-      const perPage = 50;
-      const totalPages = Math.ceil(total / perPage);
+  sitemap.push(...staticPages);
 
-      const urls = await Promise.all(
-        Array.from({ length: totalPages }, (_, i) => i + 1).map((page) =>
-          getPostsUrls({ page, type: name, perPage }),
-        ),
-      );
+  try {
+    const details = await getTotalCounts();
 
-      return urls.flat();
-    }),
-  );
+    const postsUrls = await Promise.all(
+      details.map(async (detail) => {
+        const { name, total } = detail;
+        const perPage = 50;
+        const totalPages = Math.ceil(total / perPage);
 
-  const posts = postsUrls.flat();
+        const urls = await Promise.all(
+          Array.from({ length: totalPages }, (_, i) => i + 1).map((page) =>
+            getPostsUrls({ page, type: name, perPage }),
+          ),
+        );
 
-  sitemap.push(...posts);
+        return urls.flat();
+      }),
+    );
+
+    const posts = postsUrls.flat();
+    sitemap.push(...posts);
+  } catch (error) {
+    // WordPress APIが利用できない場合は静的ページのみ
+    console.error("Error fetching WordPress sitemap data:", error);
+  }
 
   return sitemap;
 }

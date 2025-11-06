@@ -1,5 +1,3 @@
-
-
 # **WordPressを用いたヘッドレスCMS実装の決定版ガイド**
 
 ### **エグゼクティブサマリー**
@@ -10,11 +8,11 @@
 
 主要な分析結果と推奨事項は以下の通りである。
 
-* ヘッドレスアーキテクチャは、関心事を分離し、攻撃対象領域を縮小することで、サイトのパフォーマンスとセキュリティを大幅に向上させる 1。  
-* 複雑なアプリケーションにおいては、その効率性と優れた開発者体験から、WPGraphQLがREST APIよりも一般的に優れている。ただし、よりシンプルなユースケースではRESTも依然として有効な選択肢である 6。  
-* Next.jsやNuxt.jsのような最新のフロントエンドフレームワークは、単なる選択肢ではなく、ヘッドレスアーキテクチャに不可欠なパートナーである。これらのフレームワークが提供するレンダリング戦略（SSG, SSR, ISR）は、SEOといった従来のヘッドレスにおける課題を克服するために必須となる 8。  
-* 成功裡の実装には、開発ワークフローからCI/CD、専門的なホスティングに至るまで、思考様式、チーム構造、そしてツールセットの転換が求められる 4。  
-* 高性能、複雑なインタラクティビティ、またはマルチチャネルでのコンテンツ配信を要件とするプロジェクトに対しては、ヘッドレスアプローチの採用を推奨する。その際、API層にはGraphQLベースの実装を強く推奨する。
+- ヘッドレスアーキテクチャは、関心事を分離し、攻撃対象領域を縮小することで、サイトのパフォーマンスとセキュリティを大幅に向上させる 1。
+- 複雑なアプリケーションにおいては、その効率性と優れた開発者体験から、WPGraphQLがREST APIよりも一般的に優れている。ただし、よりシンプルなユースケースではRESTも依然として有効な選択肢である 6。
+- Next.jsやNuxt.jsのような最新のフロントエンドフレームワークは、単なる選択肢ではなく、ヘッドレスアーキテクチャに不可欠なパートナーである。これらのフレームワークが提供するレンダリング戦略（SSG, SSR, ISR）は、SEOといった従来のヘッドレスにおける課題を克服するために必須となる 8。
+- 成功裡の実装には、開発ワークフローからCI/CD、専門的なホスティングに至るまで、思考様式、チーム構造、そしてツールセットの転換が求められる 4。
+- 高性能、複雑なインタラクティビティ、またはマルチチャネルでのコンテンツ配信を要件とするプロジェクトに対しては、ヘッドレスアプローチの採用を推奨する。その際、API層にはGraphQLベースの実装を強く推奨する。
 
 ---
 
@@ -28,18 +26,18 @@
 
 ### **1.2 詳細なメリット分析**
 
-* **パフォーマンス**: 最新のフレームワークが提供する最適化されたレンダリング戦略や、事前にビルドされた静的ファイルを提供することで、ヘッドレスサイトはミリ秒単位のロード時間を達成する。これは、モノリシックなWordPressが要求するデータベースクエリとサーバーサイドレンダリングのプロセスからの大幅な改善である 1。  
-* **セキュリティ**: 攻撃対象領域が劇的に縮小される。WordPressバックエンドはファイアウォールで保護し隔離することが可能となり、公開される要素は静的サイトやNode.jsサーバーとなるため、データベースへの直接的な接続を持たない。これにより、テーマやプラグインに関連する一般的なWordPressの脆弱性が緩和される 2。  
-* **フロントエンドの柔軟性と開発者体験**: 開発者はWordPressのテーマシステムやPHPの制約から解放される。React、Vue、Astroといった最新のツールやフレームワーク、そしてGitやCI/CDといったモダンなワークフローを自由に利用できるため、開発速度の向上と高品質なUIの実現につながる 1。  
-* **オムニチャネルでのコンテンツ配信**: これは主要な戦略的利点である。単一のWordPressバックエンドがコンテンツハブとして機能し、APIを介してウェブサイト、モバイルアプリ、IoTデバイスなど、あらゆるデジタルプラットフォームにコンテンツを配信することで、一貫性を確保する 1。  
-* **スケーラビリティ**: フロントエンドとバックエンドを独立してスケールさせることが可能になる。CDNやサーバーレスプラットフォームでホストされているフロントエンドアプリケーションへのトラフィックが急増しても、必ずしもWordPressバックエンドサーバーに過負荷がかかるわけではない 1。
+- **パフォーマンス**: 最新のフレームワークが提供する最適化されたレンダリング戦略や、事前にビルドされた静的ファイルを提供することで、ヘッドレスサイトはミリ秒単位のロード時間を達成する。これは、モノリシックなWordPressが要求するデータベースクエリとサーバーサイドレンダリングのプロセスからの大幅な改善である 1。
+- **セキュリティ**: 攻撃対象領域が劇的に縮小される。WordPressバックエンドはファイアウォールで保護し隔離することが可能となり、公開される要素は静的サイトやNode.jsサーバーとなるため、データベースへの直接的な接続を持たない。これにより、テーマやプラグインに関連する一般的なWordPressの脆弱性が緩和される 2。
+- **フロントエンドの柔軟性と開発者体験**: 開発者はWordPressのテーマシステムやPHPの制約から解放される。React、Vue、Astroといった最新のツールやフレームワーク、そしてGitやCI/CDといったモダンなワークフローを自由に利用できるため、開発速度の向上と高品質なUIの実現につながる 1。
+- **オムニチャネルでのコンテンツ配信**: これは主要な戦略的利点である。単一のWordPressバックエンドがコンテンツハブとして機能し、APIを介してウェブサイト、モバイルアプリ、IoTデバイスなど、あらゆるデジタルプラットフォームにコンテンツを配信することで、一貫性を確保する 1。
+- **スケーラビリティ**: フロントエンドとバックエンドを独立してスケールさせることが可能になる。CDNやサーバーレスプラットフォームでホストされているフロントエンドアプリケーションへのトラフィックが急増しても、必ずしもWordPressバックエンドサーバーに過負荷がかかるわけではない 1。
 
 ### **1.3 決定的なデメリット評価**
 
-* **複雑性の増大と技術的ハードル**: これが最も重大な欠点である。WordPressと最新のJavaScript開発の両方における専門知識が要求される。APIの設計、フロントエンドの状態管理、ビルドプロセスなどが、さらなる複雑性の層を加える 1。  
-* **初期コストと開発オーバーヘッドの増加**: 開発は、単にWordPressテーマをカスタマイズするよりも要求が高い。多くの場合、フロントエンドとバックエンドで別々の開発者が必要となり、初期コストとプロジェクトのタイムラインが増加する 4。  
-* **エコシステムの制約とプラグインの非互換性**: 多くのWordPressプラグイン、特にフロントエンドと連携するもの（ページビルダー、フォームプラグイン、一部のSEOプラグインなど）は、そのままでは機能しない。これらの機能はフロントエンドで手動で再構築する必要がある 1。また、ライブプレビューやWYSIWYG編集といった機能は、カスタム実装なしでは失われる 4。  
-* **メンテナンスと運用負荷**: チームは二つの独立したシステムを維持する責任を負うことになる。一つはWordPressバックエンド（サーバー、データベース、アップデートを含む）、もう一つはフロントエンドアプリケーション（ビルドパイプラインとホスティング環境を含む）である 1。
+- **複雑性の増大と技術的ハードル**: これが最も重大な欠点である。WordPressと最新のJavaScript開発の両方における専門知識が要求される。APIの設計、フロントエンドの状態管理、ビルドプロセスなどが、さらなる複雑性の層を加える 1。
+- **初期コストと開発オーバーヘッドの増加**: 開発は、単にWordPressテーマをカスタマイズするよりも要求が高い。多くの場合、フロントエンドとバックエンドで別々の開発者が必要となり、初期コストとプロジェクトのタイムラインが増加する 4。
+- **エコシステムの制約とプラグインの非互換性**: 多くのWordPressプラグイン、特にフロントエンドと連携するもの（ページビルダー、フォームプラグイン、一部のSEOプラグインなど）は、そのままでは機能しない。これらの機能はフロントエンドで手動で再構築する必要がある 1。また、ライブプレビューやWYSIWYG編集といった機能は、カスタム実装なしでは失われる 4。
+- **メンテナンスと運用負荷**: チームは二つの独立したシステムを維持する責任を負うことになる。一つはWordPressバックエンド（サーバー、データベース、アップデートを含む）、もう一つはフロントエンドアプリケーション（ビルドパイプラインとホスティング環境を含む）である 1。
 
 ---
 
@@ -63,22 +61,22 @@ WPGraphQLは、WordPressをGraphQLサーバーに変換する無料のオープ�
 
 ### **2.3 戦略的ガイダンス：RESTとGraphQLの選択基準**
 
-* **RESTを選択する場合**: プロジェクトが比較的小規模で、データ要件が単純な場合（例：基本的なブログフィード）。開発チームがRESTの原則に精通している場合。または、WPGraphQLという別の主要なプラグインを追加することによるオーバーヘッドが懸念される場合。  
-* **GraphQLを選択する場合**: アプリケーションが複雑で、ネストされたデータ関係を持つ場合。パフォーマンスが最優先事項である場合。フロントエンドチームがバックエンドの依存関係なしに迅速にイテレーションを行う必要がある場合。または、ウェブとモバイルなど、異なるデータ要件を持つ複数のクライアント向けに構築する場合。
+- **RESTを選択する場合**: プロジェクトが比較的小規模で、データ要件が単純な場合（例：基本的なブログフィード）。開発チームがRESTの原則に精通している場合。または、WPGraphQLという別の主要なプラグインを追加することによるオーバーヘッドが懸念される場合。
+- **GraphQLを選択する場合**: アプリケーションが複雑で、ネストされたデータ関係を持つ場合。パフォーマンスが最優先事項である場合。フロントエンドチームがバックエンドの依存関係なしに迅速にイテレーションを行う必要がある場合。または、ウェブとモバイルなど、異なるデータ要件を持つ複数のクライアント向けに構築する場合。
 
 ### **表2.1 REST API vs. WPGraphQL \- 技術的比較**
 
 この比較表は、技術的な意思決定者にとって不可欠である。なぜなら、複雑で多面的なアーキテクチャの選択を、明確で一覧性の高い形式に集約しているからだ。これにより、プロジェクトの優先事項に基づいた情報に基づいた決定が可能になる。RESTとGraphQLの選択は、実装パスにおける根本的な分岐点であり、その違いはパフォーマンス、開発者体験、アーキテクチャに及ぶ 6。この表は、複数の情報源からのテキストを直接的で実行可能な意思決定ツールに変換する。
 
-| 特徴 | WordPress REST API | WPGraphQL |
-| :---- | :---- | :---- |
-| **エンドポイント管理** | リソースごとに複数のエンドポイント（例：/posts, /pages）19 | 全てのクエリに対して単一のエンドポイント（例：/graphql）6 |
-| **データ取得** | エンドポイントごとに固定のデータ構造。オーバー/アンダーフェッチングが発生しやすい 6 | クライアントが必要なデータを正確に指定。オーバー/アンダーフェッチングなし 7 |
-| **パフォーマンス** | 1つのビューに複数のHTTPリクエストが必要になることがあり、レイテンシが増加する可能性がある 6 | 全てのデータを単一のリクエストで取得し、ネットワークのオーバーヘッドを削減 2 |
-| **開発者体験** | 広く理解されている。クライアント側でのエンドポイントの発見とデータの結合が必要 4 | 型付けされたスキーマとIDEが自動補完と自己文書化を提供 22 |
-| **バージョニング** | 通常URLでバージョン管理（例：/v2/）。破壊的変更には新バージョンが必要 6 | バージョニングなしで進化。既存クライアントを壊さずに新しいフィールドを追加可能 6 |
-| **エラーハンドリング** | HTTPステータスコードを使用（例：404, 500）6 | 200 OKステータスを返し、JSONレスポンス内に特定のerrorsオブジェクトを含める 6 |
-| **WordPress連携** | コア機能であり、プラグインは不要 9 | WPGraphQLプラグインおよびACFなどの他プラグイン用拡張機能が必要 21 |
+| 特徴                   | WordPress REST API                                                                          | WPGraphQL                                                                        |
+| :--------------------- | :------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------- |
+| **エンドポイント管理** | リソースごとに複数のエンドポイント（例：/posts, /pages）19                                  | 全てのクエリに対して単一のエンドポイント（例：/graphql）6                        |
+| **データ取得**         | エンドポイントごとに固定のデータ構造。オーバー/アンダーフェッチングが発生しやすい 6         | クライアントが必要なデータを正確に指定。オーバー/アンダーフェッチングなし 7      |
+| **パフォーマンス**     | 1つのビューに複数のHTTPリクエストが必要になることがあり、レイテンシが増加する可能性がある 6 | 全てのデータを単一のリクエストで取得し、ネットワークのオーバーヘッドを削減 2     |
+| **開発者体験**         | 広く理解されている。クライアント側でのエンドポイントの発見とデータの結合が必要 4            | 型付けされたスキーマとIDEが自動補完と自己文書化を提供 22                         |
+| **バージョニング**     | 通常URLでバージョン管理（例：/v2/）。破壊的変更には新バージョンが必要 6                     | バージョニングなしで進化。既存クライアントを壊さずに新しいフィールドを追加可能 6 |
+| **エラーハンドリング** | HTTPステータスコードを使用（例：404, 500）6                                                 | 200 OKステータスを返し、JSONレスポンス内に特定のerrorsオブジェクトを含める 6     |
+| **WordPress連携**      | コア機能であり、プラグインは不要 9                                                          | WPGraphQLプラグインおよびACFなどの他プラグイン用拡張機能が必要 21                |
 
 ---
 
@@ -102,7 +100,7 @@ fetch('https://example.com/wp-json/wp/v2/posts')
 
 ### **3.2 高度なクエリとパフォーマンスに関する考慮事項**
 
-クエリパラメータを使用して、フィルタリング（?categories=X）、ページネーション（?per\_page=5\&page=2）、検索（?search=term）を行う方法を実証する。特に\_embedパラメータは、アンダーフェッチングを緩和するための重要なツールであり、関連リソース（アイキャッチ画像や著者データなど）をプライマリAPIレスポンスに含めることができる 19。
+クエリパラメータを使用して、フィルタリング（?categories=X）、ページネーション（?per_page=5\&page=2）、検索（?search=term）を行う方法を実証する。特に\_embedパラメータは、アンダーフェッチングを緩和するための重要なツールであり、関連リソース（アイキャッチ画像や著者データなど）をプライマリAPIレスポンスに含めることができる 19。
 
 パフォーマンスのベストプラクティスとして、APIレスポンスのキャッシュ 19、大規模なアーカイブでの過度な
 
@@ -110,35 +108,35 @@ fetch('https://example.com/wp-json/wp/v2/posts')
 
 ### **3.3 APIの拡張：カスタムエンドポイントの作成**
 
-functions.phpファイル内でregister\_rest\_route関数を使用し、カスタムREST APIエンドポイントを作成する手順を段階的に解説する 19。
+functions.phpファイル内でregister_rest_route関数を使用し、カスタムREST APIエンドポイントを作成する手順を段階的に解説する 19。
 
 コード例：最新の投稿のタイトルとリンクのみを返すカスタムエンドポイント  
 この例は、/custom/v1/latest-postというエンドポイントを作成し、調整されたパフォーマンスの高いレスポンスを返す方法を示す 19。
 
 PHP
 
-add\_action( 'rest\_api\_init', function () {  
-  register\_rest\_route( 'custom/v1', '/latest-post', array(  
-    'methods' \=\> 'GET',  
-    'callback' \=\> 'get\_latest\_post\_title',  
-  ) );  
+add_action( 'rest_api_init', function () {  
+ register_rest_route( 'custom/v1', '/latest-post', array(  
+ 'methods' \=\> 'GET',  
+ 'callback' \=\> 'get_latest_post_title',  
+ ) );  
 } );
 
-function get\_latest\_post\_title() {  
-  $args \= array(  
+function get_latest_post_title() {  
+ $args \= array(  
     'posts\_per\_page' \=\> 1,  
     'orderby' \=\> 'date',  
     'order' \=\> 'DESC'  
   );  
   $latest\_post \= get\_posts($args);  
-  if (empty($latest\_post)) {  
+ if (empty($latest\_post)) {  
     return new WP\_Error( 'no\_post', 'No posts found', array( 'status' \=\> 404 ) );  
   }  
   $post\_data \= array(  
     'title' \=\> $latest\_post\-\>post\_title,  
-    'link' \=\> get\_permalink($latest\_post\-\>ID)  
-  );  
-  return new WP\_REST\_Response( $post\_data, 200 );  
+    'link' \=\> get\_permalink($latest_post\-\>ID)  
+ );  
+ return new WP_REST_Response( $post_data, 200 );  
 }
 
 ### **3.4 Advanced Custom Fields (ACF)とREST APIの連携**
@@ -169,27 +167,27 @@ GraphQLクエリの記述方法について、単純な"hello world"の例から
 GraphQL
 
 query GetPostBySlug($slug: ID\!) {  
-  post(id: $slug, idType: SLUG) {  
-    title  
-    content  
-    featuredImage {  
-      node {  
-        sourceUrl(size: LARGE)  
-        altText  
-      }  
-    }  
-    author {  
-      node {  
-        name  
-      }  
-    }  
-    categories {  
-      nodes {  
-        name  
-        slug  
-      }  
-    }  
-  }  
+ post(id: $slug, idType: SLUG) {  
+ title  
+ content  
+ featuredImage {  
+ node {  
+ sourceUrl(size: LARGE)  
+ altText  
+ }  
+ }  
+ author {  
+ node {  
+ name  
+ }  
+ }  
+ categories {  
+ nodes {  
+ name  
+ slug  
+ }  
+ }  
+ }  
 }
 
 引数（Arguments）、変数（Variables）、そして再利用可能なクエリのためのフラグメント（Fragments）といった高度な概念についても解説する 24。
@@ -204,17 +202,17 @@ WPGraphQL for Advanced Custom Fields拡張プラグインを紹介する 25。AC
 GraphQL
 
 query GetPostBySlugWithACF($slug: ID\!) {  
-  post(id: $slug, idType: SLUG) {  
-    title  
-    content  
-    \#... 他の標準フィールド  
-    acfFields { \# 'acfFields'はACFフィールドグループ名に基づく  
-      customText  
-      customImage {  
-        sourceUrl  
-      }  
-    }  
-  }  
+ post(id: $slug, idType: SLUG) {  
+ title  
+ content  
+ \#... 他の標準フィールド  
+ acfFields { \# 'acfFields'はACFフィールドグループ名に基づく  
+ customText  
+ customImage {  
+ sourceUrl  
+ }  
+ }  
+ }  
 }
 
 ### **4.4 CPT-UIとの連携**
@@ -227,18 +225,18 @@ Custom Post Type UI (CPTUI) プラグインがWPGraphQLとシームレスに連�
 
 ### **5.1 React & Next.jsエコシステム**
 
-* **プロジェクト設定**: Next.jsプロジェクトのセットアップ（npx create-next-app）と、WordPress APIのURLを環境変数に設定する方法を案内する 8。  
-* **データ取得パターン**:  
-  * **静的サイト生成 (SSG)**: getStaticPropsとgetStaticPaths（またはApp RouterのgenerateStaticParams）を使用して、ビルド時に全てのWordPressデータを取得し、完全に静的で非常に高速なサイトを生成する 8。ブログやマーケティングサイトに最適である。  
-  * **サーバーサイドレンダリング (SSR)**: getServerSideProps（またはApp Routerの動的レンダリング）を使用して、リクエストごとにデータを取得する。非常に動的なコンテンツに適している。  
-  * **インクリメンタル静的再生成 (ISR)**: 静的ページをバックグラウンドで定期的に再構築することを可能にするハイブリッドアプローチ。静的な速度と動的なコンテンツの鮮度を両立させる。これはヘッドレスWordPressにとって重要な機能であり、サイト全体の再ビルドなしにコンテンツの更新を可能にする 11。  
-* **動的ページの構築**: \[slug\].jsページで、WordPressから単一の投稿を取得し（RESTまたはGraphQLを使用）、それをレンダリングする完全なコード例を提供する 5。
+- **プロジェクト設定**: Next.jsプロジェクトのセットアップ（npx create-next-app）と、WordPress APIのURLを環境変数に設定する方法を案内する 8。
+- **データ取得パターン**:
+  - **静的サイト生成 (SSG)**: getStaticPropsとgetStaticPaths（またはApp RouterのgenerateStaticParams）を使用して、ビルド時に全てのWordPressデータを取得し、完全に静的で非常に高速なサイトを生成する 8。ブログやマーケティングサイトに最適である。
+  - **サーバーサイドレンダリング (SSR)**: getServerSideProps（またはApp Routerの動的レンダリング）を使用して、リクエストごとにデータを取得する。非常に動的なコンテンツに適している。
+  - **インクリメンタル静的再生成 (ISR)**: 静的ページをバックグラウンドで定期的に再構築することを可能にするハイブリッドアプローチ。静的な速度と動的なコンテンツの鮮度を両立させる。これはヘッドレスWordPressにとって重要な機能であり、サイト全体の再ビルドなしにコンテンツの更新を可能にする 11。
+- **動的ページの構築**: \[slug\].jsページで、WordPressから単一の投稿を取得し（RESTまたはGraphQLを使用）、それをレンダリングする完全なコード例を提供する 5。
 
 ### **5.2 Vue.js & Nuxt.jsエコシステム**
 
-* **プロジェクト設定**: Nuxt.jsプロジェクトのセットアップと、WordPressバックエンドへの接続方法を案内する 9。  
-* **Nuxtのレンダリングモードの活用**: Nuxtのユニバーサルレンダリング機能（SSG, SSR）が、Next.jsと同様にヘッドレスアーキテクチャのニーズに直接対応する方法を説明する 9。  
-* **コンポーネントベースのアーキテクチャ**: WordPressから取得した様々なタイプのコンテンツをレンダリングするために、再利用可能なVueコンポーネント（例：BlogPost.vue）を用いてNuxtアプリケーションを構築する方法を示す 18。
+- **プロジェクト設定**: Nuxt.jsプロジェクトのセットアップと、WordPressバックエンドへの接続方法を案内する 9。
+- **Nuxtのレンダリングモードの活用**: Nuxtのユニバーサルレンダリング機能（SSG, SSR）が、Next.jsと同様にヘッドレスアーキテクチャのニーズに直接対応する方法を説明する 9。
+- **コンポーネントベースのアーキテクチャ**: WordPressから取得した様々なタイプのコンテンツをレンダリングするために、再利用可能なVueコンポーネント（例：BlogPost.vue）を用いてNuxtアプリケーションを構築する方法を示す 18。
 
 フロントエンドフレームワークの選択は、単に開発者の好み（React対Vue）の問題ではなく、レンダリングとデプロイ戦略の選択である。Next.jsやNuxt.jsのようなフレームワークがヘッドレス分野で支配的になったのは、まさにそれらが提供する洗練されたレンダリングオプション（SSG/ISR/SSR）が、初期のヘッドレス実装が抱えていた核心的な問題（SEO、パフォーマンス、コンテンツの鮮度）に対する解決策であったからだ。初期のヘッドレスサイトは、基本的なReactやVueで構築されたシングルページアプリケーション（SPA）であることが多かった 19。これらのSPAは、コンテンツがクライアントサイドでレンダリングされるため、検索エンジンのクローラーがインデックスを作成するのに苦労し、重大なSEOの課題を抱えていた 5。Next.jsのインクリメンタル静的再生成（ISR）11やNuxtのハイブリッドレンダリングは、このパズルの最後のピースを提供する。つまり、WordPressでのコンテンツ変更後に自動的に更新できる高速な静的ページを持つ能力である。したがって、これらのフレームワークの進化は、ヘッドレスアーキテクチャのニーズへの直接的な応答であった。それらは単なる「ビュー層」ではなく、レンダリングとデプロイのための重要なインフラを提供する、現代のヘッドレススタックの不可欠な部分である。
 
@@ -250,20 +248,20 @@ Custom Post Type UI (CPTUI) プラグインがWPGraphQLとシームレスに連�
 
 デカップルドされたフロントエンドがもたらす本質的なセキュリティ上の利点を認めつつも、API自体を保護する必要性を強調する 2。読み取り専用の操作（GETリクエスト）では認証が不要な場合が多いが、書き込み操作（ミューテーションやPOST/PUTリクエスト）には認証が不可欠である。
 
-* **アプリケーションパスワード**: WordPressに組み込まれているアプリケーションパスワード機能は、サーバー間の認証のためのシンプルで効果的な方法である 19。  
-* **JWT認証**: JSON Web Token (JWT) は、フロントエンドアプリケーションからのユーザー認証の標準として機能する。REST API用にはJWT Authプラグインが一般的な解決策として挙げられる 35。
+- **アプリケーションパスワード**: WordPressに組み込まれているアプリケーションパスワード機能は、サーバー間の認証のためのシンプルで効果的な方法である 19。
+- **JWT認証**: JSON Web Token (JWT) は、フロントエンドアプリケーションからのユーザー認証の標準として機能する。REST API用にはJWT Authプラグインが一般的な解決策として挙げられる 35。
 
 ### **6.2 パフォーマンス最適化**
 
-* **バックエンドのキャッシュ**: WordPressレベルでAPIレスポンスをキャッシュすることの重要性を議論する。デフォルトのTTLは1分だが、これは調整可能である。また、オブジェクトキャッシュを使用して高コストなデータベース操作を削減することもできる 26。  
-* **フロントエンドのキャッシュ**: Next.js/Nuxt.jsのようなフレームワークやデプロイメントプラットフォームが提供するキャッシュ戦略を再確認する。  
-* **画像最適化**: WordPressの組み込み機能だけでは不十分な場合があるため、画像最適化戦略の必要性を強調する。NuxtではNetlify Image CDNのようなソリューションを自動的に活用できる 12。
+- **バックエンドのキャッシュ**: WordPressレベルでAPIレスポンスをキャッシュすることの重要性を議論する。デフォルトのTTLは1分だが、これは調整可能である。また、オブジェクトキャッシュを使用して高コストなデータベース操作を削減することもできる 26。
+- **フロントエンドのキャッシュ**: Next.js/Nuxt.jsのようなフレームワークやデプロイメントプラットフォームが提供するキャッシュ戦略を再確認する。
+- **画像最適化**: WordPressの組み込み機能だけでは不十分な場合があるため、画像最適化戦略の必要性を強調する。NuxtではNetlify Image CDNのようなソリューションを自動的に活用できる 12。
 
 ### **6.3 WordPress特有の機能の取り扱い**
 
-* **プレビュー**: デフォルトのWordPressプレビュー機能はヘッドレス設定では機能しない。これを再実装する戦略として、認証済みAPIリクエストを使用して下書きコンテンツを取得する専用のプレビュー用ルートをフロントエンドアプリケーションに作成する方法などを議論する。  
-* **メニュー**: メニューはAPIを介して公開する必要がある。これはWP REST API Menusのようなプラグインで実現できるか、WPGraphQLではネイティブでサポートされていることが多い 5。  
-* **カスタム投稿タイプの権限**: プライベートにする必要があるカスタム投稿タイプについて、デフォルトのREST APIコントローラーは、そのステータスが'publish'であれば公開してしまう可能性がある。このセクションでは、より厳格な権限チェックを強制するためにRESTコントローラーをオーバーライドする方法を詳述する 36。
+- **プレビュー**: デフォルトのWordPressプレビュー機能はヘッドレス設定では機能しない。これを再実装する戦略として、認証済みAPIリクエストを使用して下書きコンテンツを取得する専用のプレビュー用ルートをフロントエンドアプリケーションに作成する方法などを議論する。
+- **メニュー**: メニューはAPIを介して公開する必要がある。これはWP REST API Menusのようなプラグインで実現できるか、WPGraphQLではネイティブでサポートされていることが多い 5。
+- **カスタム投稿タイプの権限**: プライベートにする必要があるカスタム投稿タイプについて、デフォルトのREST APIコントローラーは、そのステータスが'publish'であれば公開してしまう可能性がある。このセクションでは、より厳格な権限チェックを強制するためにRESTコントローラーをオーバーライドする方法を詳述する 36。
 
 ---
 
@@ -293,12 +291,12 @@ VercelやNetlifyのような専門的なフロントエンドホスティング�
 
 ヘッドレスが適切な選択であるかを判断するためのチェックリストを提供する。
 
-* **パフォーマンス要件**: ミリ秒単位の応答速度が求められる高トラフィックのアプリケーションか？  
-* **インタラクティビティ**: フロントエンドに複雑なアプリのような機能が必要か？  
-* **コンテンツチャネル**: ウェブサイト以外のチャネルにもコンテンツを配信する必要があるか？  
-* **チームのスキル**: WordPressと最新のJavaScriptフレームワークの両方に精通した人材がいるか、または確保できるか？  
-* **予算とタイムライン**: 初期開発コストの増加と長期化するタイムラインに対応できるか？  
-* **エコシステム要件**: フロントエンドと統合されたWordPressプラグインの全機能がなくても運用可能か？
+- **パフォーマンス要件**: ミリ秒単位の応答速度が求められる高トラフィックのアプリケーションか？
+- **インタラクティビティ**: フロントエンドに複雑なアプリのような機能が必要か？
+- **コンテンツチャネル**: ウェブサイト以外のチャネルにもコンテンツを配信する必要があるか？
+- **チームのスキル**: WordPressと最新のJavaScriptフレームワークの両方に精通した人材がいるか、または確保できるか？
+- **予算とタイムライン**: 初期開発コストの増加と長期化するタイムラインに対応できるか？
+- **エコシステム要件**: フロントエンドと統合されたWordPressプラグインの全機能がなくても運用可能か？
 
 ### **ベストプラクティスと一般的な落とし穴の要約**
 
@@ -310,41 +308,41 @@ VercelやNetlifyのような専門的なフロントエンドホスティング�
 
 #### **引用文献**
 
-1. Headless WordPress: Benefits, Features, and How It Works, 9月 13, 2025にアクセス、 [https://www.cloudways.com/blog/headless-wordpress-cms/](https://www.cloudways.com/blog/headless-wordpress-cms/)  
-2. Headless WordPress Explained (Even If You're Not a Developer), 9月 13, 2025にアクセス、 [https://wpsecurityninja.com/headless-wordpress-explained-for-non-techies/](https://wpsecurityninja.com/headless-wordpress-explained-for-non-techies/)  
-3. What is Headless WordPress? | Gatsby, 9月 13, 2025にアクセス、 [https://www.gatsbyjs.com/docs/glossary/headless-wordpress/](https://www.gatsbyjs.com/docs/glossary/headless-wordpress/)  
-4. ヘッドレスCMSとWordPressの可能性を探る。次世代ウェブサイト ..., 9月 13, 2025にアクセス、 [https://headless-cms.fenrir-inc.com/articles/headless-cms-wordpress/](https://headless-cms.fenrir-inc.com/articles/headless-cms-wordpress/)  
-5. Headless WordPress with React: Building a Custom React Frontend ..., 9月 13, 2025にアクセス、 [https://www.newtarget.com/web-insights-blog/wordpress-with-react/](https://www.newtarget.com/web-insights-blog/wordpress-with-react/)  
-6. GraphQL vs REST: What's the Difference? | IBM, 9月 13, 2025にアクセス、 [https://www.ibm.com/think/topics/graphql-vs-rest-api](https://www.ibm.com/think/topics/graphql-vs-rest-api)  
-7. WPGraphQL, 9月 13, 2025にアクセス、 [https://www.wpgraphql.com/](https://www.wpgraphql.com/)  
-8. Next.jsでヘッドレスCMSとしてWordPressを使う方法｜Kinsta®, 9月 13, 2025にアクセス、 [https://kinsta.com/jp/blog/headless-wordpress-next-js/](https://kinsta.com/jp/blog/headless-wordpress-next-js/)  
-9. WordPressとNuxt.js連携で実現する次世代ウェブサイト構築 | ヘッド ..., 9月 13, 2025にアクセス、 [https://headless-cms.fenrir-inc.com/articles/nuxt-wordpress-jamstack/](https://headless-cms.fenrir-inc.com/articles/nuxt-wordpress-jamstack/)  
-10. 脱WordPressのための代替ノーコードツール・ヘッドレスCMS \- 魔法使いのWebスクリプト, 9月 13, 2025にアクセス、 [https://scr.marketing-wizard.biz/utilities/post-wordpress-alternarive-headlesscms](https://scr.marketing-wizard.biz/utilities/post-wordpress-alternarive-headlesscms)  
-11. Next.js on Vercel, 9月 13, 2025にアクセス、 [https://vercel.com/frameworks/nextjs](https://vercel.com/frameworks/nextjs)  
-12. Nuxt on Netlify | Netlify Docs, 9月 13, 2025にアクセス、 [https://docs.netlify.com/build/frameworks/framework-setup-guides/nuxt/](https://docs.netlify.com/build/frameworks/framework-setup-guides/nuxt/)  
-13. wakka-inc.com, 9月 13, 2025にアクセス、 [https://wakka-inc.com/blog/1947/\#:\~:text=%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9CMS%E3%81%A8%E3%81%AF%E7%B0%A1%E5%8D%98%E3%81%AB%E3%81%84%E3%81%86%E3%81%A8%E3%80%81%E8%A1%A8%E7%A4%BA,(%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9)CMS%E3%81%A7%E3%81%99%E3%80%82\&text=%E3%81%9D%E3%81%AE%E8%A1%A8%E7%A4%BA%E3%82%92%E8%A1%8C%E3%81%86%E3%83%93%E3%83%A5%E3%83%BC%E3%83%AF%E3%83%BC,%E3%81%A8%E3%81%84%E3%81%86%E3%81%93%E3%81%A8%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82](https://wakka-inc.com/blog/1947/#:~:text=%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9CMS%E3%81%A8%E3%81%AF%E7%B0%A1%E5%8D%98%E3%81%AB%E3%81%84%E3%81%86%E3%81%A8%E3%80%81%E8%A1%A8%E7%A4%BA,\(%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9\)CMS%E3%81%A7%E3%81%99%E3%80%82&text=%E3%81%9D%E3%81%AE%E8%A1%A8%E7%A4%BA%E3%82%92%E8%A1%8C%E3%81%86%E3%83%93%E3%83%A5%E3%83%BC%E3%83%AF%E3%83%BC,%E3%81%A8%E3%81%84%E3%81%86%E3%81%93%E3%81%A8%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82)  
-14. How to make a headless WordPress website in 2025 using react and a plugin, 9月 13, 2025にアクセス、 [https://www.hostinger.com/tutorials/headless-wordpress](https://www.hostinger.com/tutorials/headless-wordpress)  
-15. WordPressヘッドレス化とは？その仕組みと設定方法（＋ヒント）, 9月 13, 2025にアクセス、 [https://www.hostinger.com/jp/tutorials/headless-wordpress/](https://www.hostinger.com/jp/tutorials/headless-wordpress/)  
-16. WordPressのヘッドレスCMS化の特徴とメリット・デメリット, 9月 13, 2025にアクセス、 [https://wakka-inc.com/blog/1947/](https://wakka-inc.com/blog/1947/)  
-17. 【最新版】ヘッドレスCMSとWordPressのセキュリティ対策の特徴 ..., 9月 13, 2025にアクセス、 [https://blog.microcms.io/headlesscms-wordpress-security/](https://blog.microcms.io/headlesscms-wordpress-security/)  
-18. Our Headless WordPress Journey with Astro.js and Vue.js ..., 9月 13, 2025にアクセス、 [https://outsourcify.net/our-headless-wordpress-journey-with-astro-js-and-vue-js/](https://outsourcify.net/our-headless-wordpress-journey-with-astro-js-and-vue-js/)  
-19. WP REST APIとは？使い方や実装に必須の知識について徹底解説 ..., 9月 13, 2025にアクセス、 [https://ume-noki.com/wp-rest-api/](https://ume-noki.com/wp-rest-api/)  
-20. GraphQL vs REST API \- Difference Between API Design ... \- AWS, 9月 13, 2025にアクセス、 [https://aws.amazon.com/compare/the-difference-between-graphql-and-rest/](https://aws.amazon.com/compare/the-difference-between-graphql-and-rest/)  
-21. WPGraphQL – WordPress plugin, 9月 13, 2025にアクセス、 [https://wordpress.org/plugins/wp-graphql/](https://wordpress.org/plugins/wp-graphql/)  
-22. WordPressにGraphQLを導入する \- Zenn, 9月 13, 2025にアクセス、 [https://zenn.dev/fbd\_tech/books/519201590c4e98/viewer/6f3693](https://zenn.dev/fbd_tech/books/519201590c4e98/viewer/6f3693)  
-23. 「WPGraphQL」を使用してWordPressでGraphQLを使う \- KumaTechLab, 9月 13, 2025にアクセス、 [https://kumatech-lab.com/wpgraphql](https://kumatech-lab.com/wpgraphql)  
-24. Intro to GraphQL, 9月 13, 2025にアクセス、 [https://www.wpgraphql.com/docs/intro-to-graphql](https://www.wpgraphql.com/docs/intro-to-graphql)  
-25. wp-graphql/wpgraphql-acf: Re-architecture of WPGraphQL ... \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/wp-graphql/wpgraphql-acf](https://github.com/wp-graphql/wpgraphql-acf)  
-26. WordPress REST API · WordPress VIP Documentation, 9月 13, 2025にアクセス、 [https://docs.wpvip.com/wordpress-on-vip/wordpress-rest-api/](https://docs.wpvip.com/wordpress-on-vip/wordpress-rest-api/)  
-27. Need help using WP REST API to display specific posts. : r/Wordpress, 9月 13, 2025にアクセス、 [https://www.reddit.com/r/Wordpress/comments/za8r7y/need\_help\_using\_wp\_rest\_api\_to\_display\_specific/](https://www.reddit.com/r/Wordpress/comments/za8r7y/need_help_using_wp_rest_api_to_display_specific/)  
-28. Integrating Custom Field Types With the WordPress REST API \- ACF, 9月 13, 2025にアクセス、 [https://www.advancedcustomfields.com/resources/integrating-custom-field-types/](https://www.advancedcustomfields.com/resources/integrating-custom-field-types/)  
-29. ACF to REST API – WordPress plugin | WordPress.org, 9月 13, 2025にアクセス、 [https://wordpress.org/plugins/acf-to-rest-api/](https://wordpress.org/plugins/acf-to-rest-api/)  
-30. 「WPGraphQL」を使用してWordPressでGraphQLを使う ..., 9月 13, 2025にアクセス、 [https://kumatech-lab.com/wpgraphql/](https://kumatech-lab.com/wpgraphql/)  
-31. Queries \- GraphQL, 9月 13, 2025にアクセス、 [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/)  
-32. WPGraphQL for ACF Plugin \- WordPress.com, 9月 13, 2025にアクセス、 [https://wordpress.com/plugins/wpgraphql-acf](https://wordpress.com/plugins/wpgraphql-acf)  
-33. How to Build a Headless WordPress Blog with Next.js and GraphQl ..., 9月 13, 2025にアクセス、 [https://raddy.dev/blog/how-to-build-a-headless-wordpress-blog-with-next-js-and-graphql/](https://raddy.dev/blog/how-to-build-a-headless-wordpress-blog-with-next-js-and-graphql/)  
-34. Headless Vue \+ WordPress Boilerplate \- DEV Community, 9月 13, 2025にアクセス、 [https://dev.to/chrischase011/headless-vue-wordpress-boilerplate-2je5](https://dev.to/chrischase011/headless-vue-wordpress-boilerplate-2je5)  
-35. WP-API/jwt-auth: Enable JSON Web Token authentication ... \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/WP-API/jwt-auth](https://github.com/WP-API/jwt-auth)  
-36. WordPress: Custom Post types and read permission in REST \- Artur Piszek, 9月 13, 2025にアクセス、 [https://piszek.com/2024/02/17/wordpress-custom-post-types-and-read-permission-in-rest/](https://piszek.com/2024/02/17/wordpress-custom-post-types-and-read-permission-in-rest/)  
-37. Learn Next.js | Next.js by Vercel \- The React Framework, 9月 13, 2025にアクセス、 [https://nextjs.org/learn](https://nextjs.org/learn)  
+1. Headless WordPress: Benefits, Features, and How It Works, 9月 13, 2025にアクセス、 [https://www.cloudways.com/blog/headless-wordpress-cms/](https://www.cloudways.com/blog/headless-wordpress-cms/)
+2. Headless WordPress Explained (Even If You're Not a Developer), 9月 13, 2025にアクセス、 [https://wpsecurityninja.com/headless-wordpress-explained-for-non-techies/](https://wpsecurityninja.com/headless-wordpress-explained-for-non-techies/)
+3. What is Headless WordPress? | Gatsby, 9月 13, 2025にアクセス、 [https://www.gatsbyjs.com/docs/glossary/headless-wordpress/](https://www.gatsbyjs.com/docs/glossary/headless-wordpress/)
+4. ヘッドレスCMSとWordPressの可能性を探る。次世代ウェブサイト ..., 9月 13, 2025にアクセス、 [https://headless-cms.fenrir-inc.com/articles/headless-cms-wordpress/](https://headless-cms.fenrir-inc.com/articles/headless-cms-wordpress/)
+5. Headless WordPress with React: Building a Custom React Frontend ..., 9月 13, 2025にアクセス、 [https://www.newtarget.com/web-insights-blog/wordpress-with-react/](https://www.newtarget.com/web-insights-blog/wordpress-with-react/)
+6. GraphQL vs REST: What's the Difference? | IBM, 9月 13, 2025にアクセス、 [https://www.ibm.com/think/topics/graphql-vs-rest-api](https://www.ibm.com/think/topics/graphql-vs-rest-api)
+7. WPGraphQL, 9月 13, 2025にアクセス、 [https://www.wpgraphql.com/](https://www.wpgraphql.com/)
+8. Next.jsでヘッドレスCMSとしてWordPressを使う方法｜Kinsta®, 9月 13, 2025にアクセス、 [https://kinsta.com/jp/blog/headless-wordpress-next-js/](https://kinsta.com/jp/blog/headless-wordpress-next-js/)
+9. WordPressとNuxt.js連携で実現する次世代ウェブサイト構築 | ヘッド ..., 9月 13, 2025にアクセス、 [https://headless-cms.fenrir-inc.com/articles/nuxt-wordpress-jamstack/](https://headless-cms.fenrir-inc.com/articles/nuxt-wordpress-jamstack/)
+10. 脱WordPressのための代替ノーコードツール・ヘッドレスCMS \- 魔法使いのWebスクリプト, 9月 13, 2025にアクセス、 [https://scr.marketing-wizard.biz/utilities/post-wordpress-alternarive-headlesscms](https://scr.marketing-wizard.biz/utilities/post-wordpress-alternarive-headlesscms)
+11. Next.js on Vercel, 9月 13, 2025にアクセス、 [https://vercel.com/frameworks/nextjs](https://vercel.com/frameworks/nextjs)
+12. Nuxt on Netlify | Netlify Docs, 9月 13, 2025にアクセス、 [https://docs.netlify.com/build/frameworks/framework-setup-guides/nuxt/](https://docs.netlify.com/build/frameworks/framework-setup-guides/nuxt/)
+13. wakka-inc.com, 9月 13, 2025にアクセス、 [https://wakka-inc.com/blog/1947/\#:\~:text=%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9CMS%E3%81%A8%E3%81%AF%E7%B0%A1%E5%8D%98%E3%81%AB%E3%81%84%E3%81%86%E3%81%A8%E3%80%81%E8%A1%A8%E7%A4%BA,(%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9)CMS%E3%81%A7%E3%81%99%E3%80%82\&text=%E3%81%9D%E3%81%AE%E8%A1%A8%E7%A4%BA%E3%82%92%E8%A1%8C%E3%81%86%E3%83%93%E3%83%A5%E3%83%BC%E3%83%AF%E3%83%BC,%E3%81%A8%E3%81%84%E3%81%86%E3%81%93%E3%81%A8%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82](<https://wakka-inc.com/blog/1947/#:~:text=%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9CMS%E3%81%A8%E3%81%AF%E7%B0%A1%E5%8D%98%E3%81%AB%E3%81%84%E3%81%86%E3%81%A8%E3%80%81%E8%A1%A8%E7%A4%BA,(%E3%83%98%E3%83%83%E3%83%89%E3%83%AC%E3%82%B9)CMS%E3%81%A7%E3%81%99%E3%80%82&text=%E3%81%9D%E3%81%AE%E8%A1%A8%E7%A4%BA%E3%82%92%E8%A1%8C%E3%81%86%E3%83%93%E3%83%A5%E3%83%BC%E3%83%AF%E3%83%BC,%E3%81%A8%E3%81%84%E3%81%86%E3%81%93%E3%81%A8%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82>)
+14. How to make a headless WordPress website in 2025 using react and a plugin, 9月 13, 2025にアクセス、 [https://www.hostinger.com/tutorials/headless-wordpress](https://www.hostinger.com/tutorials/headless-wordpress)
+15. WordPressヘッドレス化とは？その仕組みと設定方法（＋ヒント）, 9月 13, 2025にアクセス、 [https://www.hostinger.com/jp/tutorials/headless-wordpress/](https://www.hostinger.com/jp/tutorials/headless-wordpress/)
+16. WordPressのヘッドレスCMS化の特徴とメリット・デメリット, 9月 13, 2025にアクセス、 [https://wakka-inc.com/blog/1947/](https://wakka-inc.com/blog/1947/)
+17. 【最新版】ヘッドレスCMSとWordPressのセキュリティ対策の特徴 ..., 9月 13, 2025にアクセス、 [https://blog.microcms.io/headlesscms-wordpress-security/](https://blog.microcms.io/headlesscms-wordpress-security/)
+18. Our Headless WordPress Journey with Astro.js and Vue.js ..., 9月 13, 2025にアクセス、 [https://outsourcify.net/our-headless-wordpress-journey-with-astro-js-and-vue-js/](https://outsourcify.net/our-headless-wordpress-journey-with-astro-js-and-vue-js/)
+19. WP REST APIとは？使い方や実装に必須の知識について徹底解説 ..., 9月 13, 2025にアクセス、 [https://ume-noki.com/wp-rest-api/](https://ume-noki.com/wp-rest-api/)
+20. GraphQL vs REST API \- Difference Between API Design ... \- AWS, 9月 13, 2025にアクセス、 [https://aws.amazon.com/compare/the-difference-between-graphql-and-rest/](https://aws.amazon.com/compare/the-difference-between-graphql-and-rest/)
+21. WPGraphQL – WordPress plugin, 9月 13, 2025にアクセス、 [https://wordpress.org/plugins/wp-graphql/](https://wordpress.org/plugins/wp-graphql/)
+22. WordPressにGraphQLを導入する \- Zenn, 9月 13, 2025にアクセス、 [https://zenn.dev/fbd_tech/books/519201590c4e98/viewer/6f3693](https://zenn.dev/fbd_tech/books/519201590c4e98/viewer/6f3693)
+23. 「WPGraphQL」を使用してWordPressでGraphQLを使う \- KumaTechLab, 9月 13, 2025にアクセス、 [https://kumatech-lab.com/wpgraphql](https://kumatech-lab.com/wpgraphql)
+24. Intro to GraphQL, 9月 13, 2025にアクセス、 [https://www.wpgraphql.com/docs/intro-to-graphql](https://www.wpgraphql.com/docs/intro-to-graphql)
+25. wp-graphql/wpgraphql-acf: Re-architecture of WPGraphQL ... \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/wp-graphql/wpgraphql-acf](https://github.com/wp-graphql/wpgraphql-acf)
+26. WordPress REST API · WordPress VIP Documentation, 9月 13, 2025にアクセス、 [https://docs.wpvip.com/wordpress-on-vip/wordpress-rest-api/](https://docs.wpvip.com/wordpress-on-vip/wordpress-rest-api/)
+27. Need help using WP REST API to display specific posts. : r/Wordpress, 9月 13, 2025にアクセス、 [https://www.reddit.com/r/Wordpress/comments/za8r7y/need_help_using_wp_rest_api_to_display_specific/](https://www.reddit.com/r/Wordpress/comments/za8r7y/need_help_using_wp_rest_api_to_display_specific/)
+28. Integrating Custom Field Types With the WordPress REST API \- ACF, 9月 13, 2025にアクセス、 [https://www.advancedcustomfields.com/resources/integrating-custom-field-types/](https://www.advancedcustomfields.com/resources/integrating-custom-field-types/)
+29. ACF to REST API – WordPress plugin | WordPress.org, 9月 13, 2025にアクセス、 [https://wordpress.org/plugins/acf-to-rest-api/](https://wordpress.org/plugins/acf-to-rest-api/)
+30. 「WPGraphQL」を使用してWordPressでGraphQLを使う ..., 9月 13, 2025にアクセス、 [https://kumatech-lab.com/wpgraphql/](https://kumatech-lab.com/wpgraphql/)
+31. Queries \- GraphQL, 9月 13, 2025にアクセス、 [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/)
+32. WPGraphQL for ACF Plugin \- WordPress.com, 9月 13, 2025にアクセス、 [https://wordpress.com/plugins/wpgraphql-acf](https://wordpress.com/plugins/wpgraphql-acf)
+33. How to Build a Headless WordPress Blog with Next.js and GraphQl ..., 9月 13, 2025にアクセス、 [https://raddy.dev/blog/how-to-build-a-headless-wordpress-blog-with-next-js-and-graphql/](https://raddy.dev/blog/how-to-build-a-headless-wordpress-blog-with-next-js-and-graphql/)
+34. Headless Vue \+ WordPress Boilerplate \- DEV Community, 9月 13, 2025にアクセス、 [https://dev.to/chrischase011/headless-vue-wordpress-boilerplate-2je5](https://dev.to/chrischase011/headless-vue-wordpress-boilerplate-2je5)
+35. WP-API/jwt-auth: Enable JSON Web Token authentication ... \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/WP-API/jwt-auth](https://github.com/WP-API/jwt-auth)
+36. WordPress: Custom Post types and read permission in REST \- Artur Piszek, 9月 13, 2025にアクセス、 [https://piszek.com/2024/02/17/wordpress-custom-post-types-and-read-permission-in-rest/](https://piszek.com/2024/02/17/wordpress-custom-post-types-and-read-permission-in-rest/)
+37. Learn Next.js | Next.js by Vercel \- The React Framework, 9月 13, 2025にアクセス、 [https://nextjs.org/learn](https://nextjs.org/learn)
 38. Deploy Nuxt Sites and Apps \- Starter Templates & Resources \- Netlify, 9月 13, 2025にアクセス、 [https://www.netlify.com/with/nuxt/](https://www.netlify.com/with/nuxt/)

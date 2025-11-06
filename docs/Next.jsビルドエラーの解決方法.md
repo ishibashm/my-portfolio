@@ -1,5 +1,3 @@
-
-
 # **Next.js 15における非odo同期Propsの完全攻略：「paramsにPromiseのプロパティがありません」エラーの深掘り**
 
 ## **序論：「Type 'PageProps' Does Not Satisfy」ビルドエラーの解体**
@@ -38,11 +36,11 @@ searchParamsプロパティや、next/headersからインポートされるcooki
 
 #### **表1：paramsプロパティの進化（Next.js 14 vs. Next.js 15）**
 
-| 機能 | Next.js 14（およびそれ以前） | Next.js 15（推奨パターン） |
-| :---- | :---- | :---- |
+| 機能                           | Next.js 14（およびそれ以前）             | Next.js 15（推奨パターン）                     |
+| :----------------------------- | :--------------------------------------- | :--------------------------------------------- |
 | **コンポーネントのシグネチャ** | export default function Page({ params }) | export default async function Page({ params }) |
-| **Propsの型 (\[slug\])** | { params: { slug: string } } | { params: Promise\<{ slug: string }\> } |
-| **値へのアクセス** | const slug \= params.slug; | const { slug } \= await params; |
+| **Propsの型 (\[slug\])**       | { params: { slug: string } }             | { params: Promise\<{ slug: string }\> }        |
+| **値へのアクセス**             | const slug \= params.slug;               | const { slug } \= await params;                |
 
 ## **第2章：サーバーコンポーネントにおける決定的な解決策**
 
@@ -58,8 +56,8 @@ searchParamsプロパティや、next/headersからインポートされるcooki
 
 これが修正の中核部分です。既存のparamsの型定義をPromiseでラップする必要があります。ユーザーの具体的なケースである\[...slug\]の場合、型定義は以下のように変更されます。
 
-* **旧来の型定義:** interface PageProps { params: { slug: string } }  
-* **新しい正しい型定義:** interface PageProps { params: Promise\<{ slug: string }\> }
+- **旧来の型定義:** interface PageProps { params: { slug: string } }
+- **新しい正しい型定義:** interface PageProps { params: Promise\<{ slug: string }\> }
 
 この変更により、型定義がNext.jsの内部型が課す制約を満たすようになり、エラーメッセージで指摘されていた型の非互換性が解消されます。
 
@@ -74,24 +72,24 @@ TypeScript
 // src/app/\[...slug\]/page.tsx
 
 interface PageProps {  
-  params: Promise\<{ slug: string }\>; // 正しい型定義  
+ params: Promise\<{ slug: string }\>; // 正しい型定義  
 }
 
 export default async function Page({ params }: PageProps) {  
-  // Promiseをawaitで解決する  
-  const resolvedParams \= await params;  
-  // slugプロパティにアクセスする  
-  const { slug } \= resolvedParams;
+ // Promiseをawaitで解決する  
+ const resolvedParams \= await params;  
+ // slugプロパティにアクセスする  
+ const { slug } \= resolvedParams;
 
-  // より簡潔な記述:  
-  // const { slug } \= await params;
+// より簡潔な記述:  
+ // const { slug } \= await params;
 
-  return (  
-    \<div\>  
-      \<h1\>Catch-all Page\</h1\>  
-      \<p\>Path segments: {slug.join('/')}\</p\>  
-    \</div\>  
-  );  
+return (  
+ \<div\>  
+ \<h1\>Catch-all Page\</h1\>  
+ \<p\>Path segments: {slug.join('/')}\</p\>  
+ \</div\>  
+ );  
 }
 
 このコードスニペットは、ユーザーが問題に直面しているsrc/app/\[...slug\]/page.tsxファイルに対する、完全かつ即時適用可能な解決策です。
@@ -100,12 +98,12 @@ export default async function Page({ params }: PageProps) {
 
 この表は、開発者が将来遭遇する可能性のある他の動的ルートパターンにも対応できるよう、再利用可能なリファレンスとして機能します。
 
-| ルートパターン | paramsの型定義 | URLの例 | 解決後のparamsの値 |
-| :---- | :---- | :---- | :---- |
-| app/blog/\[slug\]/page.tsx | Promise\<{ slug: string }\> | /blog/hello-world | { slug: 'hello-world' } |
-| app/shop/\[...slug\]/page.tsx | Promise\<{ slug: string }\> | /shop/men/shirts | { slug: \['men', 'shirts'\] } |
-| app/docs/\[\[...slug\]\]/page.tsx | Promise\<{ slug?: string }\> | /docs | { slug: undefined } |
-| app/\[cat\]/\[item\]/page.tsx | Promise\<{ cat: string, item: string }\> | /electronics/tv | { cat: 'electronics', item: 'tv' } |
+| ルートパターン                    | paramsの型定義                           | URLの例           | 解決後のparamsの値                 |
+| :-------------------------------- | :--------------------------------------- | :---------------- | :--------------------------------- |
+| app/blog/\[slug\]/page.tsx        | Promise\<{ slug: string }\>              | /blog/hello-world | { slug: 'hello-world' }            |
+| app/shop/\[...slug\]/page.tsx     | Promise\<{ slug: string }\>              | /shop/men/shirts  | { slug: \['men', 'shirts'\] }      |
+| app/docs/\[\[...slug\]\]/page.tsx | Promise\<{ slug?: string }\>             | /docs             | { slug: undefined }                |
+| app/\[cat\]/\[item\]/page.tsx     | Promise\<{ cat: string, item: string }\> | /electronics/tv   | { cat: 'electronics', item: 'tv' } |
 
 出典: 8
 
@@ -131,8 +129,8 @@ TypeScript
 import ClientPost from './client-post';
 
 export default async function Page({ params }: { params: Promise\<{ slug: string }\> }) {  
-  // Promiseを直接クライアントコンポーネントに渡す  
-  return \<ClientPost params\={params} /\>;  
+ // Promiseを直接クライアントコンポーネントに渡す  
+ return \<ClientPost params\={params} /\>;  
 }
 
 // app/blog/\[slug\]/client-post.tsx (クライアントコンポーネントの子)  
@@ -141,10 +139,10 @@ export default async function Page({ params }: { params: Promise\<{ slug: string
 import { use } from 'react';
 
 export default function ClientPost({ params }: { params: Promise\<{ slug:string }\> }) {  
-  // useフックでPromiseをアンラップする  
-  const { slug } \= use(params);
+ // useフックでPromiseをアンラップする  
+ const { slug } \= use(params);
 
-  return \<div\>Post slug from Client Component: {slug}\</div\>;  
+return \<div\>Post slug from Client Component: {slug}\</div\>;  
 }
 
 このパターンはアーキテクチャ上の検討事項も提起します。つまり、Promiseをクライアントコンポーネントに渡すべきか、あるいはサーバー側で解決してプリミティブな値を渡すべきか、という選択です。後者はクライアント側の複雑さを減らす一方で、コンポーネント間の結合度を高める可能性があります。
@@ -183,14 +181,14 @@ as AppRouterPageRouteのような型アサーションを用いた一時的な�
 
 #### **引用文献**
 
-1. 'Props' does not satisfy the constraint 'PageProps' | Type Script is hard for Noobs : r/nextjs, 9月 13, 2025にアクセス、 [https://www.reddit.com/r/nextjs/comments/1hpwuo9/props\_does\_not\_satisfy\_the\_constraint\_pageprops/](https://www.reddit.com/r/nextjs/comments/1hpwuo9/props_does_not_satisfy_the_constraint_pageprops/)  
-2. Next.js 15 Build Fails: 'params' type mismatch (Promise) on dynamic routes \#77609 \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/vercel/next.js/issues/77609](https://github.com/vercel/next.js/issues/77609)  
-3. Dynamic Route TypeScript Error: params type missing Promise properties \- Stack Overflow, 9月 13, 2025にアクセス、 [https://stackoverflow.com/questions/79369898/dynamic-route-typescript-error-params-type-missing-promise-properties](https://stackoverflow.com/questions/79369898/dynamic-route-typescript-error-params-type-missing-promise-properties)  
-4. seeing this error and can't deploy : r/nextjs \- Reddit, 9月 13, 2025にアクセス、 [https://www.reddit.com/r/nextjs/comments/1lxj1sy/seeing\_this\_error\_and\_cant\_deploy/](https://www.reddit.com/r/nextjs/comments/1lxj1sy/seeing_this_error_and_cant_deploy/)  
-5. Dynamic APIs are Asynchronous \- Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/messages/sync-dynamic-apis](https://nextjs.org/docs/messages/sync-dynamic-apis)  
-6. Next.js 15 params Type Error During Build – Promise  
-7. Getting Started: Linking and Navigating \- Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/app/getting-started/linking-and-navigating](https://nextjs.org/docs/app/getting-started/linking-and-navigating)  
-8. File-system conventions: Dynamic Segments | Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes)  
-9. Dynamic Routes \- Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes)  
-10. File-system conventions: route.js | Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/app/api-reference/file-conventions/route](https://nextjs.org/docs/app/api-reference/file-conventions/route)  
+1. 'Props' does not satisfy the constraint 'PageProps' | Type Script is hard for Noobs : r/nextjs, 9月 13, 2025にアクセス、 [https://www.reddit.com/r/nextjs/comments/1hpwuo9/props_does_not_satisfy_the_constraint_pageprops/](https://www.reddit.com/r/nextjs/comments/1hpwuo9/props_does_not_satisfy_the_constraint_pageprops/)
+2. Next.js 15 Build Fails: 'params' type mismatch (Promise) on dynamic routes \#77609 \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/vercel/next.js/issues/77609](https://github.com/vercel/next.js/issues/77609)
+3. Dynamic Route TypeScript Error: params type missing Promise properties \- Stack Overflow, 9月 13, 2025にアクセス、 [https://stackoverflow.com/questions/79369898/dynamic-route-typescript-error-params-type-missing-promise-properties](https://stackoverflow.com/questions/79369898/dynamic-route-typescript-error-params-type-missing-promise-properties)
+4. seeing this error and can't deploy : r/nextjs \- Reddit, 9月 13, 2025にアクセス、 [https://www.reddit.com/r/nextjs/comments/1lxj1sy/seeing_this_error_and_cant_deploy/](https://www.reddit.com/r/nextjs/comments/1lxj1sy/seeing_this_error_and_cant_deploy/)
+5. Dynamic APIs are Asynchronous \- Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/messages/sync-dynamic-apis](https://nextjs.org/docs/messages/sync-dynamic-apis)
+6. Next.js 15 params Type Error During Build – Promise
+7. Getting Started: Linking and Navigating \- Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/app/getting-started/linking-and-navigating](https://nextjs.org/docs/app/getting-started/linking-and-navigating)
+8. File-system conventions: Dynamic Segments | Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes)
+9. Dynamic Routes \- Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes)
+10. File-system conventions: route.js | Next.js, 9月 13, 2025にアクセス、 [https://nextjs.org/docs/app/api-reference/file-conventions/route](https://nextjs.org/docs/app/api-reference/file-conventions/route)
 11. Handling Props Type Error with Auth0's Next.js Library, 9月 13, 2025にアクセス、 [https://community.auth0.com/t/handling-props-type-error-with-auth0s-next-js-library/124956](https://community.auth0.com/t/handling-props-type-error-with-auth0s-next-js-library/124956)

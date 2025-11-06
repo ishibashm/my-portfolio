@@ -1,0 +1,238 @@
+.blogPost {
+  padding: 2rem 0;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.container {
+  padding: 0 1rem;
+}
+
+.articleWrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.articleHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.articleTitle {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.articleDate {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.blogContent {
+  margin-bottom: 3rem;
+}
+
+/* MDXコンテンツのスタイル */
+.blogContent :global(.mdx-h1) {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin: 2.5rem 0 1.5rem 0;
+  color: #fff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.blogContent :global(.mdx-h2) {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  color: #fff;
+}
+
+.blogContent :global(.mdx-h3) {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 1.5rem 0 0.75rem 0;
+  color: #fff;
+}
+
+.blogContent :global(.mdx-h4) {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 1.25rem 0 0.5rem 0;
+  color: #fff;
+}
+
+.blogContent :global(.mdx-h5) {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 1rem 0 0.5rem 0;
+  color: #fff;
+}
+
+.blogContent :global(.mdx-h6) {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin: 0.75rem 0 0.5rem 0;
+  color: #fff;
+}
+
+.blogContent :global(.mdx-p) {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: 1rem 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.blogContent :global(.mdx-a-external) {
+  color: #45b7d1;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.blogContent :global(.mdx-aExternal:hover) {
+  border-bottom-color: #45b7d1;
+}
+
+.blogContent :global(.mdx-a-internal) {
+  color: #45b7d1;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.blogContent :global(.mdx-a-internal:hover) {
+  border-bottom-color: #45b7d1;
+}
+
+.blogContent :global(.mdx-img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.blogContent :global(.mdx-ul),
+.blogContent :global(.mdx-ol) {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.blogContent :global(.mdx-li) {
+  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+}
+
+.blogContent :global(.mdxBlockquote) {
+  border-left: 4px solid #45b7d1;
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.blogContent :global(.mdx-code) {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 0.9em;
+  color: #e6e6e6;
+}
+
+.blogContent :global(.mdx-pre) {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+}
+
+.blogContent :global(.mdx-pre code) {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+  color: #e6e6e6;
+}
+
+.blogContent :global(.mdx-hr) {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 3rem 0;
+}
+
+.blogContent :global(.mdx-strong) {
+  font-weight: 600;
+  color: #fff;
+}
+
+.blogContent :global(.mdx-em) {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.articleFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tag {
+  background: rgba(69, 183, 209, 0.2);
+  color: #45b7d1;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  border: 1px solid rgba(69, 183, 209, 0.3);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .blogPost {
+    padding: 1rem 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .articleTitle {
+    font-size: 2rem;
+  }
+
+  .blogContent :global(.mdx-h1) {
+    font-size: 1.875rem;
+  }
+
+  .blogContent :global(.mdx-h2) {
+    font-size: 1.75rem;
+  }
+
+  .blogContent :global(.mdx-h3) {
+    font-size: 1.5rem;
+  }
+
+  .blogContent :global(.mdx-p) {
+    font-size: 0.95rem;
+  }
+
+  .blogContent :global(.mdx-pre) {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+}

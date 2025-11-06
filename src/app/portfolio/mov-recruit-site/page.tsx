@@ -1,9 +1,9 @@
 "use client";
-import Image from 'next/image';
-import styles from './mov-recruit-site.module.css';
-import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
-import { Footer } from '@/components/Globals/Footer/Footer';
+import Image from "next/image";
+import styles from "./mov-recruit-site.module.css";
+import Head from "next/head";
+import { useEffect, useRef, useState } from "react";
+import { Footer } from "@/components/Globals/Footer/Footer";
 
 const images = [
   "/images/gallery/gallery-1.webp",
@@ -26,7 +26,7 @@ const Scroller = ({ reverse = false }: { reverse?: boolean }) => {
 
     const scrollerContent = Array.from(scrollerInner.children);
 
-    scrollerContent.forEach(item => {
+    scrollerContent.forEach((item) => {
       const duplicatedItem = item.cloneNode(true) as HTMLElement;
       duplicatedItem.setAttribute("aria-hidden", "true");
       scrollerInner.appendChild(duplicatedItem);
@@ -34,16 +34,24 @@ const Scroller = ({ reverse = false }: { reverse?: boolean }) => {
   }, []);
 
   return (
-    <div ref={scrollerRef} className={`${styles.scroller} ${reverse ? styles.scrollerReverse : ''}`}>
+    <div
+      ref={scrollerRef}
+      className={`${styles.scroller} ${reverse ? styles.scrollerReverse : ""}`}
+    >
       <div className={styles.scrollerInner}>
         {images.map((src, index) => (
-          <Image key={index} src={src} alt={`Gallery ${index + 1}`} width={400} height={300} />
+          <Image
+            key={index}
+            src={src}
+            alt={`Gallery ${index + 1}`}
+            width={400}
+            height={300}
+          />
         ))}
       </div>
     </div>
   );
 };
-
 
 const MovRecruitSitePage = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -56,12 +64,12 @@ const MovRecruitSitePage = () => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
     observer.observe(refCurrent);
     return () => observer.disconnect();
   }, []);
-  
+
   return (
     <>
       <Head>
@@ -88,26 +96,44 @@ const MovRecruitSitePage = () => {
                   : styles.featuresTextBlock
               }
             >
-              <p className={styles.featuresLead}>NEXAは、『テクノロジーで、次の「当たり前」を創造する』をミッションに掲げるテックカンパニーです。</p>
-              <p className={styles.featuresMission}>あなたの才能が、世界を動かす力になる。その挑戦の始まりが、ここにあります。</p>
+              <p className={styles.featuresLead}>
+                NEXAは、『テクノロジーで、次の「当たり前」を創造する』をミッションに掲げるテックカンパニーです。
+              </p>
+              <p className={styles.featuresMission}>
+                あなたの才能が、世界を動かす力になる。その挑戦の始まりが、ここにあります。
+              </p>
             </div>
           </section>
           <section className={styles.jobs}>
             <h2 className={styles.sectionTitle}>募集中のポジション</h2>
             <div className={styles.jobList}>
               <div className={styles.jobCard}>
-                <h4><span className={styles.animatedTextHover}>Webエンジニア</span></h4>
+                <h4>
+                  <span className={styles.animatedTextHover}>
+                    Webエンジニア
+                  </span>
+                </h4>
                 <p>自社サービスの開発・運用を担当していただきます。</p>
                 <span className={styles.jobTag}>正社員</span>
               </div>
               <div className={styles.jobCard}>
-                <h4><span className={styles.animatedTextHover}>Webデザイナー</span></h4>
+                <h4>
+                  <span className={styles.animatedTextHover}>
+                    Webデザイナー
+                  </span>
+                </h4>
                 <p>自社サービスやLPのデザインを担当していただきます。</p>
                 <span className={styles.jobTag}>正社員</span>
               </div>
               <div className={styles.jobCard}>
-                <h4><span className={styles.animatedTextHover}>Webマーケター</span></h4>
-                <p>自社サービスのマーケティング戦略の立案・実行を担当していただきます。</p>
+                <h4>
+                  <span className={styles.animatedTextHover}>
+                    Webマーケター
+                  </span>
+                </h4>
+                <p>
+                  自社サービスのマーケティング戦略の立案・実行を担当していただきます。
+                </p>
                 <span className={styles.jobTag}>契約社員</span>
               </div>
             </div>
@@ -144,6 +170,6 @@ const MovRecruitSitePage = () => {
       </div>
     </>
   );
-}
+};
 
 export default MovRecruitSitePage;

@@ -1,12 +1,12 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: '', // すべてのパスを許可
+      userAgent: "*",
+      allow: "/",
+      disallow: "", // すべてのパスを許可
     },
-    sitemap: 'https://www.cloud-palette.com/sitemap.xml',
+    sitemap: "https://www.cloud-palette.com/sitemap.xml",
   };
 }

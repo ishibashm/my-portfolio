@@ -11,7 +11,9 @@
   font-weight: 700;
   margin-bottom: 0.5em;
   color: #fff;
-  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Montserrat", "Noto Sans JP", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
 }
 
 .photoGallerySubtitle {
@@ -24,7 +26,13 @@
 .scroller {
   max-width: 100%;
   overflow: hidden;
-  -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    white 20%,
+    white 80%,
+    transparent
+  );
   mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
   margin-top: 1rem;
 }
@@ -53,9 +61,8 @@
   height: 300px;
   width: auto;
   border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
 }
-
 
 .aboutUsSection {
   background: #283e50;
@@ -76,7 +83,9 @@
   text-align: center;
   margin-bottom: 2.5rem;
   letter-spacing: 2px;
-  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Montserrat", "Noto Sans JP", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
 }
 
 .aboutUsContent {
@@ -86,7 +95,9 @@
   line-height: 1.8;
   color: #fff;
   text-align: left;
-  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Noto Sans JP", "Montserrat", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -160,7 +171,9 @@
   align-items: center;
   min-height: 100dvh;
   background: #283e50;
-  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Noto Sans JP", "Montserrat", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
   color: #333;
 }
 
@@ -205,14 +218,16 @@
   text-align: center;
   margin: 20px auto 0;
   padding: 0;
-  color: #F0F2F5;
+  color: #f0f2f5;
 }
 
 .heroText h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Montserrat", "Noto Sans JP", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
 }
 
 .heroText p {
@@ -228,9 +243,11 @@
   line-height: 30px;
   margin: 30px;
   text-align: center;
-  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
-    color: #F0F2F5 !important;
-  }
+  font-family:
+    "Noto Sans JP", "Montserrat", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
+  color: #f0f2f5 !important;
+}
 
 .heroSubtitle {
   display: none;
@@ -251,7 +268,9 @@
   margin-bottom: 2.5rem;
   color: #fff;
   letter-spacing: 2px;
-  font-family: 'Montserrat', 'Noto Sans JP', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Montserrat", "Noto Sans JP", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
 }
 
 .featuresGrid {
@@ -261,29 +280,31 @@
 }
 
 .featureCard {
-    font-size: 34px;
-    font-weight: 300;
-    letter-spacing: 2.45px;
-    line-height: 30px;
-    margin: 30px 0 18px 0;
-    color: #fff;
-    text-align: center;
-    font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: 2.45px;
+  line-height: 30px;
+  margin: 30px 0 18px 0;
+  color: #fff;
+  text-align: center;
+  font-family:
+    "Noto Sans JP", "Montserrat", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
 }
 
 .featureCard h3 {
   font-size: 1.3rem;
-    width: 100%;
-    max-width: 990px;
-    padding: 48px 32px;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(0, 124, 255, 0.10);
-    margin-top: 48px;
-    border: 1px solid #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  max-width: 990px;
+  padding: 48px 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 124, 255, 0.1);
+  margin-top: 48px;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   line-height: 1.7;
   color: #555;
 }
@@ -307,7 +328,7 @@
 }
 
 .jobCard {
-  background: #3A5064;
+  background: #3a5064;
   padding: 24px 18px;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(102, 126, 234, 0.07);
@@ -317,26 +338,28 @@
   transition: all 0.3s ease;
   border: 1px solid transparent;
   color: #fff;
-  font-family: 'Noto Sans JP', 'Montserrat', 'Inter', '文游明朝体 古雅かな R', 'Avenir', sans-serif;
+  font-family:
+    "Noto Sans JP", "Montserrat", "Inter", "文游明朝体 古雅かな R", "Avenir",
+    sans-serif;
 }
 
 .jobCard:hover {
   transform: translateY(-4px);
-   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-   border-color: rgba(0, 246, 255, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 246, 255, 0.2);
 }
 
 .jobCard h4 {
   font-size: 1.15rem;
   font-weight: 600;
-  color: #F0F2F5;
+  color: #f0f2f5;
   margin: 0;
   font-family: inherit;
 }
 
 .jobCard p {
   font-size: 0.98rem;
-  color: #A9B4C2;
+  color: #a9b4c2;
   margin: 0;
   flex-grow: 1;
   padding: 0 16px;
@@ -344,24 +367,19 @@
 }
 
 .jobTag {
-  background: #00F6FF;
+  background: #00f6ff;
   color: #283e50;
   padding: 7px 16px;
   border-radius: 16px;
   font-size: 0.92rem;
   font-weight: bold;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 124, 255, 0.10);
+  box-shadow: 0 2px 8px rgba(0, 124, 255, 0.1);
   font-family: inherit;
 }
 
 .animatedTextHover {
-  background-image: linear-gradient(
-    90deg,
-    #00F6FF,
-    #F0F2F5,
-    #F0F2F5
-  );
+  background-image: linear-gradient(90deg, #00f6ff, #f0f2f5, #f0f2f5);
   background-size: 300% 100%;
   background-position: 100% 0;
   -webkit-background-clip: text;
@@ -399,7 +417,7 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  color: #F0F2F5;
+  color: #f0f2f5;
 }
 
 @media (max-width: 900px) {

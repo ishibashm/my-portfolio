@@ -17,10 +17,10 @@
 }
 
 .blogCard {
-  background: rgba(255, 255, 255, .05);
+  background: rgba(255, 255, 255, 0.05);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
@@ -69,7 +69,7 @@
 }
 
 .cardCategory {
-  background-color: #45B7D1;
+  background-color: #45b7d1;
   padding: 0.2rem 0.6rem;
   border-radius: 8px;
   font-size: 0.8rem;

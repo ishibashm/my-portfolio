@@ -1,10 +1,10 @@
-import { DocumentNode } from 'graphql';
-import { draftMode } from 'next/headers';
-import { print } from 'graphql/language/printer';
+import { DocumentNode } from "graphql";
+import { draftMode } from "next/headers";
+import { print } from "graphql/language/printer";
 
 type FetchGraphQLOptions = {
   query: DocumentNode | string;
-  variables?: Record<string, any>;
+  variables?: Record<string, unknown>;
 };
 
 export async function fetchGraphQL<T>({
@@ -14,22 +14,22 @@ export async function fetchGraphQL<T>({
   const { isEnabled } = await draftMode();
 
   const endpoint =
-    typeof window === 'undefined'
+    typeof window === "undefined"
       ? `${process.env.NEXT_PUBLIC_SITE_URL}/api/graphql`
-      : '/api/graphql';
+      : "/api/graphql";
 
-  const queryString = typeof query === 'string' ? query : print(query);
+  const queryString = typeof query === "string" ? query : print(query);
 
   const res = await fetch(endpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       query: queryString,
       variables,
     }),
-    cache: isEnabled ? 'no-store' : 'force-cache',
+    cache: isEnabled ? "no-store" : "force-cache",
   });
 
   if (!res.ok) {
@@ -37,13 +37,13 @@ export async function fetchGraphQL<T>({
     console.error(`GraphQL fetch failed: ${res.status} ${res.statusText}`, {
       errorBody,
     });
-    throw new Error('Failed to fetch API');
+    throw new Error("Failed to fetch API");
   }
 
   const json = await res.json();
   if (json.errors) {
-    console.error('GraphQL Errors:', json.errors);
-    throw new Error('Failed to fetch API');
+    console.error("GraphQL Errors:", json.errors);
+    throw new Error("Failed to fetch API");
   }
 
   return json;

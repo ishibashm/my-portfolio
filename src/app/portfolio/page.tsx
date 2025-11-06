@@ -1,4 +1,4 @@
-import { PortfolioListTemplate } from '@/components/Templates/PortfolioList/PortfolioListTemplate';
+import { PortfolioListTemplate } from "@/components/Templates/PortfolioList/PortfolioListTemplate";
 
 const PortfolioPage = () => {
   // 静的なダミーデータのみを使用
@@ -40,58 +40,59 @@ const PortfolioPage = () => {
     //   },
     // },
     {
-      __typename: 'Post' as const,
-      slug: 'corporate-site',
-      title: 'コーポレートサイト',
-      excerpt: '<p>React, TypeScript, Next.jsで構築したコーポレートサイトです。</p>',
+      __typename: "Post" as const,
+      slug: "corporate-site",
+      title: "コーポレートサイト",
+      excerpt:
+        "<p>React, TypeScript, Next.jsで構築したコーポレートサイトです。</p>",
       featuredImage: {
         node: {
-          sourceUrl: '/images/portfolio.png', // スクリーンショットのパスに変更
-          altText: 'コーポレートサイトのスクリーンショット',
+          sourceUrl: "/images/portfolio.png", // スクリーンショットのパスに変更
+          altText: "コーポレートサイトのスクリーンショット",
         },
       },
       tags: {
         nodes: [
           {
-            __typename: 'Tag' as const,
-            name: 'React',
-            slug: 'react',
+            __typename: "Tag" as const,
+            name: "React",
+            slug: "react",
           },
           {
-            __typename: 'Tag' as const,
-            name: 'Next.js',
-            slug: 'nextjs',
+            __typename: "Tag" as const,
+            name: "Next.js",
+            slug: "nextjs",
           },
           {
-            __typename: 'Tag' as const,
-            name: 'TypeScript',
-            slug: 'typescript',
+            __typename: "Tag" as const,
+            name: "TypeScript",
+            slug: "typescript",
           },
         ],
       },
     },
     {
-      __typename: 'Post' as const,
-      slug: 'mov-recruit-site',
-      title: '採用サイト',
-      excerpt: '<p>Next.js, TypeScriptで構築した採用サイトです。</p>',
+      __typename: "Post" as const,
+      slug: "mov-recruit-site",
+      title: "採用サイト",
+      excerpt: "<p>Next.js, TypeScriptで構築した採用サイトです。</p>",
       featuredImage: {
         node: {
-          sourceUrl: '/images/portfolio2.png',
-          altText: '採用サイトのヒーローイメージ',
+          sourceUrl: "/images/portfolio2.png",
+          altText: "採用サイトのヒーローイメージ",
         },
       },
       tags: {
         nodes: [
           {
-            __typename: 'Tag' as const,
-            name: 'Next.js',
-            slug: 'nextjs',
+            __typename: "Tag" as const,
+            name: "Next.js",
+            slug: "nextjs",
           },
           {
-            __typename: 'Tag' as const,
-            name: 'TypeScript',
-            slug: 'typescript',
+            __typename: "Tag" as const,
+            name: "TypeScript",
+            slug: "typescript",
           },
         ],
       },

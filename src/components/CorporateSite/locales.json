@@ -13,9 +13,18 @@
     "services": {
       "title": "Our Services",
       "items": [
-        { "title": "Web Design", "description": "Creating stunning and user-friendly interfaces." },
-        { "title": "Web Development", "description": "Building robust and scalable web applications." },
-        { "title": "SEO & Marketing", "description": "Driving traffic and increasing online visibility." }
+        {
+          "title": "Web Design",
+          "description": "Creating stunning and user-friendly interfaces."
+        },
+        {
+          "title": "Web Development",
+          "description": "Building robust and scalable web applications."
+        },
+        {
+          "title": "SEO & Marketing",
+          "description": "Driving traffic and increasing online visibility."
+        }
       ]
     },
     "about": {
@@ -28,9 +37,18 @@
     "news": {
       "title": "Latest News",
       "items": [
-        { "date": "2025.07.01", "title": "Launched our new branding and website." },
-        { "date": "2025.06.15", "title": "Welcomed two new developers to our team." },
-        { "date": "2025.05.20", "title": "Published a case study on our latest project." }
+        {
+          "date": "2025.07.01",
+          "title": "Launched our new branding and website."
+        },
+        {
+          "date": "2025.06.15",
+          "title": "Welcomed two new developers to our team."
+        },
+        {
+          "date": "2025.05.20",
+          "title": "Published a case study on our latest project."
+        }
       ]
     },
     "footer": {
@@ -51,9 +69,18 @@
     "services": {
       "title": "私たちのサービス",
       "items": [
-        { "title": "ウェブデザイン", "description": "魅力的で使いやすいインターフェースを作成します。" },
-        { "title": "ウェブ開発", "description": "堅牢でスケーラブルなウェブアプリケーションを構築します。" },
-        { "title": "SEO & マーケティング", "description": "トラフィックを促進し、オンラインでの認知度を高めます。" }
+        {
+          "title": "ウェブデザイン",
+          "description": "魅力的で使いやすいインターフェースを作成します。"
+        },
+        {
+          "title": "ウェブ開発",
+          "description": "堅牢でスケーラブルなウェブアプリケーションを構築します。"
+        },
+        {
+          "title": "SEO & マーケティング",
+          "description": "トラフィックを促進し、オンラインでの認知度を高めます。"
+        }
       ]
     },
     "about": {
@@ -66,10 +93,18 @@
     "news": {
       "title": "最新ニュース",
       "items": [
-        { "date": "2025.07.01", "title": "新しいブランディングとウェブサイトを公開しました。" },
-        { "date": "2025.06.15", "title": "チームに2人の新しい開発者を迎えました。" },
-        { "date": "2025.05.20",
- "title": "最新プロジェクトのケーススタディを公開しました。" }
+        {
+          "date": "2025.07.01",
+          "title": "新しいブランディングとウェブサイトを公開しました。"
+        },
+        {
+          "date": "2025.06.15",
+          "title": "チームに2人の新しい開発者を迎えました。"
+        },
+        {
+          "date": "2025.05.20",
+          "title": "最新プロジェクトのケーススタディを公開しました。"
+        }
       ]
     },
     "footer": {

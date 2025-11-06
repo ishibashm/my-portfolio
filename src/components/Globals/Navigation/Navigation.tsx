@@ -1,11 +1,12 @@
-'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import styles from './Navigation.module.css';
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./Navigation.module.css";
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/portfolio', label: 'Portfolio' },
+  { href: "/", label: "Home" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export const Navigation = () => {
@@ -17,7 +18,7 @@ export const Navigation = () => {
         <Link
           href={href}
           key={href}
-          className={pathname === href ? styles.active : ''}
+          className={pathname === href ? styles.active : ""}
         >
           {label}
         </Link>

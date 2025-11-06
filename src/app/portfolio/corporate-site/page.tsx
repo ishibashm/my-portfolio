@@ -1,6 +1,6 @@
-'use client';
-import { CorporateSite } from '@/components/CorporateSite/CorporateSite';
-import './corporate-site.css';
+"use client";
+import { CorporateSite } from "@/components/CorporateSite/CorporateSite";
+import "./corporate-site.css";
 
 const CorporateSitePage = () => {
   return (

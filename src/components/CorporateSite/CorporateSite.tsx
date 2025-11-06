@@ -1,12 +1,12 @@
-'use client';
-import React, { useState } from 'react';
-import './CorporateSite.css';
-import locales from './locales.json';
+"use client";
+import React, { useState } from "react";
+import "./CorporateSite.css";
+import locales from "./locales.json";
 
-type Locale = 'en' | 'ja';
+type Locale = "en" | "ja";
 
 export const CorporateSite = () => {
-  const [locale, setLocale] = useState<Locale>('ja');
+  const [locale] = useState<Locale>("ja");
   const t = locales[locale];
 
   return (
@@ -23,7 +23,7 @@ export const CorporateSite = () => {
           <div className="container">
             <h2 className="section-title">{t.services.title}</h2>
             <div className="services-grid">
-              {t.services.items.map(item => (
+              {t.services.items.map((item) => (
                 <div className="service-item" key={item.title}>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -39,9 +39,12 @@ export const CorporateSite = () => {
             <div className="about-content">
               <p>{t.about.content}</p>
               <dl>
-                <dt>{t.about.company}</dt><dd>MyCorp Inc.</dd>
-                <dt>{t.about.founded}</dt><dd>2025</dd>
-                <dt>{t.about.location}</dt><dd>Tokyo, Japan</dd>
+                <dt>{t.about.company}</dt>
+                <dd>MyCorp Inc.</dd>
+                <dt>{t.about.founded}</dt>
+                <dd>2025</dd>
+                <dt>{t.about.location}</dt>
+                <dd>Tokyo, Japan</dd>
               </dl>
             </div>
           </div>
@@ -51,7 +54,7 @@ export const CorporateSite = () => {
           <div className="container">
             <h2 className="section-title">{t.news.title}</h2>
             <ul className="news-list">
-              {t.news.items.map(item => (
+              {t.news.items.map((item) => (
                 <li key={item.title}>
                   <time>{item.date}</time>
                   <a href="#">{item.title}</a>

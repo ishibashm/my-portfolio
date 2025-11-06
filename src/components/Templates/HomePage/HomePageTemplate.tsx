@@ -1,6 +1,6 @@
-'use client';
-import Link from 'next/link';
-import styles from './HomePageTemplate.module.css';
+"use client";
+import Link from "next/link";
+import styles from "./HomePageTemplate.module.css";
 
 export const HomePageTemplate = () => {
   return (
@@ -10,7 +10,12 @@ export const HomePageTemplate = () => {
           <h2 className={styles.sectionTitle}>About Me</h2>
           <div className={styles.aboutContent}>
             <div className={styles.socialLinks}>
-              <a href="https://github.com/ishibashm" target="_blank" rel="noopener noreferrer" className={styles.socialButton}>
+              <a
+                href="https://github.com/ishibashm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.socialButton}
+              >
                 GitHub
               </a>
               <Link href="/portfolio" className={styles.socialButton}>

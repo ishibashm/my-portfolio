@@ -1,447 +1,467 @@
 /* オーバーサイズタイポグラフィ - メインスタイル */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #000000;
-    color: #ffffff;
-    overflow-x: hidden;
-    line-height: 1.2;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+  line-height: 1.2;
 }
 
 .container {
-    width: 100%;
-    min-height: 100vh;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* ヒーローセクション */
 .hero-section {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
 }
 
 .oversized-text-wrapper {
-    position: relative;
-    text-align: center;
+  position: relative;
+  text-align: center;
 }
 
 .oversized-text {
-    font-size: 20vw;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 0.8;
-    color: #ffffff;
-    text-transform: uppercase;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    overflow: visible;
+  font-size: 20vw;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.8;
+  color: #ffffff;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
 }
 
 .oversized-text::before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-    background-size: 300% 300%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gradientShift 8s ease-in-out infinite;
-    z-index: -1;
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientShift 8s ease-in-out infinite;
+  z-index: -1;
 }
 
 .char {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(100px) rotateX(-90deg);
-    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100px) rotateX(-90deg);
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .char.animate-in {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
 }
 
 .subtitle {
-    margin-top: 2rem;
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    color: #888888;
-    text-transform: uppercase;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: #888888;
+  text-transform: uppercase;
 }
 
 /* セカンダリセクション */
 .secondary-section {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-    color: #000000;
-    position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #000000;
+  position: relative;
 }
 
 .message-wrapper {
-    text-align: center;
-    position: relative;
+  text-align: center;
+  position: relative;
 }
 
 .large-message {
-    font-size: 12vw;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 0.9;
-    text-transform: uppercase;
+  font-size: 12vw;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  text-transform: uppercase;
 }
 
 .line {
-    display: block;
-    position: relative;
+  display: block;
+  position: relative;
 }
 
 .line.overflow {
-    color: #ff3333;
-    transform: translateX(10vw);
-    position: relative;
+  color: #ff3333;
+  transform: translateX(10vw);
+  position: relative;
 }
 
 .line.overflow::after {
-    content: '';
-    position: absolute;
-    right: -5vw;
-    top: 50%;
-    width: 20vw;
-    height: 2px;
-    background: #ff3333;
-    transform: translateY(-50%);
+  content: "";
+  position: absolute;
+  right: -5vw;
+  top: 50%;
+  width: 20vw;
+  height: 2px;
+  background: #ff3333;
+  transform: translateY(-50%);
 }
 
 .supporting-text {
-    margin-top: 3rem;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: #666666;
-    line-height: 1.6;
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.6;
 }
 
 /* 数値統計セクション */
 .stats-section {
-    padding: 8rem 2rem;
-    background: #111111;
-    border-top: 1px solid #333333;
+  padding: 8rem 2rem;
+  background: #111111;
+  border-top: 1px solid #333333;
 }
 
 .stats-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 4rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .stat-item {
-    text-align: center;
-    position: relative;
+  text-align: center;
+  position: relative;
 }
 
 .big-number {
-    display: block;
-    font-size: 15vw;
-    font-weight: 900;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-    position: relative;
-    z-index: 2;
+  display: block;
+  font-size: 15vw;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
 }
 
 .big-number::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    animation: pulse 3s ease-in-out infinite;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  animation: pulse 3s ease-in-out infinite;
 }
 
 .stat-label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #888888;
-    letter-spacing: 0.3em;
-    margin-top: 1rem;
-    text-transform: uppercase;
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #888888;
+  letter-spacing: 0.3em;
+  margin-top: 1rem;
+  text-transform: uppercase;
 }
 
 /* オーバーフローセクション */
 .overflow-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: #ff3333;
-    color: #ffffff;
-    position: relative;
-    overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #ff3333;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
 .overflow-wrapper {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 }
 
 .overflow-text {
-    font-size: 25vw;
-    font-weight: 900;
-    letter-spacing: -0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    position: relative;
-    left: -10vw;
-    will-change: transform;
+  font-size: 25vw;
+  font-weight: 900;
+  letter-spacing: -0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  position: relative;
+  left: -10vw;
+  will-change: transform;
 }
 
 .overflow-content {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    font-size: 1.2rem;
-    font-weight: 400;
-    text-align: right;
-    line-height: 1.6;
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-align: right;
+  line-height: 1.6;
 }
 
 /* インタラクティブセクション */
 .interactive-section {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #000000;
-    position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  position: relative;
 }
 
 .interactive-wrapper {
-    text-align: center;
+  text-align: center;
 }
 
 .hover-text {
-    font-size: 18vw;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    color: #ffffff;
+  font-size: 18vw;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  color: #ffffff;
 }
 
 .hover-text:hover {
-    color: transparent;
-    transform: scale(1.1);
+  color: transparent;
+  transform: scale(1.1);
 }
 
 .hover-text::before {
-    content: attr(data-hover);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #f7b733, #fc4a1a);
-    background-size: 400% 400%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    animation: gradientShift 3s ease-in-out infinite;
+  content: attr(data-hover);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #4ecdc4,
+    #45b7d1,
+    #96ceb4,
+    #f7b733,
+    #fc4a1a
+  );
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  animation: gradientShift 3s ease-in-out infinite;
 }
 
 .hover-text:hover::before {
-    opacity: 1;
+  opacity: 1;
 }
 
 .interaction-hint {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #666666;
-    font-weight: 300;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #666666;
+  font-weight: 300;
 }
 
 /* フッター */
 .footer {
-    padding: 3rem 2rem;
-    background: #111111;
-    border-top: 1px solid #333333;
+  padding: 3rem 2rem;
+  background: #111111;
+  border-top: 1px solid #333333;
 }
 
 .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer-text {
-    font-size: 0.9rem;
-    color: #888888;
-    font-weight: 400;
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 400;
 }
 
 .back-link a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .back-link a:hover {
-    color: #4ecdc4;
+  color: #4ecdc4;
 }
 
 /* アニメーション */
 @keyframes gradientShift {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes pulse {
-    0%, 100% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
-    .oversized-text {
-        font-size: 25vw;
-        letter-spacing: -0.08em;
-    }
-    
-    .large-message {
-        font-size: 18vw;
-    }
-    
-    .big-number {
-        font-size: 20vw;
-    }
-    
-    .overflow-text {
-        font-size: 30vw;
-        left: -15vw;
-    }
-    
-    .hover-text {
-        font-size: 22vw;
-    }
-    
-    .line.overflow {
-        transform: translateX(5vw);
-    }
-    
-    .line.overflow::after {
-        right: -10vw;
-        width: 15vw;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-    
-    .overflow-content {
-        position: static;
-        margin-top: 2rem;
-        text-align: center;
-        padding: 0 1rem;
-    }
-    
-    .stats-wrapper {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
+  .oversized-text {
+    font-size: 25vw;
+    letter-spacing: -0.08em;
+  }
+
+  .large-message {
+    font-size: 18vw;
+  }
+
+  .big-number {
+    font-size: 20vw;
+  }
+
+  .overflow-text {
+    font-size: 30vw;
+    left: -15vw;
+  }
+
+  .hover-text {
+    font-size: 22vw;
+  }
+
+  .line.overflow {
+    transform: translateX(5vw);
+  }
+
+  .line.overflow::after {
+    right: -10vw;
+    width: 15vw;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .overflow-content {
+    position: static;
+    margin-top: 2rem;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .stats-wrapper {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .oversized-text {
-        font-size: 30vw;
-    }
-    
-    .large-message {
-        font-size: 22vw;
-    }
-    
-    .big-number {
-        font-size: 25vw;
-    }
-    
-    .overflow-text {
-        font-size: 35vw;
-        left: -20vw;
-    }
-    
-    .hover-text {
-        font-size: 28vw;
-    }
-    
-    .subtitle {
-        font-size: 1.2rem;
-    }
-    
-    .supporting-text {
-        font-size: 1rem;
-    }
+  .oversized-text {
+    font-size: 30vw;
+  }
+
+  .large-message {
+    font-size: 22vw;
+  }
+
+  .big-number {
+    font-size: 25vw;
+  }
+
+  .overflow-text {
+    font-size: 35vw;
+    left: -20vw;
+  }
+
+  .hover-text {
+    font-size: 28vw;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .supporting-text {
+    font-size: 1rem;
+  }
 }
 
 /* 高解像度ディスプレイ対応 */
 @media (-webkit-min-device-pixel-ratio: 2) {
-    .oversized-text,
-    .large-message,
-    .big-number,
-    .overflow-text,
-    .hover-text {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+  .oversized-text,
+  .large-message,
+  .big-number,
+  .overflow-text,
+  .hover-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 /* ダークモードサポート */
 @media (prefers-color-scheme: dark) {
-    .secondary-section {
-        background: #1a1a1a;
-        color: #ffffff;
-    }
-    
-    .supporting-text {
-        color: #cccccc;
-    }
+  .secondary-section {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .supporting-text {
+    color: #cccccc;
+  }
 }

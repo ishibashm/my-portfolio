@@ -1,28 +1,28 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import styles from './BlogListTemplate.module.css';
-import { formatDate } from '@/utils/formatDate';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./BlogListTemplate.module.css";
+import { formatDate } from "@/utils/formatDate";
 
 // 型定義をコンポーネント内で定義
 type Post = {
-  __typename?: 'Post';
+  __typename?: "Post";
   slug?: string | null;
   title?: string | null;
   excerpt?: string | null;
   date?: string | null;
   featuredImage?: {
-    __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge';
+    __typename?: "NodeWithFeaturedImageToMediaItemConnectionEdge";
     node?: {
-      __typename?: 'MediaItem';
+      __typename?: "MediaItem";
       sourceUrl?: string | null;
       altText?: string | null;
     } | null;
   } | null;
   categories?: {
-    __typename?: 'PostToCategoryConnection';
+    __typename?: "PostToCategoryConnection";
     nodes?: Array<{
-      __typename?: 'Category';
+      __typename?: "Category";
       name?: string | null;
       slug?: string | null;
     } | null> | null;
@@ -35,10 +35,7 @@ interface BlogListTemplateProps {
   currentSlug: string;
 }
 
-export const BlogListTemplate = ({
-  posts,
-  title,
-}: BlogListTemplateProps) => {
+export const BlogListTemplate = ({ posts, title }: BlogListTemplateProps) => {
   return (
     <section className={styles.blogListSection}>
       <div className="container">
@@ -47,15 +44,19 @@ export const BlogListTemplate = ({
           {posts?.map(
             (post) =>
               post && (
-                <Link href={`/blog/${post.slug}`} key={post.slug} className={styles.blogCard}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  key={post.slug}
+                  className={styles.blogCard}
+                >
                   {post.featuredImage?.node?.sourceUrl && (
                     <div className={styles.cardImage}>
                       <Image
                         src={post.featuredImage.node.sourceUrl}
-                        alt={post.featuredImage.node.altText || ''}
+                        alt={post.featuredImage.node.altText || ""}
                         width={400}
                         height={250}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: "cover" }}
                       />
                     </div>
                   )}
@@ -81,7 +82,7 @@ export const BlogListTemplate = ({
                     )}
                   </div>
                 </Link>
-              )
+              ),
           )}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { HomePageTemplate } from '@/components/Templates/HomePage/HomePageTemplate';
+import { HomePageTemplate } from "@/components/Templates/HomePage/HomePageTemplate";
 // import { fetchGraphQL } from '@/utils/fetchGraphQL';
 // import {
 //   HomePageDocument,
@@ -19,8 +19,8 @@ export default async function Home() {
 
   return (
     <HomePageTemplate
-      // page={page}
-      // posts={posts?.nodes}
+    // page={page}
+    // posts={posts?.nodes}
     />
   );
 }

@@ -1,10 +1,10 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { PortfoliosQuery } from '@/gql/graphql';
-import styles from './PortfolioListTemplate.module.css'; // 専用のCSSモジュールを使用
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { PortfoliosQuery } from "@/gql/graphql";
+import styles from "./PortfolioListTemplate.module.css"; // 専用のCSSモジュールを使用
 
-type Posts = NonNullable<PortfoliosQuery['posts']>['nodes'];
+type Posts = NonNullable<PortfoliosQuery["posts"]>["nodes"];
 
 interface PortfolioListTemplateProps {
   posts?: Posts | null;
@@ -15,7 +15,7 @@ export const PortfolioListTemplate = ({
 }: PortfolioListTemplateProps) => {
   // 'portfolio' カテゴリを除外して表示するカテゴリを取得
   const getDisplayCategories = (post: Posts[0]) => {
-    return post?.categories?.nodes?.filter(cat => cat?.slug !== 'portfolio');
+    return post?.categories?.nodes?.filter((cat) => cat?.slug !== "portfolio");
   };
 
   return (
@@ -26,15 +26,19 @@ export const PortfolioListTemplate = ({
           {posts?.map(
             (post) =>
               post && (
-                <Link href={`/portfolio/${post.slug}`} key={post.slug} className={styles.styleCard}>
+                <Link
+                  href={`/portfolio/${post.slug}`}
+                  key={post.slug}
+                  className={styles.styleCard}
+                >
                   <div className={styles.cardPreview}>
                     {post.featuredImage?.node?.sourceUrl && (
                       <Image
                         src={post.featuredImage.node.sourceUrl}
-                        alt={post.featuredImage.node.altText || ''}
+                        alt={post.featuredImage.node.altText || ""}
                         width={400}
                         height={250}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: "cover" }}
                       />
                     )}
                   </div>
@@ -55,16 +59,19 @@ export const PortfolioListTemplate = ({
                     )}
                     {post.tags?.nodes && post.tags.nodes.length > 0 && (
                       <div className={styles.cardTags}>
-                        {post.tags.nodes.map(tag => tag && (
-                          <span key={tag.slug} className={styles.cardTag}>
-                            {tag.name}
-                          </span>
-                        ))}
+                        {post.tags.nodes.map(
+                          (tag) =>
+                            tag && (
+                              <span key={tag.slug} className={styles.cardTag}>
+                                {tag.name}
+                              </span>
+                            ),
+                        )}
                       </div>
                     )}
                   </div>
                 </Link>
-              )
+              ),
           )}
         </div>
       </div>

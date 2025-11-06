@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import './InteractiveBackground.css';
+"use client";
+import React from "react";
+import "./InteractiveBackground.css";
 
 export const InteractiveBackground = () => {
   return (

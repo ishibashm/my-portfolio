@@ -9,9 +9,7 @@ export async function PUT(request: NextRequest) {
   }
 
   const requestBody = await request.text();
-  const { paths } = requestBody
-    ? JSON.parse(requestBody)
-    : { paths: [] };
+  const { paths } = requestBody ? JSON.parse(requestBody) : { paths: [] };
 
   try {
     // Always revalidate the HomePage tag

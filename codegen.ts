@@ -1,17 +1,17 @@
-import { CodegenConfig } from '@graphql-codegen/cli';
+import { CodegenConfig } from "@graphql-codegen/cli";
 
 // Vercelのビルド環境でも、認証不要なオリジナルのIPアドレスを直接参照する
-const schema = 'http://35.224.211.72/graphql';
+const schema = "http://35.224.211.72/graphql";
 
 const config: CodegenConfig = {
   schema,
-  documents: ['src/queries/**/*.graphql'],
+  documents: ["src/queries/**/*.graphql"],
   generates: {
-    './src/gql/': {
-      preset: 'client',
+    "./src/gql/": {
+      preset: "client",
       plugins: [],
       presetConfig: {
-        gqlTagName: 'gql',
+        gqlTagName: "gql",
       },
     },
   },

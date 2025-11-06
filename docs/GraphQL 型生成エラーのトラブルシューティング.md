@@ -1,5 +1,3 @@
-
-
 # **Next.jsにおけるGraphQL Code Generator統合の包括的診断および解決ガイド：TS2305: Module has no exported memberの解体**
 
 ## **序論**
@@ -56,8 +54,8 @@ schemaを解析して型の「宇宙」全体を理解します。第二に、do
 
 ### **一般的な失敗パターン**
 
-1. **不正確なGlobパターン**: documentsに指定されたglobパターンが、PageQuery操作を含むファイルの実際の場所と一致していません。Next.jsのappルーターとpagesルーターではディレクトリ構造が異なるため、プロジェクトの構成に合わせた正確なパス指定が必要です。例えば、appルーター内のコンポーネントにクエリを配置している場合、documents: \["src/\*\*/\*.tsx"\]のようなパターンでは不十分かもしれません。  
-2. **対象ファイルの欠落**: globパターン自体は正しいものの、PageQueryがスキャン対象外のファイルに定義されているケースです。例えば、globが.ts(x)ファイルのみを対象としている場合に、クエリが.jsファイルに記述されていると、ジェネレータはその操作を発見できません。  
+1. **不正確なGlobパターン**: documentsに指定されたglobパターンが、PageQuery操作を含むファイルの実際の場所と一致していません。Next.jsのappルーターとpagesルーターではディレクトリ構造が異なるため、プロジェクトの構成に合わせた正確なパス指定が必要です。例えば、appルーター内のコンポーネントにクエリを配置している場合、documents: \["src/\*\*/\*.tsx"\]のようなパターンでは不十分かもしれません。
+2. **対象ファイルの欠落**: globパターン自体は正しいものの、PageQueryがスキャン対象外のファイルに定義されているケースです。例えば、globが.ts(x)ファイルのみを対象としている場合に、クエリが.jsファイルに記述されていると、ジェネレータはその操作を発見できません。
 3. **スキーマとドキュメントの混同**: これが最も致命的な誤解です。開発者がdocumentsプロパティに、クライアントサイドの操作ファイルではなく、GraphQLスキーマ定義ファイル（例：schema.graphql）へのパスを指定してしまうことがあります 10。前述の通り、  
    documentsはアプリケーションが使用する具体的なクエリやミューテーションを指し示すためのものであり、スキーマ定義を指すものではありません。
 
@@ -65,28 +63,28 @@ schemaを解析して型の「宇宙」全体を理解します。第二に、do
 
 .tsxのようなコードファイルからGraphQL操作を抽出する際、GraphQL Code Generatorは内部的にgraphql-tag-pluckというライブラリを使用します 9。このツールは、ファイル内のコードを解析し、特定の形式で記述されたGraphQLクエリ文字列を見つけ出します。発見の対象となるのは、主に以下の2つの形式です。
 
-* gqlタグで囲まれたテンプレートリテラル:  
+- gqlタグで囲まれたテンプレートリテラル:  
   TypeScript  
   import { gql } from '@apollo/client';
 
-  const PAGE\_QUERY \= gql\`  
-    query PageQuery($slug: String\!) {  
-      page(where: { slug: $slug }) {  
-        id  
-        title  
-      }  
-    }  
+  const PAGE_QUERY \= gql\`  
+   query PageQuery($slug: String\!) {  
+   page(where: { slug: $slug }) {  
+   id  
+   title  
+   }  
+   }  
   \`;
 
-* /\* GraphQL \*/というマジックコメントが前に付いたテンプレートリテラル:  
+- /\* GraphQL \*/というマジックコメントが前に付いたテンプレートリテラル:  
   TypeScript  
-  const PAGE\_QUERY \= /\* GraphQL \*/\`  
-    query PageQuery($slug: String\!) {  
-      page(where: { slug: $slug }) {  
-        id  
-        title  
-      }  
-    }  
+  const PAGE_QUERY \= /\* GraphQL \*/\`  
+   query PageQuery($slug: String\!) {  
+   page(where: { slug: $slug }) {  
+   id  
+   title  
+   }  
+   }  
   \`;
 
 これらの規約に従っていないクエリ文字列は、たとえファイルがdocumentsのglobパターンに一致していても、graphql-tag-pluckによって無視され、結果として型が生成されません 9。
@@ -95,13 +93,13 @@ schemaを解析して型の「宇宙」全体を理解します。第二に、do
 
 以下の表は、Next.jsプロジェクトにおける一般的なdocuments構成の誤りとその修正方法をまとめたものです。これにより、迅速な診断と修正が可能になります。
 
-| シナリオ / クエリの場所 | 不適切なdocuments構成の例 | 正しいdocuments構成の例 | 根拠と主な考慮事項 |
-| :---- | :---- | :---- | :---- |
-| クエリを.graphqlファイルで管理 (src/graphql/内) | documents: "src/\*\*/\*.tsx" | documents: "src/graphql/\*\*/\*.graphql" | .graphqlファイルのみをスキャン対象とすることで、スキャンが高速かつ正確になります。コードファイルのスキャンが不要なため、graphql-tag-pluckのオーバーヘッドもありません。 |
-| Next.js appルーターのコンポーネントにクエリを併記 | documents: "src/pages/\*\*/\*.tsx" | documents: "src/app/\*\*/\*.{ts,tsx}" | appルーターのディレクトリ構造に合わせてglobパターンを更新する必要があります。pagesルーター用の古いパターンではファイルを見つけられません。 |
-| Next.js pagesルーターのコンポーネントにクエリを併記 | documents: "src/app/\*\*/\*.tsx" | documents: "src/pages/\*\*/\*.tsx" | pagesルーターの規約に従い、pagesディレクトリ内をスキャン対象とします。 |
-| プロジェクト全体（app, components等）をスキャン | documents: "src/\*\*/\*.ts" | documents: "src/\*\*/\!(\*.d).{ts,tsx}" | プロジェクト全体を対象とする場合、より広範なglobパターンが必要です。\!(\*.d)は、型定義ファイル（.d.ts）をスキャン対象から除外するための一般的なプラクティスです 9。 |
-| スキーマ定義ファイルを誤って指定 | documents: "src/schema.graphql" | documents: "src/\*\*/\*.{ts,tsx}" | documentsはクライアントサイドの操作を指すべきです。スキーマファイルはschemaプロパティで指定します。この混同が、型が一切生成されない一般的な原因です 10。 |
+| シナリオ / クエリの場所                             | 不適切なdocuments構成の例          | 正しいdocuments構成の例                  | 根拠と主な考慮事項                                                                                                                                                      |
+| :-------------------------------------------------- | :--------------------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| クエリを.graphqlファイルで管理 (src/graphql/内)     | documents: "src/\*\*/\*.tsx"       | documents: "src/graphql/\*\*/\*.graphql" | .graphqlファイルのみをスキャン対象とすることで、スキャンが高速かつ正確になります。コードファイルのスキャンが不要なため、graphql-tag-pluckのオーバーヘッドもありません。 |
+| Next.js appルーターのコンポーネントにクエリを併記   | documents: "src/pages/\*\*/\*.tsx" | documents: "src/app/\*\*/\*.{ts,tsx}"    | appルーターのディレクトリ構造に合わせてglobパターンを更新する必要があります。pagesルーター用の古いパターンではファイルを見つけられません。                              |
+| Next.js pagesルーターのコンポーネントにクエリを併記 | documents: "src/app/\*\*/\*.tsx"   | documents: "src/pages/\*\*/\*.tsx"       | pagesルーターの規約に従い、pagesディレクトリ内をスキャン対象とします。                                                                                                  |
+| プロジェクト全体（app, components等）をスキャン     | documents: "src/\*\*/\*.ts"        | documents: "src/\*\*/\!(\*.d).{ts,tsx}"  | プロジェクト全体を対象とする場合、より広範なglobパターンが必要です。\!(\*.d)は、型定義ファイル（.d.ts）をスキャン対象から除外するための一般的なプラクティスです 9。     |
+| スキーマ定義ファイルを誤って指定                    | documents: "src/schema.graphql"    | documents: "src/\*\*/\*.{ts,tsx}"        | documentsはクライアントサイドの操作を指すべきです。スキーマファイルはschemaプロパティで指定します。この混同が、型が一切生成されない一般的な原因です 10。                |
 
 この表は、開発者が直面する可能性のある最も一般的な構成ミスを網羅し、それぞれのプロジェクト構造に合わせた具体的で実行可能な解決策を提供します。これにより、抽象的な「globが間違っている」という知識が、コピー＆ペースト可能な具体的な解決策へと変換され、問題解決のプロセスを大幅に加速させます。
 
@@ -110,18 +108,18 @@ schemaを解析して型の「宇宙」全体を理解します。第二に、do
 根本原因がdocumentsプロパティの構成ミスにあると特定された今、問題を恒久的に解決するための体系的な手順を以下に示します。このステップバイステップのガイドは、実践的で具体的なチェックリストとして機能します。
 
 1. ステップ1: PageQueryの定義場所を特定する  
-   プロジェクトのコードベース全体を検索し、query PageQuery {... }というGraphQL操作が記述されているファイルを正確に特定します。そのファイルの完全なパス（例：src/app/\[...slug\]/page.tsx）をメモします。  
+   プロジェクトのコードベース全体を検索し、query PageQuery {... }というGraphQL操作が記述されているファイルを正確に特定します。そのファイルの完全なパス（例：src/app/\[...slug\]/page.tsx）をメモします。
 2. ステップ2: codegen.tsを検査する  
-   プロジェクトのルートディレクトリにあるGraphQL Code Generatorの構成ファイル（codegen.tsまたはcodegen.yml）を開き、documentsプロパティを見つけます。  
+   プロジェクトのルートディレクトリにあるGraphQL Code Generatorの構成ファイル（codegen.tsまたはcodegen.yml）を開き、documentsプロパティを見つけます。
 3. ステップ3: Globパターンを検証する  
-   ステップ1で特定したファイルのパスと、documentsプロパティに設定されているglobパターンを比較します。パターンがファイルパスと一致するかどうかを確認してください。必要であれば、オンラインのglobテスターなどを使用して、パターンが意図通りに機能しているか検証します。例えば、パターンがsrc/pages/\*\*/\*.tsxで、ファイルがsrc/app/page.tsxにある場合、一致しないことは明らかです。  
+   ステップ1で特定したファイルのパスと、documentsプロパティに設定されているglobパターンを比較します。パターンがファイルパスと一致するかどうかを確認してください。必要であれば、オンラインのglobテスターなどを使用して、パターンが意図通りに機能しているか検証します。例えば、パターンがsrc/pages/\*\*/\*.tsxで、ファイルがsrc/app/page.tsxにある場合、一致しないことは明らかです。
 4. ステップ4: 構成を修正する  
    documentsプロパティのglobパターンを、ステップ1のファイルを明確に含むように修正します。前節の診断リファレンス表を参考に、プロジェクトのディレクトリ構造に適したパターンを選択してください。  
-   同時に、そのファイル内のPageQueryが、graphql-tag-pluckによって発見可能な形式（gqlタグまたは/\* GraphQL \*/マジックコメント）で記述されていることを確認します 9。  
+   同時に、そのファイル内のPageQueryが、graphql-tag-pluckによって発見可能な形式（gqlタグまたは/\* GraphQL \*/マジックコメント）で記述されていることを確認します 9。
 5. ステップ5: 手動で型を再生成する  
-   ターミナルで、package.jsonに定義されているコード生成スクリプトを実行します（例：pnpm run generate、npm run codegen、または直接pnpm graphql-codegen）。コマンドの実行中にエラーや警告が表示されないか注意深く観察します。特に「Unable to find any GraphQL type definitions」のようなメッセージは、documentsのパスが依然として間違っていることを示唆しています 10。  
+   ターミナルで、package.jsonに定義されているコード生成スクリプトを実行します（例：pnpm run generate、npm run codegen、または直接pnpm graphql-codegen）。コマンドの実行中にエラーや警告が表示されないか注意深く観察します。特に「Unable to find any GraphQL type definitions」のようなメッセージは、documentsのパスが依然として間違っていることを示唆しています 10。
 6. ステップ6: 出力ファイルを検証する  
-   生成されたファイル（エラーメッセージによれば@/gql/graphql.ts）を開き、export type PageQueryという文字列を検索します。このエクスポート文が存在すれば、修正が成功したことの確たる証拠となります。もし存在しない場合は、ステップ3と4に戻り、globパターンとクエリの形式を再確認してください。  
+   生成されたファイル（エラーメッセージによれば@/gql/graphql.ts）を開き、export type PageQueryという文字列を検索します。このエクスポート文が存在すれば、修正が成功したことの確たる証拠となります。もし存在しない場合は、ステップ3と4に戻り、globパターンとクエリの形式を再確認してください。
 7. ステップ7: サーバーを再起動し、再ビルドする  
    最終的な手段として、IDEのTypeScript言語サーバーを再起動します（VS Codeでは、コマンドパレットからTypeScript: Restart TS serverを実行）1。これにより、IDEが新しい型定義を確実に認識するようになります。その後、  
    pnpm run buildコマンドを再度実行し、ビルドが正常に完了することを確認します。
@@ -136,8 +134,8 @@ TS2305エラーを解決することは重要ですが、それは対症療法�
 
 GraphQLクエリやフラグメントをプロジェクト内でどのように整理するかは、保守性とジェネレータの効率に大きな影響を与えます。主に2つの戦略があります。
 
-* **中央集権型**: すべての.graphqlファイルを専門のディレクトリ（例：src/graphql/）に集約します。このアプローチは、documentsの構成をsrc/graphql/\*\*/\*.graphqlのように非常にシンプルかつ高速にできるという利点があります。どこにクエリがあるかが一目瞭然で、管理が容易です。  
-* **コロケーション型**: クエリやフラグメントを、それらを使用するReactコンポーネントと同じファイルまたは同じディレクトリに配置します。これはコンポーネントのモジュール性と再利用性を高めますが、documentsのglobパターンをsrc/\*\*/\!(\*.d).{ts,tsx}のように広範に設定する必要があり、スキャンに時間がかかる可能性があります 2。
+- **中央集権型**: すべての.graphqlファイルを専門のディレクトリ（例：src/graphql/）に集約します。このアプローチは、documentsの構成をsrc/graphql/\*\*/\*.graphqlのように非常にシンプルかつ高速にできるという利点があります。どこにクエリがあるかが一目瞭然で、管理が容易です。
+- **コロケーション型**: クエリやフラグメントを、それらを使用するReactコンポーネントと同じファイルまたは同じディレクトリに配置します。これはコンポーネントのモジュール性と再利用性を高めますが、documentsのglobパターンをsrc/\*\*/\!(\*.d).{ts,tsx}のように広範に設定する必要があり、スキャンに時間がかかる可能性があります 2。
 
 どちらの戦略を選択するかはプロジェクトの規模やチームの好みによりますが、重要なのは一貫したルールを適用することです。
 
@@ -156,9 +154,9 @@ GraphQLの仕様自体は操作名の一意性を強制しませんが、Apollo 
 JSON
 
 "scripts": {  
-  "dev": "graphql-codegen \--watch & next dev",  
-  "build": "graphql-codegen && next build",  
-  "generate": "graphql-codegen"  
+ "dev": "graphql-codegen \--watch & next dev",  
+ "build": "graphql-codegen && next build",  
+ "generate": "graphql-codegen"  
 }
 
 \--watchフラグ（または-w）をdevスクリプトに追加することで、GraphQL操作を含むファイルを保存するたびに、型が自動的に再生成されます。これにより、開発サイクル中に型が常に最新の状態に保たれ、ビルド時までエラーが発覚しないという事態を回避できます。また、buildスクリプトの前にgraphql-codegenを実行することで、本番ビルドが常に最新の型定義に基づいて行われることが保証されます。
@@ -175,14 +173,14 @@ TypeScript
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig \= {  
-  schema: 'http://localhost:4000/graphql',  
-  documents: \['src/\*\*/\*.tsx'\],  
-  generates: {  
-    './src/gql/': {  
-      preset: 'client',  
-      plugins: // プリセットが最適なプラグインを自動的に選択  
-    }  
-  }  
+ schema: 'http://localhost:4000/graphql',  
+ documents: \['src/\*\*/\*.tsx'\],  
+ generates: {  
+ './src/gql/': {  
+ preset: 'client',  
+ plugins: // プリセットが最適なプラグインを自動的に選択  
+ }  
+ }  
 };
 
 export default config;
@@ -199,15 +197,15 @@ documentsプロパティの役割を正しく理解し、操作の一意な命�
 
 #### **引用文献**
 
-1. What causes the typescript Module has no exported member .ts(2305) error and how do you fix it? \- Stack Overflow, 9月 13, 2025にアクセス、 [https://stackoverflow.com/questions/68899565/what-causes-the-typescript-module-has-no-exported-member-ts2305-error-and-how](https://stackoverflow.com/questions/68899565/what-causes-the-typescript-module-has-no-exported-member-ts2305-error-and-how)  
-2. How to use GraphQL Codegen with Payload and React Query in Nextjs \- nouance, 9月 13, 2025にアクセス、 [https://nouance.io/articles/how-to-use-graphql-codegen-with-payload-and-react-query-in-nextjs](https://nouance.io/articles/how-to-use-graphql-codegen-with-payload-and-react-query-in-nextjs)  
-3. Introduction to GraphQL Code Generator, 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/docs/getting-started](https://the-guild.dev/graphql/codegen/docs/getting-started)  
-4. GraphQL CodeGen with Next.js \- Webkul Blog, 9月 13, 2025にアクセス、 [https://webkul.com/blog/nextjs-graphql-codegen/](https://webkul.com/blog/nextjs-graphql-codegen/)  
-5. Next.js Storefront: GraphQL Codegen, TypeScript & TypedDocumentString \- YouTube, 9月 13, 2025にアクセス、 [https://www.youtube.com/watch?v=AjAij2j81Js](https://www.youtube.com/watch?v=AjAij2j81Js)  
-6. GraphQL Codegen, 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen](https://the-guild.dev/graphql/codegen)  
-7. Codegen with GraphQL, Typescript, and Apollo, 9月 13, 2025にアクセス、 [https://www.apollographql.com/tutorials/lift-off-part1/09-codegen](https://www.apollographql.com/tutorials/lift-off-part1/09-codegen)  
-8. codegen.ts file \- GraphQL (The Guild), 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/docs/config-reference/codegen-config](https://the-guild.dev/graphql/codegen/docs/config-reference/codegen-config)  
-9. documents field \- GraphQL (The Guild), 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/docs/config-reference/documents-field](https://the-guild.dev/graphql/codegen/docs/config-reference/documents-field)  
-10. "The query argument is unknown error" for query types generated by graphql-codegen \- Stack Overflow, 9月 13, 2025にアクセス、 [https://stackoverflow.com/questions/76000093/the-query-argument-is-unknown-error-for-query-types-generated-by-graphql-codeg](https://stackoverflow.com/questions/76000093/the-query-argument-is-unknown-error-for-query-types-generated-by-graphql-codeg)  
-11. Why does codegen:generate require query names to be unique? · Issue \#670 · apollographql/apollo-tooling \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/apollographql/apollo-tooling/issues/670](https://github.com/apollographql/apollo-tooling/issues/670)  
+1. What causes the typescript Module has no exported member .ts(2305) error and how do you fix it? \- Stack Overflow, 9月 13, 2025にアクセス、 [https://stackoverflow.com/questions/68899565/what-causes-the-typescript-module-has-no-exported-member-ts2305-error-and-how](https://stackoverflow.com/questions/68899565/what-causes-the-typescript-module-has-no-exported-member-ts2305-error-and-how)
+2. How to use GraphQL Codegen with Payload and React Query in Nextjs \- nouance, 9月 13, 2025にアクセス、 [https://nouance.io/articles/how-to-use-graphql-codegen-with-payload-and-react-query-in-nextjs](https://nouance.io/articles/how-to-use-graphql-codegen-with-payload-and-react-query-in-nextjs)
+3. Introduction to GraphQL Code Generator, 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/docs/getting-started](https://the-guild.dev/graphql/codegen/docs/getting-started)
+4. GraphQL CodeGen with Next.js \- Webkul Blog, 9月 13, 2025にアクセス、 [https://webkul.com/blog/nextjs-graphql-codegen/](https://webkul.com/blog/nextjs-graphql-codegen/)
+5. Next.js Storefront: GraphQL Codegen, TypeScript & TypedDocumentString \- YouTube, 9月 13, 2025にアクセス、 [https://www.youtube.com/watch?v=AjAij2j81Js](https://www.youtube.com/watch?v=AjAij2j81Js)
+6. GraphQL Codegen, 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen](https://the-guild.dev/graphql/codegen)
+7. Codegen with GraphQL, Typescript, and Apollo, 9月 13, 2025にアクセス、 [https://www.apollographql.com/tutorials/lift-off-part1/09-codegen](https://www.apollographql.com/tutorials/lift-off-part1/09-codegen)
+8. codegen.ts file \- GraphQL (The Guild), 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/docs/config-reference/codegen-config](https://the-guild.dev/graphql/codegen/docs/config-reference/codegen-config)
+9. documents field \- GraphQL (The Guild), 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/docs/config-reference/documents-field](https://the-guild.dev/graphql/codegen/docs/config-reference/documents-field)
+10. "The query argument is unknown error" for query types generated by graphql-codegen \- Stack Overflow, 9月 13, 2025にアクセス、 [https://stackoverflow.com/questions/76000093/the-query-argument-is-unknown-error-for-query-types-generated-by-graphql-codeg](https://stackoverflow.com/questions/76000093/the-query-argument-is-unknown-error-for-query-types-generated-by-graphql-codeg)
+11. Why does codegen:generate require query names to be unique? · Issue \#670 · apollographql/apollo-tooling \- GitHub, 9月 13, 2025にアクセス、 [https://github.com/apollographql/apollo-tooling/issues/670](https://github.com/apollographql/apollo-tooling/issues/670)
 12. Named Operations Object \- Codegen \- GraphQL (The Guild), 9月 13, 2025にアクセス、 [https://the-guild.dev/graphql/codegen/plugins/typescript/named-operations-object](https://the-guild.dev/graphql/codegen/plugins/typescript/named-operations-object)

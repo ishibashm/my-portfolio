@@ -1,11 +1,11 @@
-'use client';
-import Image from 'next/image';
-import { PostBySlugQuery } from '@/gql/graphql';
-import styles from './BlogDetailTemplate.module.css';
-import { formatDate } from '@/utils/formatDate';
+"use client";
+import Image from "next/image";
+import { PostBySlugQuery } from "@/gql/graphql";
+import styles from "./BlogDetailTemplate.module.css";
+import { formatDate } from "@/utils/formatDate";
 
 interface BlogDetailTemplateProps {
-  post: NonNullable<PostBySlugQuery['post']>;
+  post: NonNullable<PostBySlugQuery["post"]>;
 }
 
 export const BlogDetailTemplate = ({ post }: BlogDetailTemplateProps) => {
@@ -15,7 +15,7 @@ export const BlogDetailTemplate = ({ post }: BlogDetailTemplateProps) => {
         <div className={styles.blogDetail__eyecatch}>
           <Image
             src={post.featuredImage.node.sourceUrl}
-            alt={post.featuredImage.node.altText || ''}
+            alt={post.featuredImage.node.altText || ""}
             width={1280}
             height={720}
             priority
@@ -38,7 +38,7 @@ export const BlogDetailTemplate = ({ post }: BlogDetailTemplateProps) => {
         </div>
         <div
           className={styles.blogDetail__content}
-          dangerouslySetInnerHTML={{ __html: post.content || '' }}
+          dangerouslySetInnerHTML={{ __html: post.content || "" }}
         />
       </div>
     </div>
