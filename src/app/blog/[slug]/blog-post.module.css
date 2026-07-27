@@ -31,6 +31,16 @@
   font-size: 1rem;
 }
 
+.articleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
 .blogContent {
   margin-bottom: 3rem;
 }
@@ -199,6 +209,85 @@
   border-radius: 20px;
   font-size: 0.875rem;
   border: 1px solid rgba(69, 183, 209, 0.3);
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.tag:hover {
+  background: rgba(69, 183, 209, 0.35);
+  color: #9fdcea;
+}
+
+/* 前後の記事ナビゲーション */
+.postNav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.navPrev,
+.navNext {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: #fff;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.navNext {
+  text-align: right;
+}
+
+.navPrev:hover,
+.navNext:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.navLabel {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.navTitle {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.backLinkWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.backLink {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.backLink:hover {
+  color: #4ecdc4;
+}
+
+@media (max-width: 640px) {
+  .postNav {
+    grid-template-columns: 1fr;
+  }
+
+  .navNext {
+    text-align: left;
+  }
 }
 
 /* レスポンシブデザイン */

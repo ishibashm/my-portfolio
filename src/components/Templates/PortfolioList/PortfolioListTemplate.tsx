@@ -1,10 +1,32 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { PortfoliosQuery } from "@/gql/graphql";
 import styles from "./PortfolioListTemplate.module.css"; // 専用のCSSモジュールを使用
 
-type Posts = NonNullable<PortfoliosQuery["posts"]>["nodes"];
+// WordPress由来の自動生成型に依存すると、ビルドにWordPressサーバーが
+// 必要になってしまうため、必要な形だけをここで定義する
+type Term = {
+  __typename?: string;
+  name?: string | null;
+  slug?: string | null;
+} | null;
+
+type PortfolioPost = {
+  __typename?: string;
+  slug?: string | null;
+  title?: string | null;
+  excerpt?: string | null;
+  featuredImage?: {
+    node?: {
+      sourceUrl?: string | null;
+      altText?: string | null;
+    } | null;
+  } | null;
+  categories?: { nodes?: Term[] | null } | null;
+  tags?: { nodes?: Term[] | null } | null;
+} | null;
+
+type Posts = PortfolioPost[];
 
 interface PortfolioListTemplateProps {
   posts?: Posts | null;

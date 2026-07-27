@@ -1,41 +1,30 @@
-import { HomePageTemplate } from "@/components/Templates/HomePage/HomePageTemplate";
-// import { fetchGraphQL } from '@/utils/fetchGraphQL';
-// import {
-//   HomePageDocument,
-//   HomePageQuery,
-// } from '@/gql/graphql';
-// import { Metadata } from 'next';
-// import { seoData } from '@/utils/seoData';
+import type { Metadata } from "next";
+import {
+  HomePageTemplate,
+  type HomePost,
+} from "@/components/Templates/HomePage/HomePageTemplate";
+import { getAllPosts, getReadingTime } from "@/lib/posts";
 
-export const revalidate = 60;
+// トップに載せる最新記事の件数
+const LATEST_POST_COUNT = 5;
 
-export default async function Home() {
-  // const { data } = await fetchGraphQL<HomePageQuery>({
-  //   query: HomePageDocument,
-  //   variables: {},
-  // });
+export const metadata: Metadata = {
+  title: "Cloud Palette",
+  description:
+    "Next.js・TypeScript を中心としたWeb制作の記録と、制作実績をまとめたサイトです。",
+};
 
-  // const { page, posts } = data;
+export default function Home() {
+  const posts: HomePost[] = getAllPosts()
+    .slice(0, LATEST_POST_COUNT)
+    .map(({ slug, title, date, description, tags, content }) => ({
+      slug,
+      title,
+      date,
+      description,
+      tags,
+      readingTime: getReadingTime(content),
+    }));
 
-  return (
-    <HomePageTemplate
-    // page={page}
-    // posts={posts?.nodes}
-    />
-  );
+  return <HomePageTemplate posts={posts} />;
 }
-
-// export async function generateMetadata(): Promise<Metadata> {
-//   const { data } = await fetchGraphQL<HomePageQuery>({
-//     query: HomePageDocument,
-//     variables: {},
-//   });
-
-//   const { page } = data;
-
-//   if (!page) {
-//     return {};
-//   }
-
-//   return seoData(page);
-// }

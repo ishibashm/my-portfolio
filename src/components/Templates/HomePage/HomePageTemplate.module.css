@@ -2,61 +2,179 @@
   color: #fff;
 }
 
-/* General Section Styles */
-.sectionTitle {
-  font-size: 2.5rem;
+/* ヒーロー：ビューポートを埋め尽くさない高さにして、
+   最初の画面で下に記事が続くことが分かるようにする */
+.hero {
+  padding: 5rem 0 3rem;
   text-align: center;
-  margin-bottom: 4rem;
-  font-weight: 500;
 }
 
-/* About Section */
-.about {
-  box-sizing: border-box;
+.heroEyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.heroTitle {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.heroLead {
+  max-width: 34rem;
+  margin: 0 auto 2rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.9;
+}
+
+.heroLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.primaryButton {
+  background-color: #45b7d1;
+  color: #0d1b2a;
+  border: 1px solid #45b7d1;
+}
+
+.primaryButton:hover {
+  background-color: #6fcbe0;
+  border-color: #6fcbe0;
+}
+
+.secondaryButton {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.secondaryButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* 最新記事 */
+.latest {
+  padding: 1rem 0 5rem;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sectionLink {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.sectionLink:hover {
+  color: #4ecdc4;
+}
+
+.postList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.postCard {
+  display: block;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.postCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.postMeta {
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* ナビゲーション（高さ80px）を差し引き、可視領域いっぱいに配置する。
-     box-sizing: border-box によりパディングを含めた高さになるため、
-     ページ全体がビューポートを超えず、初期表示で下方向にスクロールされない */
-  min-height: calc(100vh - 80px);
-  padding: 2rem 1rem;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.aboutContent {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
+.dot {
+  color: rgba(255, 255, 255, 0.35);
 }
 
-.socialLinks {
-  margin-top: 2rem;
+.postTitle {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.postExcerpt {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.tagRow {
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
-.socialButton {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50px;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 500;
-  transition: all 0.3s ease;
+.tag {
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(69, 183, 209, 0.18);
+  border: 1px solid rgba(69, 183, 209, 0.35);
+  color: #9fdcea;
+  font-size: 0.78rem;
 }
 
-.socialButton:hover {
-  background-color: #fff;
-  color: #000;
-}
-.hero {
-  width: 100%;
-  height: 400px; /* Adjust as needed */
-  position: relative;
-}
-
-.heroImage {
-  object-fit: cover;
+.empty {
+  color: rgba(255, 255, 255, 0.6);
 }

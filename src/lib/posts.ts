@@ -21,6 +21,15 @@ export function getAllPostSlugs(): string[] {
   return fileNames.map((fileName) => fileName.replace(/\.mdx?$/, ""));
 }
 
+// 本文からおおよその読了時間（分）を求める。
+// 日本語は単語で区切れないため文字数、英数字は単語数で数え、
+// それぞれ 400文字/分・200語/分 として合算する
+export function getReadingTime(content: string): number {
+  const japanese = (content.match(/[぀-ヿ一-鿿]/g) ?? []).length;
+  const words = (content.match(/[A-Za-z0-9]+/g) ?? []).length;
+  return Math.max(1, Math.round(japanese / 400 + words / 200));
+}
+
 // 記事のメタデータとコンテンツを取得
 export function getPostBySlug(slug: string): Omit<MDXPost, "slug"> | null {
   try {

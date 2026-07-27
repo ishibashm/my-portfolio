@@ -25,6 +25,15 @@ main {
   z-index: 10;
 }
 
+/* 各テンプレートが共通で使う中央寄せコンテナ。
+   これまで定義されておらず、一覧ページが画面端まで広がっていた */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;

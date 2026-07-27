@@ -1,0 +1,16 @@
+.backLinkWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 1.5rem 5rem;
+}
+
+.backLink {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.backLink:hover {
+  color: #4ecdc4;
+}

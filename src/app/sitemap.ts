@@ -1,102 +1,34 @@
 import { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/posts";
 
-export const revalidate = 0;
+const BASE_URL =
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.cloud-palette.com";
 
-async function getTotalCounts() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/sitemap/v1/totalpages`,
-  );
-  const data = await response.json();
-  if (!data) return [];
-  const propertyNames = Object.keys(data);
+// 記事はMDXファイルから読むため、外部APIに問い合わせる必要はない
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
 
-  const excludeItems = ["page", "user", "category", "tag"];
-  let totalArray = propertyNames
-    .filter((name) => !excludeItems.includes(name))
-    .map((name) => {
-      return { name, total: data[name] };
-    });
-
-  return totalArray;
-}
-
-async function getPostsUrls({
-  page,
-  type,
-  perPage,
-}: {
-  page: number;
-  type: string;
-  perPage: number;
-}) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/sitemap/v1/posts?pageNo=${page}&postType=${type}&perPage=${perPage}`,
-  );
-
-  const data = await response.json();
-
-  if (!data) return [];
-
-  const posts = data.map(
-    (post: { url: string; post_modified_date: string }) => {
-      return {
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}${post.url}`,
-        lastModified: new Date(post.post_modified_date)
-          .toISOString()
-          .split("T")[0],
-      };
-    },
-  );
-
-  return posts;
-}
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const sitemap = [];
-
-  // 主要な静的ページを追加
-  const staticPages = [
-    {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}`,
-      lastModified: new Date().toISOString(),
-    },
-    {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/portfolio`,
-      lastModified: new Date().toISOString(),
-    },
-    {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/blog`,
-      lastModified: new Date().toISOString(),
-    },
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: BASE_URL, lastModified: now, priority: 1 },
+    { url: `${BASE_URL}/blog`, lastModified: now, priority: 0.8 },
+    { url: `${BASE_URL}/portfolio`, lastModified: now, priority: 0.8 },
   ];
 
-  sitemap.push(...staticPages);
+  const posts = getAllPosts();
 
-  try {
-    const details = await getTotalCounts();
+  const postPages: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: post.date ? new Date(post.date) : now,
+    priority: 0.6,
+  }));
 
-    const postsUrls = await Promise.all(
-      details.map(async (detail) => {
-        const { name, total } = detail;
-        const perPage = 50;
-        const totalPages = Math.ceil(total / perPage);
+  const tagPages: MetadataRoute.Sitemap = Array.from(
+    new Set(posts.flatMap((post) => post.tags ?? [])),
+  ).map((tag) => ({
+    url: `${BASE_URL}/blog/tags/${encodeURIComponent(tag)}`,
+    lastModified: now,
+    priority: 0.4,
+  }));
 
-        const urls = await Promise.all(
-          Array.from({ length: totalPages }, (_, i) => i + 1).map((page) =>
-            getPostsUrls({ page, type: name, perPage }),
-          ),
-        );
-
-        return urls.flat();
-      }),
-    );
-
-    const posts = postsUrls.flat();
-    sitemap.push(...posts);
-  } catch (error) {
-    // WordPress APIが利用できない場合は静的ページのみ
-    console.error("Error fetching WordPress sitemap data:", error);
-  }
-
-  return sitemap;
+  return [...staticPages, ...postPages, ...tagPages];
 }
