@@ -1,6 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// このルートは WordPress への GraphQL プロキシ。無認証で公開すると、
+// インターネット上の誰でも WordPress へ任意のクエリを送れてしまう
+// （ユーザー情報の列挙や、高負荷クエリによるDoSの恐れ）。
+// そのためサーバー間通信用の共有シークレットを必須にしている。
+// 呼び出し側は X-Headless-Secret-Key ヘッダに HEADLESS_SECRET を付与すること。
 export async function POST(req: NextRequest) {
+  const expectedSecret = process.env.HEADLESS_SECRET;
+
+  // シークレット未設定の環境で、誤って口を開けたままにしないよう拒否する
+  if (!expectedSecret) {
+    console.error("HEADLESS_SECRET is not configured");
+    return NextResponse.json(
+      { error: "GraphQL proxy is not configured" },
+      { status: 503 },
+    );
+  }
+
+  if (req.headers.get("X-Headless-Secret-Key") !== expectedSecret) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { query, variables } = await req.json();
   const wordpressApiUrl = process.env.WORDPRESS_API_URL;
 

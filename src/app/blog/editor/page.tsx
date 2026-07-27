@@ -81,7 +81,6 @@ export default function Page() {
   );
 }
 
-
 // 編集機能に特化した子コンポーネント
 function BlogEditor({ session }: { session: Session }) {
   const [post, setPost] = useState<BlogPost>(defaultPost);
@@ -111,14 +110,32 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
       setIsPreviewLoading(true);
       let content = post.content;
       content = content.replace(/^# (.*$)/gm, '<h1 class="preview-h1">$1</h1>');
-      content = content.replace(/^## (.*$)/gm, '<h2 class="preview-h2">$1</h2>');
-      content = content.replace(/^### (.*$)/gm, '<h3 class="preview-h3">$1</h3>');
+      content = content.replace(
+        /^## (.*$)/gm,
+        '<h2 class="preview-h2">$1</h2>',
+      );
+      content = content.replace(
+        /^### (.*$)/gm,
+        '<h3 class="preview-h3">$1</h3>',
+      );
       content = content.replace(/^- (.*$)/gm, '<li class="preview-li">$1</li>');
-      content = content.replace(/(<li.*<\/li>)/gms, '<ul class="preview-ul">$1</ul>');
-      content = content.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="preview-code"><code>$2</code></pre>');
-      content = content.replace(/\*\*(.*?)\*\*/g, '<strong class="preview-strong">$1</strong>');
+      content = content.replace(
+        /(<li.*<\/li>)/gms,
+        '<ul class="preview-ul">$1</ul>',
+      );
+      content = content.replace(
+        /```(\w+)?\n([\s\S]*?)```/g,
+        '<pre class="preview-code"><code>$2</code></pre>',
+      );
+      content = content.replace(
+        /\*\*(.*?)\*\*/g,
+        '<strong class="preview-strong">$1</strong>',
+      );
       content = content.replace(/\*(.*?)\*/g, '<em class="preview-em">$1</em>');
-      content = content.replace(/^(?!<[h|ul|pre|li])(.*)$/gm, '<p class="preview-p">$1</p>');
+      content = content.replace(
+        /^(?!<[h|ul|pre|li])(.*)$/gm,
+        '<p class="preview-p">$1</p>',
+      );
       setPreviewContent(content);
       const timer = setTimeout(() => setIsPreviewLoading(false), 300);
       return () => clearTimeout(timer);
@@ -164,7 +181,9 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
   // ファイルとしてダウンロード
   const downloadPost = () => {
     const content = generateMDXContent();
-    const filename = post.title ? post.title.replace(/[^a-zA-Z0-9あ-ん]/g, "_") : "blog-post";
+    const filename = post.title
+      ? post.title.replace(/[^a-zA-Z0-9あ-ん]/g, "_")
+      : "blog-post";
     const blob = new Blob([content], { type: "text/markdown" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -227,7 +246,9 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
           <div className={styles.previewContainer}>
             <div className={styles.previewHeader}>
               <h2>プレビュー</h2>
-              {isPreviewLoading && <div className={styles.loading}>読み込み中...</div>}
+              {isPreviewLoading && (
+                <div className={styles.loading}>読み込み中...</div>
+              )}
             </div>
             <div className={styles.previewContent}>
               <div className={`${styles.postHeader} ${styles.previewMeta}`}>
@@ -236,10 +257,14 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
                 <div className={styles.previewTags}>
                   <span className={styles.label}>タグ:</span>
                   {post.tags.map((tag) => (
-                    <span key={tag} className={styles.tag}>{tag}</span>
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
                   ))}
                 </div>
-                <time className={styles.date}>{new Date(post.date).toLocaleDateString("ja-JP")}</time>
+                <time className={styles.date}>
+                  {new Date(post.date).toLocaleDateString("ja-JP")}
+                </time>
               </div>
               <div
                 dangerouslySetInnerHTML={{ __html: previewContent }}
@@ -273,7 +298,9 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
                 <label className={styles.label}>記事の説明</label>
                 <textarea
                   value={post.description}
-                  onChange={(e) => setPost({ ...post, description: e.target.value })}
+                  onChange={(e) =>
+                    setPost({ ...post, description: e.target.value })
+                  }
                   className={styles.textarea}
                   placeholder="記事の説明を入力..."
                   rows={3}
@@ -287,7 +314,10 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
                   onChange={(e) =>
                     setPost({
                       ...post,
-                      tags: e.target.value.split(",").map((tag) => tag.trim()).filter((tag) => tag),
+                      tags: e.target.value
+                        .split(",")
+                        .map((tag) => tag.trim())
+                        .filter((tag) => tag),
                     })
                   }
                   className={styles.input}
@@ -302,14 +332,17 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
                   <button
                     className={`${styles.buttonSmall} ${styles.insertButton}`}
                     onClick={() => {
-                      const textarea = document.querySelector("textarea") as HTMLTextAreaElement;
+                      const textarea = document.querySelector(
+                        "textarea",
+                      ) as HTMLTextAreaElement;
                       const start = textarea.selectionStart;
                       const end = textarea.selectionEnd;
                       const text = textarea.value;
                       const beforeText = text.substring(0, start);
                       const afterText = text.substring(end);
                       const selectedText = text.substring(start, end);
-                      const newText = beforeText + `**${selectedText}**` + afterText;
+                      const newText =
+                        beforeText + `**${selectedText}**` + afterText;
                       setPost({ ...post, content: newText });
                     }}
                   >
@@ -339,7 +372,11 @@ tags: [${post.tags.map((tag) => `'${tag}'`).join(", ")}]
                 onClick={() => setSandboxCode(template)}
                 className={`${styles.buttonSmall} ${styles.templateButton}`}
               >
-                {name === "basic" ? "基本コンポーネント" : name === "interactive" ? "インタラクティブ" : "チャート"}
+                {name === "basic"
+                  ? "基本コンポーネント"
+                  : name === "interactive"
+                    ? "インタラクティブ"
+                    : "チャート"}
               </button>
             ))}
           </div>

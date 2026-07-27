@@ -1,4 +1,6 @@
-const createMDX = require("@next/mdx")();
+import createMDX from "@next/mdx";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -29,5 +31,13 @@ const nextConfig = {
   },
 };
 
+const withMDX = createMDX({
+  options: {
+    // MDX冒頭のYAML（--- で囲まれた部分）を本文から取り除き、
+    // `frontmatter` という名前付きエクスポートとして取り出せるようにする
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+  },
+});
+
 // Merge MDX config with Next.js config
-module.exports = createMDX(nextConfig);
+export default withMDX(nextConfig);

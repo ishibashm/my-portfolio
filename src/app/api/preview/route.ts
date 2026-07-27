@@ -1,3 +1,4 @@
+import { draftMode } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -5,17 +6,27 @@ export async function GET(request: NextRequest) {
   const secret = searchParams.get("secret");
   const slug = searchParams.get("slug");
 
-  if (secret !== process.env.WORDPRESS_PREVIEW_SECRET) {
+  const expectedSecret = process.env.WORDPRESS_PREVIEW_SECRET;
+
+  // シークレット未設定の環境では、誰でもプレビューに入れる状態を避けるため拒否する
+  if (!expectedSecret) {
+    console.error("WORDPRESS_PREVIEW_SECRET is not configured");
+    return new Response("Preview is not configured", { status: 503 });
+  }
+
+  if (secret !== expectedSecret) {
     return new Response("Invalid token", { status: 401 });
   }
 
-  const response = NextResponse.redirect(
-    new URL(`/${slug || ""}`, request.url),
-  );
+  // Cookieを手書きせず draftMode() を使う。
+  // __prerender_bypass はNext.jsがサーバー側で生成するトークンと突き合わせるため、
+  // 固定値を自前でセットする実装ではプレビューが正しく有効にならない。
+  const draft = await draftMode();
+  draft.enable();
 
-  // プレビューモードを有効にするCookieを設定
-  response.cookies.set("__prerender_bypass", "1");
-  response.cookies.set("__next_preview_data", '{"preview":true}');
+  // slugはユーザー入力。先頭のスラッシュを全て取り除いてから組み立てることで、
+  // "//evil.com" のようなプロトコル相対URLで外部サイトへ飛ばされるのを防ぐ
+  const safePath = `/${(slug ?? "").replace(/^\/+/, "")}`;
 
-  return response;
+  return NextResponse.redirect(new URL(safePath, request.url));
 }

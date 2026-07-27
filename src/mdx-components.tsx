@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import Image from "next/image";
+import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import { ComponentProps, FC } from "react";
 
@@ -50,7 +50,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <Image
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
-        {...(props as any)}
+        {...(props as ImageProps)}
       />
     ),
     ul: ({ children }) => <ul className="mdx-ul">{children}</ul>,
@@ -66,7 +66,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     pre: ({ children }) => <pre className="mdx-pre">{children}</pre>,
     hr: () => <hr className="mdx-hr" />,
-    strong: ({ children }) => <strong className="mdx-strong">{children}</strong>,
+    strong: ({ children }) => (
+      <strong className="mdx-strong">{children}</strong>
+    ),
     em: ({ children }) => <em className="mdx-em">{children}</em>,
     ...components,
   };

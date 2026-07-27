@@ -24,6 +24,8 @@ export async function fetchGraphQL<T>({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      // /api/graphql は認証必須。サーバー側でのみ使う共有シークレットを付与する
+      "X-Headless-Secret-Key": process.env.HEADLESS_SECRET ?? "",
     },
     body: JSON.stringify({
       query: queryString,

@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import styles from "./blog-post.module.css";
-import { getAllPostSlugs, getPostBySlug } from "@/lib/posts";
+import { getAllPostSlugs } from "@/lib/posts";
 import { FC } from "react";
 
+// Next.js 15 では動的ルートの params は Promise で渡される
 interface BlogPostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 // MDXファイルのfrontmatterの型
@@ -21,20 +22,18 @@ interface MdxModule {
   frontmatter: Frontmatter;
 }
 
-async function getPostComponent(
-  slug: string,
-): Promise<MdxModule | null> {
+async function getPostComponent(slug: string): Promise<MdxModule | null> {
   try {
     // 動的インポートを使用して、slugに一致するMDXファイルを読み込む
     return await import(`@/posts/${slug}.mdx`);
-  } catch (error) {
+  } catch {
     // ファイルが見つからない場合はnullを返す
     return null;
   }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const postModule = await getPostComponent(slug);
 
   if (!postModule) {
@@ -88,7 +87,7 @@ export async function generateStaticParams() {
 
 // メタデータ生成
 export async function generateMetadata({ params }: BlogPostPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const postModule = await getPostComponent(slug);
 
   if (!postModule) {
