@@ -12,11 +12,15 @@
 
 /* About Section */
 .about {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  padding: 5rem 0;
+  /* ナビゲーション（高さ80px）を差し引き、可視領域いっぱいに配置する。
+     box-sizing: border-box によりパディングを含めた高さになるため、
+     ページ全体がビューポートを超えず、初期表示で下方向にスクロールされない */
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
 }
 
 .aboutContent {
